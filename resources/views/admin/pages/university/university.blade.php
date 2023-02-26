@@ -146,13 +146,13 @@
                                                     <label>{{__('global_status')}}</label>
                                                     <select class="form-control" name="status">
                                                         <?php $value = \Illuminate\Support\Facades\Config::get('status.active'); ?>
-                                                        <option value="{{$value}}" <?php if ($university->status==$value){ echo 'selected'; } ?>>{{\App\Services\Admin\Misc\SystemService::get_status_name_by_id($value)}}</option>
+                                                        <option value="{{$value}}" <?php if (isset($university) && $university->status==$value){ echo 'selected'; } ?>>{{\App\Services\Admin\Misc\SystemService::get_status_name_by_id($value)}}</option>
 
                                                         <?php $value = \Illuminate\Support\Facades\Config::get('status.wait'); ?>
-                                                        <option value="{{$value}}" <?php if ($university->status==$value){ echo 'selected'; } ?>>{{\App\Services\Admin\Misc\SystemService::get_status_name_by_id($value)}}</option>
+                                                        <option value="{{$value}}" <?php if (isset($university) && $university->status==$value){ echo 'selected'; } ?>>{{\App\Services\Admin\Misc\SystemService::get_status_name_by_id($value)}}</option>
 
                                                         <?php $value = \Illuminate\Support\Facades\Config::get('status.block'); ?>
-                                                        <option value="{{$value}}" <?php if ($university->status==$value){ echo 'selected'; } ?>>{{\App\Services\Admin\Misc\SystemService::get_status_name_by_id($value)}}</option>
+                                                        <option value="{{$value}}" <?php if (isset($university) && $university->status==$value){ echo 'selected'; } ?>>{{\App\Services\Admin\Misc\SystemService::get_status_name_by_id($value)}}</option>
                                                     </select>
                                                 </div>
                                             </div>
