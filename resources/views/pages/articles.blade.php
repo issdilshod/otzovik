@@ -27,12 +27,14 @@
         <p class="_change_able" data-key="articles_top_info_p" data-value="{{$template['articles_top_info_p']}}">{{$template['articles_top_info_p']}}</p>       
         <div class="send-inner">
           <div class="sending-group">
-            <input id="articles-email" type="email" placeholder="Введите почту" class="form-control">
-            <button id="articles-subscribe" class="send-btn">
-              <svg class="icon">
-                <use xlink:href="#letter-ico"></use>
-              </svg>
-            </button>
+            <form id="articles-submit">
+                <input id="articles-email" type="email" placeholder="Введите почту" class="form-control">
+                <button id="articles-subscribe" class="send-btn">
+                <svg class="icon">
+                    <use xlink:href="#letter-ico"></use>
+                </svg>
+                </button>
+            </form>
           </div>
           <div class="agree">Нажимая на “Отправить” я соглашаюсь на <a href="{{url('legal')}}">обработку персональных данных</a> и <a href="{{url('policy')}}">политикой конфиденциальности</a> сайта</div>
         </div>

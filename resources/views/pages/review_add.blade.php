@@ -107,7 +107,7 @@
             <div class="form-group"><input name="last_name" type="text" placeholder="Фамилия" class="form-control"></div>
           </div>
           <div class="col-lg-4">
-            <div class="form-group"><input name="email" type="text" placeholder="Почта*" class="form-control"></div>
+            <div class="form-group"><input name="email" type="email" placeholder="Почта*" class="form-control"></div>
           </div>
           <div class="col-lg-12">
             <div class="form-group"><textarea name="text" placeholder="Отзыв*" cols="30" rows="10" class="form-control"></textarea></div>
@@ -153,17 +153,40 @@
 
             var validated = true;
 
-            if ($('input[name="first_name"]').val()==''){
+            // empty
+            if ($('input[name="first_name"]').val()=='' || $('input[name="first_name"]').val().length>20){
                 $('input[name="first_name"]').css('border', '1px solid rgb(255 0 0 / 38%)');
                 validated = false;
+            }else{
+                $('input[name="first_name"]').removeAttr('style');
             }
             if ($('input[name="email"]').val()==''){
                 $('input[name="email"]').css('border', '1px solid rgb(255 0 0 / 38%)');
                 validated = false;
+            }else{
+                $('input[name="email"]').removeAttr('style');
             }
             if ($('textarea[name="text"]').val()==''){
                 $('textarea[name="text"]').css('border', '1px solid rgb(255 0 0 / 38%)');
                 validated = false;
+            }else{
+                $('textarea[name="text"]').removeAttr('style');
+            }
+
+            // length
+            if ($('input[name="last_name"]').val().length>20){
+                $('input[name="last_name"]').css('border', '1px solid rgb(255 0 0 / 38%)');
+                validated = false;
+            }else{
+                $('input[name="last_name"]').removeAttr('style');
+            }
+
+            // star validation
+            if (parseInt($('#value').html())<1){
+                $('#value').css('text-shadow', '1px 1px 1px rgb(255 0 0 / 38%)');
+                validated = false;
+            }else{
+                $('#value').removeAttr('style');
             }
 
             if (!validated){ return false; }

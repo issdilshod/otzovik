@@ -16,12 +16,14 @@
           <div class="col-lg-6 d-flex justify-content-end">
             <div class="send-inner">
               <div class="sending-group">
-                <input id="footer-email" type="email" placeholder="Введите почту" class="form-control">
-                <button id="footer-subscribe" class="send-btn">
-                  <svg class="icon">
-                    <use xlink:href="#letter-ico"></use>
-                  </svg>
-                </button>
+                    <form id="footer-submit">
+                        <input id="footer-email" type="email" placeholder="Введите почту" class="form-control">
+                        <button id="footer-subscribe" class="send-btn">
+                            <svg class="icon">
+                                <use xlink:href="#letter-ico"></use>
+                            </svg>
+                        </button>
+                    </form>
               </div>
               <div class="agree">Нажимая на “Отправить” я соглашаюсь на <a href="{{url('legal')}}">обработку персональных данных</a> и <a href="{{url('policy')}}">политикой конфиденциальности</a> сайта</div>
             </div>
@@ -161,12 +163,12 @@
         }
     }
 
-    $(document).on('click', '#footer-subscribe', function (e){
+    $(document).on('submit', '#footer-submit', function (e){
         e.preventDefault();
         subscribe('#footer-email');
     })
 
-    $(document).on('click', '#articles-subscribe', function (e){
+    $(document).on('submit', '#articles-submit', function (e){
         e.preventDefault();
         subscribe('#articles-email');
     })
