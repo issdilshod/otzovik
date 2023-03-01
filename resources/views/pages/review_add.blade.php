@@ -189,6 +189,15 @@
                 $('#value').removeAttr('style');
             }
 
+            // validate email for cyrillic
+            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            if (!regex.test($('input[name="email"]').val())){
+                $('input[name="email"]').css('border', '1px solid rgb(255 0 0 / 38%)');
+                validated = false;
+            }else{
+                $('input[name="email"]').removeAttr('style');
+            }
+
             if (!validated){ return false; }
 
             // serialize to form data
