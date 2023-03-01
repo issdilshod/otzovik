@@ -28,11 +28,7 @@
                 <div class="input-wrapper">
                 <input type="text" placeholder="" id="place" data-slug="">
                 <div class="input-hint" style="display:none">
-                    <ul>
-                        <li>
-                            <a href="#"><span>Кра</span>снодар</a>
-                        </li>
-                    </ul>
+                    <ul></ul>
                 </div>
                 </div>
             </div>
@@ -213,7 +209,10 @@
                 $('.input-hint>ul').html('');
                 if (res.data.length>0){
                     for (let key in res.data){
-                        $('.input-hint>ul').append('<li><a href="#" data-slug="'+res.data[key]['slug']+'" data-name="'+res.data[key]['name']+'">'+res.data[key]['name'].toLowerCase().replace(searchValue.toLowerCase(), '<span>'+searchValue+'</span>')+'</a></li>');
+                        var origCity = res.data[key]['name'].toLowerCase();
+                        searchValue = searchValue.charAt(0).toUpperCase() + searchValue.slice(1);
+
+                        $('.input-hint>ul').append('<li><a href="#" data-slug="'+res.data[key]['slug']+'" data-name="'+res.data[key]['name']+'">'+'<span>'+searchValue+'</span>'+origCity.slice(searchValue.length)+'</a></li>');
                     }
                 }else{
                     // TODO: Not found
