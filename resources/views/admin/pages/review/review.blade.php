@@ -65,7 +65,11 @@
 
                                 <div class="form-group">
                                     <label>{{__('review_university')}}</label>
-                                    <select class="form-control select2 universities-select" name="university_id"></select>
+                                    <select class="form-control select2 universities-select" name="university_id">
+                                        @foreach ($universities as $university)
+                                            <option value="{{$university->id}}" <?php if(isset($review)&&$university->id==$review->university_id){ echo 'selected'; }?>>{{$university->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                     
                                 <div class="form-group">
@@ -114,21 +118,7 @@
 <script src="{{ asset('assets/admin/plugins/select2/js/select2.full.min.js') }}"></script>
 <script>
 $(function () {
-    // Universities
-    var universities = JSON.parse('<?=json_encode($universities)?>');
-
-    var universityId = '<?=isset($review->university_id)?$review->university_id:''?>';
-
-    var tmpData = [];
-    for (let key in universities){
-        tmpData.push({
-            id: universities[key]['id'],
-            text: universities[key]['name'],
-            selected: (universities[key]['id']==universityId)?true:false
-        });
-    }
-
-    $('.universities-select').select2({data: tmpData});
+    $('.universities-select').select2();
 });
 </script>
 <!-- ./Select2 -->

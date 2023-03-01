@@ -121,7 +121,11 @@
                                                 <!-- cities from base -->
                                                 <div class="form-group">
                                                     <label>{{__('university_city')}}</label>
-                                                    <select class="city-select" data-placeholder="{{__('university_city_select')}}" style="width: 100%;" name="city_id"></select>
+                                                    <select class="city-select" data-placeholder="{{__('university_city_select')}}" style="width: 100%;" name="city_id">
+                                                        @foreach ($cities as $city)
+                                                            <option value="{{$city->id}}" <?php if (isset($university)&&$university->city_id==$city->id){ echo 'selected'; } ?>>{{$city->name}}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
 
@@ -246,7 +250,22 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>{{__('university_direction')}}</label>
-                                                    <select class="direction-select" multiple="multiple" data-placeholder="{{__('university_select_direction')}}" style="width: 100%;" name="directions[]"></select>
+                                                    <select class="direction-select" multiple="multiple" data-placeholder="{{__('university_select_direction')}}" style="width: 100%;" name="directions[]">
+                                                        @foreach ($directions as $direction)
+                                                            <option 
+                                                                value="{{$direction->id}}"
+                                                                <?php 
+                                                                    if (isset($university)){
+                                                                        $exists = false; 
+                                                                        foreach($university->directions as $key => $value):
+                                                                            if ($value->direction_id==$direction->id){ $exists = true; }
+                                                                        endforeach;
+                                                                        if ($exists){ echo 'selected'; }
+                                                                    } 
+                                                                ?>
+                                                            >{{$direction->name}}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
 
@@ -254,7 +273,22 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>{{__('university_education_type')}}</label>
-                                                    <select class="education-type-select" multiple="multiple" data-placeholder="{{__('university_education_type_select')}}" style="width: 100%;" name="education_types[]"></select>
+                                                    <select class="education-type-select" multiple="multiple" data-placeholder="{{__('university_education_type_select')}}" style="width: 100%;" name="education_types[]">
+                                                        @foreach ($education_types as $education_type)
+                                                            <option 
+                                                                value="{{$education_type->id}}"
+                                                                <?php 
+                                                                    if (isset($university)){
+                                                                        $exists = false; 
+                                                                        foreach($university->education_types as $key => $value):
+                                                                            if ($value->education_type_id==$education_type->id){ $exists = true; }
+                                                                        endforeach;
+                                                                        if ($exists){ echo 'selected'; }
+                                                                    } 
+                                                                ?>
+                                                            >{{$education_type->name}}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
 
@@ -262,7 +296,22 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>{{__('university_education_level')}}</label>
-                                                    <select class="education-level-select" multiple="multiple" data-placeholder="{{__('university_education_level_select')}}" style="width: 100%;" name="education_levels[]"></select>
+                                                    <select class="education-level-select" multiple="multiple" data-placeholder="{{__('university_education_level_select')}}" style="width: 100%;" name="education_levels[]">
+                                                        @foreach ($education_levels as $education_level)
+                                                            <option 
+                                                                value="{{$education_level->id}}"
+                                                                <?php 
+                                                                    if (isset($university)){
+                                                                        $exists = false; 
+                                                                        foreach($university->education_levels as $key => $value):
+                                                                            if ($value->education_level_id==$education_level->id){ $exists = true; }
+                                                                        endforeach;
+                                                                        if ($exists){ echo 'selected'; }
+                                                                    } 
+                                                                ?>
+                                                            >{{$education_level->name}}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                             
@@ -301,97 +350,16 @@
 <script>
 $(function () {
     // Directions
-    var directions = JSON.parse('<?=json_encode($directions)?>');
-
-    // university direction
-    var universityDirections = [];
-    <?php if (isset($university->id)){ ?>
-    universityDirections = JSON.parse('<?=json_encode($university->directions)?>');
-    <?php } ?>
-
-    var tmpData = [];
-    for (let key in directions){
-
-        // search if selected
-        var found = universityDirections.findIndex((i) => i.direction_id==directions[key]['id']);
-
-        tmpData.push({
-            id: directions[key]['id'],
-            text: directions[key]['name'],
-            selected: (found>-1)?true:false
-        });
-    }
-
-    $('.direction-select').select2({data: tmpData});
+    $('.direction-select').select2();
 
     // Education type
-    var educationTypes = JSON.parse('<?=json_encode($education_types)?>');
-
-    // university education type
-    var universityEducationTypes = [];
-    <?php if (isset($university->id)){ ?>
-    universityEducationTypes = JSON.parse('<?=json_encode($university->education_types)?>');
-    <?php } ?>
-
-    tmpData = [];
-    for (let key in educationTypes){
-
-        // search if selected
-        var found = universityEducationTypes.findIndex((i) => i.education_type_id==educationTypes[key]['id']);
-
-        tmpData.push({
-            id: educationTypes[key]['id'],
-            text: educationTypes[key]['name'],
-            selected: (found>-1)?true:false
-        });
-    }
-
-    $('.education-type-select').select2({data: tmpData});
+    $('.education-type-select').select2();
 
     // Education level
-    var educationLevels = JSON.parse('<?=json_encode($education_levels)?>');
-
-    // university education level
-    var universityEducationLevels = [];
-    <?php if (isset($university->id)){ ?>
-    universityEducationLevels = JSON.parse('<?=json_encode($university->education_levels)?>');
-    <?php } ?>
-
-    tmpData = [];
-    for (let key in educationLevels){
-
-        // search if selected
-        var found = universityEducationLevels.findIndex((i) => i.education_level_id==educationLevels[key]['id']);
-
-        tmpData.push({
-            id: educationLevels[key]['id'],
-            text: educationLevels[key]['name'],
-            selected: (found>-1)?true:false
-        });
-    }
-
-    $('.education-level-select').select2({data: tmpData});
+    $('.education-level-select').select2();
 
     // city
-    var cities = JSON.parse('<?=json_encode($cities)?>');
-
-    // university direction
-    var universityCityId = '';
-    <?php if (isset($university->id)){ ?>
-    universityCityId = JSON.parse('<?=json_encode($university->city_id)?>');
-    <?php } ?>
-
-    var tmpData = [];
-    for (let key in cities){
-
-        tmpData.push({
-            id: cities[key]['id'],
-            text: cities[key]['name'],
-            selected: (universityCityId==cities[key]['id'])?true:false
-        });
-    }
-
-    $('.city-select').select2({data: tmpData});
+    $('.city-select').select2();
 });
 </script>
 <!-- ./Select2 -->
