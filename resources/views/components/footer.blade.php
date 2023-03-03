@@ -18,7 +18,7 @@
               <div class="sending-group">
                     <form id="footer-submit">
                         <input id="footer-email" type="email" placeholder="Введите почту" class="form-control">
-                        <button id="footer-subscribe" class="send-btn">
+                        <button id="footer-submit" class="send-btn">
                             <svg class="icon">
                                 <use xlink:href="#letter-ico"></use>
                             </svg>
