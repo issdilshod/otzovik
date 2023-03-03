@@ -138,7 +138,7 @@
                 <div class="statistic-row">                  
                     <span>5</span>
                     @for ($i = 0; $i <= 100; $i+=20)
-                        @if ($university->statistic['five']!=0 && $university->statistic['five']>$i)
+                        @if ($university->statistic['five']!=0 && $university->statistic['five']>=$i)
                             <span><span class="shild full"></span></span>
                         @else
                             <span><span class="shild"></span></span>
@@ -149,7 +149,7 @@
                 <div class="statistic-row">                  
                     <span>4</span>
                     @for ($i = 0; $i <= 100; $i+=20)
-                        @if ($university->statistic['four']!=0 && $university->statistic['four']>$i)
+                        @if ($university->statistic['four']!=0 && $university->statistic['four']>=$i)
                             <span><span class="shild full"></span></span>
                         @else
                             <span><span class="shild"></span></span>
@@ -160,7 +160,7 @@
                 <div class="statistic-row">                  
                     <span>3</span>
                     @for ($i = 0; $i <= 100; $i+=20)
-                        @if ($university->statistic['three']!=0 && $university->statistic['three']>$i)
+                        @if ($university->statistic['three']!=0 && $university->statistic['three']>=$i)
                             <span><span class="shild full"></span></span>
                         @else
                             <span><span class="shild"></span></span>
@@ -171,7 +171,7 @@
                 <div class="statistic-row">                  
                     <span>2</span>
                     @for ($i = 0; $i <= 100; $i+=20)
-                        @if ($university->statistic['two']!=0 && $university->statistic['two']>$i)
+                        @if ($university->statistic['two']!=0 && $university->statistic['two']>=$i)
                             <span><span class="shild full"></span></span>
                         @else
                             <span><span class="shild"></span></span>
