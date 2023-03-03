@@ -325,6 +325,13 @@
                                             <div class="col-md-12">
                                                 <div class="form-group qa_result">
                                                     <label for="q_a">{{__('university_qa')}}</label>
+                                                    <?php foreach($university['qas'] as $key => $qa): ?>
+                                                        <div class="qa_list" id="qa<?=$key?>">
+                                                            <input class="form-control" placeholder="<?=__('university_question')?>" name="qa[<?=$key?>][question]" value="<?=$qa['question']?>" />
+                                                            <textarea name="qa[<?=$key?>][answer]" class="form-control mt-1" style="height:100px;" placeholder="<?=__('university_answer')?>"><?=$qa['answer']?></textarea>
+                                                            <span class="btn btn-sm btn-danger qa_remove" data-number="<?=$key?>"><i class="fa fa-trash"></i></span>
+                                                        </div>
+                                                    <?php endforeach; ?>
                                                 </div>
                                                 <div class="form-group text-right">
                                                     <span class="btn btn-primary qa_add">
@@ -356,7 +363,7 @@
 <script src="{{ asset('assets/admin/plugins/select2/js/select2.full.min.js') }}"></script>
 <script>
 // qa uniq number
-var qaNumber = 0;
+var qaNumber = parseInt("{{count($university['qas'])}}");
 var qPlaceholder = "{{__('university_question')}}";
 var aPlaceholder = "{{__('university_answer')}}";
     
@@ -376,8 +383,8 @@ $(function () {
 });
 
 $(document).on('click', '.qa_add', function (){
-    var question = '<input name="question['+qaNumber+'][question]" class="form-control" placeholder="'+qPlaceholder+'" />';
-    var answer = '<textarea name="question['+qaNumber+'][answer]" class="form-control mt-1" placeholder="'+aPlaceholder+'" style="height:100px"></textarea>';
+    var question = '<input name="qa['+qaNumber+'][question]" class="form-control" placeholder="'+qPlaceholder+'" />';
+    var answer = '<textarea name="qa['+qaNumber+'][answer]" class="form-control mt-1" placeholder="'+aPlaceholder+'" style="height:100px"></textarea>';
     var qa_remove = '<span class="btn btn-sm btn-danger qa_remove" data-number="'+qaNumber+'"><i class="fa fa-trash"></i></span>';
     $('.qa_result').append('<div class="qa_list" id="qa'+qaNumber+'">'+question+answer+qa_remove+'</div>');
 

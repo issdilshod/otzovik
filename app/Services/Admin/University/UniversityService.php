@@ -3,6 +3,7 @@
 namespace App\Services\Admin\University;
 
 use App\Models\Admin\Review\Review;
+use App\Models\Admin\Setting\Qa;
 use App\Services\Admin\Misc\StringService;
 use App\Services\Service;
 use App\Models\Admin\University\University;
@@ -67,6 +68,11 @@ class UniversityService extends Service{
                                             ->where('university_id', $id)
                                             ->get();
 
+        // qas
+        $university['qas'] = Qa::where('status', Config::get('status.active'))
+                                ->where('rel', $id)
+                                ->get();
+
         return $university;
     }
 
@@ -128,6 +134,11 @@ class UniversityService extends Service{
                                     ->where('uet1.university_id', $university->id)
                                     ->get();
 
+        // qas
+        $university['qas'] = Qa::where('status', Config::get('status.active'))
+                                ->where('rel', $university->id)
+                                ->get();
+
         return $university;
     }
 
@@ -164,6 +175,11 @@ class UniversityService extends Service{
                                             ->where('uet1.university_id', $university->id)
                                             ->get();
 
+        // qas
+        $university['qas'] = Qa::where('status', Config::get('status.active'))
+                                ->where('rel', $university->id)
+                                ->get();
+        
         return $university;
     }
 
@@ -305,6 +321,11 @@ class UniversityService extends Service{
             $this->universityEducationLevelService->store($id, $value);
         endforeach;
 
+        // qa remove
+        if (isset($university['qa'])){
+            unset($university['qa']);
+        }
+
         // UPDATE
         $university = University::where('id', $id)
                         ->where('status', '!=', Config::get('status.delete'))
@@ -348,6 +369,7 @@ class UniversityService extends Service{
             'education_levels' => 'array',
             'extra' => '',
             'status' => '',
+            'qa' => 'array',
             'current_user_id' => ''
         ]);
 

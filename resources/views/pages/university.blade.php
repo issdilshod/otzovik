@@ -406,60 +406,33 @@
 
     <!-- faq -->
     <div class="faq">
-      <div class="headline">
-        <div class="ico">
-          <svg class="icon">
-            <use xlink:href="#message-ico"></use>
-          </svg>
-        </div>
-        Часто задаваемые вопросы
-      </div>
-      <div class="accordion" id="acco">
-        <div class="card">
-          <div class="card-header" id="headingOne">
-            <h2 class="mb-0">
-              <button class="collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Какие документы нужны для поступления в вуз?
-              </button>
-            </h2>
-          </div>
-      
-          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#acco">
-            <div class="card-body">
-              <p>После того как прием окончен, комиссия будет подводить итог и решать, кому суждено учиться, а кому нет. Результаты вывесят на доске объявлений факультета, также их можно посмотреть и на основном сайте вуза.</p>
+        <div class="headline">
+            <div class="ico">
+            <svg class="icon">
+                <use xlink:href="#message-ico"></use>
+            </svg>
             </div>
-          </div>
+            Часто задаваемые вопросы
         </div>
-        <div class="card">
-          <div class="card-header" id="headingTwo">
-            <h2 class="mb-0">
-              <button class="collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Когда нужно подавать документы?
-              </button>
-            </h2>
-          </div>
-          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#acco">
-            <div class="card-body">
-              <p>После того как прием окончен, комиссия будет подводить итог и решать, кому суждено учиться, а кому нет. Р</p>
-            </div>
-          </div>
+        <div class="accordion" id="acco">         
+            @foreach ($university['qas'] as $key => $qa)
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h2 class="mb-0">
+                        <button class="collapsed" type="button" data-toggle="collapse" data-target="#collapse{{$key}}" aria-expanded="true" aria-controls="collapse{{$key}}">
+                            {{$qa->question}}
+                        </button>
+                        </h2>
+                    </div>
+                
+                    <div id="collapse{{$key}}" class="collapse <?php if ($key==0){ echo 'show'; } ?>" aria-labelledby="heading{{$key}}" data-parent="#acco">
+                        <div class="card-body">
+                        <p>{{$qa->answer}}</p>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
-        <div class="card">
-          <div class="card-header" id="headingThree">
-            <h2 class="mb-0">
-              <button class="collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                Как узнать, зачислены ли вы в вуз?
-              </button>
-            </h2>
-          </div>
-          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#acco">
-            <div class="card-body">
-              <p>После того как прием окончен, комиссия будет подводить итог и решать, кому суждено учиться, а кому нет. Результаты вывесят на доске объявлений факультета, также их можно посмотреть и на основном сайте вуза.</p>
-              <p>После того как прием окончен, комиссия будет подводить итог и решать, кому суждено учиться, а кому нет. Р</p>
-            </div>
-          </div>
-        </div>
-      </div>
 
     </div>
     <!-- / faq -->

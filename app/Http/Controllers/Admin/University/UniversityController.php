@@ -10,6 +10,7 @@ use App\Services\Admin\Setting\CityService;
 use App\Services\Admin\Setting\DirectionService;
 use App\Services\Admin\Setting\EducationLevelService;
 use App\Services\Admin\Setting\EducationTypeService;
+use App\Services\Admin\Setting\QaService;
 use App\Services\Admin\University\UniversityService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -24,6 +25,7 @@ class UniversityController extends Controller
     private $educationLevelService;
     private $citySevice;
     private $userService;
+    private $qaService;
 
     public function __construct()
     {
@@ -34,6 +36,7 @@ class UniversityController extends Controller
         $this->educationLevelService = new EducationLevelService();
         $this->citySevice = new CityService();
         $this->userService = new UserService();
+        $this->qaService = new QaService();
     }
     
     public function index(Request $request)
@@ -56,7 +59,17 @@ class UniversityController extends Controller
         // logo upload
         $validated['logo'] = $this->fileService->upload($request, $validated['name']);
 
-        if ($this->universityService->create($validated)){
+        if ($university = $this->universityService->create($validated)){
+
+            // qa
+            if (isset($validated['qa'])){
+                $this->qaService->removeByRel($university->id);
+                foreach($validated['qa'] as $key => $value):
+                    $value['rel'] = $university->id;
+                    $this->qaService->save($value);
+                endforeach;
+            }
+
             return redirect('admin/universities')->with('status', '200');
         }
 
@@ -92,6 +105,15 @@ class UniversityController extends Controller
 
         if ($this->universityService->update($validated, $id))
         {
+            // qa
+            if (isset($validated['qa'])){
+                $this->qaService->removeByRel($id);
+                foreach($validated['qa'] as $key => $value):
+                    $value['rel'] = $id;
+                    $this->qaService->save($value);
+                endforeach;
+            }
+
             return redirect('admin/universities')->with('status', '200'); 
         }
 
