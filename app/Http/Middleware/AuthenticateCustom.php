@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class AuthenticateCustom
 {
@@ -37,12 +38,12 @@ class AuthenticateCustom
                             ->orderBy('uat.updated_at', 'DESC')
                             ->first();
                 if ($user==null){
-                    return redirect('admin/')->with('msg', 'not authenticated')->withCookie(Cookie::forget('token'));
+                    return redirect('admin/')->with('status', '401')->withCookie(Cookie::forget('token'));
                 }
                 $request->merge(['current_user_id' => $user->id]);
-                $request->session()->put('user_id', $user->id);
+                Session::push('user_id', $user->id);
             }else{
-                return redirect('admin/')->with('msg', 'not authenticated');
+                return redirect('admin/')->with('status', '401');
             }
         }
         
