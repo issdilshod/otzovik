@@ -1,6 +1,5 @@
 <div class="container">
     <div class="sending">
-      <form>
         <div class="row">
           <div class="col-lg-6">
             <div class="headline">
@@ -18,7 +17,7 @@
               <div class="sending-group">
                     <form id="footer-submit">
                         <input id="footer-email" type="email" placeholder="Введите почту" class="form-control">
-                        <button id="footer-submit" class="send-btn">
+                        <button id="footer-subscribe" class="send-btn">
                             <svg class="icon">
                                 <use xlink:href="#letter-ico"></use>
                             </svg>
@@ -29,7 +28,6 @@
             </div>
           </div>
         </div>
-      </form>
     </div>
     <div class="footer-top">
       <div class="f-col">
