@@ -96,6 +96,9 @@
     "university_education_level": "Уровень образования",
     "university_education_level_select": "Выбор уровень образования",
     "university_extra": "Дополнительно",
+    "university_qa": "Часто задаваемые вопросы",
+    "university_question": "Вопрос",
+    "university_answer": "Ответ",
 
     "directions_title": "Направлении",
     "directions_list_title": "Список направлений",

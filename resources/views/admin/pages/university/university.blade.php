@@ -323,7 +323,14 @@
                                             </div>
 
                                             <div class="col-md-12">
-                                                
+                                                <div class="form-group qa_result">
+                                                    <label for="q_a">{{__('university_qa')}}</label>
+                                                </div>
+                                                <div class="form-group text-right">
+                                                    <span class="btn btn-primary qa_add">
+                                                        <i class="fa fa-plus"></i>
+                                                    </span>
+                                                </div>
                                             </div>
 
                                         </div>
@@ -348,6 +355,11 @@
 <!-- Select2 -->
 <script src="{{ asset('assets/admin/plugins/select2/js/select2.full.min.js') }}"></script>
 <script>
+// qa uniq number
+var qaNumber = 0;
+var qPlaceholder = "{{__('university_question')}}";
+var aPlaceholder = "{{__('university_answer')}}";
+    
 $(function () {
     // Directions
     $('.direction-select').select2();
@@ -360,7 +372,41 @@ $(function () {
 
     // city
     $('.city-select').select2();
+
+});
+
+$(document).on('click', '.qa_add', function (){
+    var question = '<input name="question['+qaNumber+'][question]" class="form-control" placeholder="'+qPlaceholder+'" />';
+    var answer = '<textarea name="question['+qaNumber+'][answer]" class="form-control mt-1" placeholder="'+aPlaceholder+'" style="height:100px"></textarea>';
+    var qa_remove = '<span class="btn btn-sm btn-danger qa_remove" data-number="'+qaNumber+'"><i class="fa fa-trash"></i></span>';
+    $('.qa_result').append('<div class="qa_list" id="qa'+qaNumber+'">'+question+answer+qa_remove+'</div>');
+
+    qaNumber++;
+});
+
+$(document).on('click', '.qa_remove', function(){
+    var number = $(this).data('number');
+    $('#qa'+number).remove();
 });
 </script>
+<style>
+    .qa_list{
+        position:relative;
+        padding: 5px;
+        border: 1px solid #efefef;
+        border-radius: 5px;
+        margin-bottom: 5px;
+    }
+    .qa_remove{
+        position:absolute;
+        top:9px;
+        right:9px;
+        opacity: 0;
+        transition: 0.4s;
+    }
+    .qa_list:hover .qa_remove{
+        opacity: 1;
+    }
+</style>
 <!-- ./Select2 -->
 @stop
