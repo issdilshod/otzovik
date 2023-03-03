@@ -325,6 +325,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group qa_result">
                                                     <label for="q_a">{{__('university_qa')}}</label>
+                                                    <?php if (isset($university)){ ?>
                                                     <?php foreach($university['qas'] as $key => $qa): ?>
                                                         <div class="qa_list" id="qa<?=$key?>">
                                                             <input class="form-control" placeholder="<?=__('university_question')?>" name="qa[<?=$key?>][question]" value="<?=$qa['question']?>" />
@@ -332,6 +333,7 @@
                                                             <span class="btn btn-sm btn-danger qa_remove" data-number="<?=$key?>"><i class="fa fa-trash"></i></span>
                                                         </div>
                                                     <?php endforeach; ?>
+                                                    <?php } ?>
                                                 </div>
                                                 <div class="form-group text-right">
                                                     <span class="btn btn-primary qa_add">
@@ -363,7 +365,7 @@
 <script src="{{ asset('assets/admin/plugins/select2/js/select2.full.min.js') }}"></script>
 <script>
 // qa uniq number
-var qaNumber = parseInt("{{count($university['qas'])}}");
+var qaNumber = parseInt("<?php if(isset($university)){ echo count($university['qas']); }?>");
 var qPlaceholder = "{{__('university_question')}}";
 var aPlaceholder = "{{__('university_answer')}}";
     
