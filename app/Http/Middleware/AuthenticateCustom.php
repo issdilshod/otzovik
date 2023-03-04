@@ -42,6 +42,7 @@ class AuthenticateCustom
                 }
                 $request->merge(['current_user_id' => $user->id]);
                 Session::push('user_id', $user->id);
+                Session::push('token', $tmpToken);
             }else{
                 return redirect('admin/')->with('status', '401');
             }

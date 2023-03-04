@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\Blog\CommentController;
 use App\Http\Controllers\Admin\Review\ReviewController;
 use App\Http\Controllers\Admin\Setting\CityController;
+use App\Http\Controllers\Admin\Setting\QaController;
 use App\Http\Controllers\Admin\Setting\SettingController;
 use App\Http\Controllers\Admin\Subscribe\SubscribeController;
 use App\Http\Controllers\Admin\University\UniversityController;
@@ -17,4 +18,8 @@ Route::post('university', [UniversityController::class, 'api_store']);
 
 Route::middleware(['auth.bearer'])->group(function (){
     Route::put('setting/{key}', [SettingController::class, 'api_update']);
+
+    // QAS
+    Route::put('qa/{id}', [QaController::class, 'api_update']);
+    Route::post('qa', [QaController::class, 'api_store']);
 });

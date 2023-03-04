@@ -11,6 +11,7 @@ use App\Services\Admin\Setting\CityService;
 use App\Services\Admin\Setting\DirectionService;
 use App\Services\Admin\Setting\EducationLevelService;
 use App\Services\Admin\Setting\EducationTypeService;
+use App\Services\Admin\Setting\QaService;
 use App\Services\Admin\Setting\SettingService;
 use App\Services\Admin\University\UniversityService;
 use App\Services\MainService;
@@ -31,6 +32,7 @@ class MainController extends Controller
     private $commentService;
     private $cityService;
     private $settingService;
+    private $qaService;
 
     public function __construct()
     {
@@ -45,6 +47,7 @@ class MainController extends Controller
         $this->commentService = new CommentService();
         $this->cityService = new CityService();
         $this->settingService = new SettingService();
+        $this->qaService = new QaService();
     }
 
     // e 404
@@ -434,6 +437,8 @@ class MainController extends Controller
         $data['cities'] = $this->cityService->findAll(); 
 
         $data['last_reviews'] = $this->reviewService->last();
+
+        $data['qas'] = $this->qaService->findByRel();
 
         // settings
         $data['template'] = $this->settingService->findByPage(Config::get('pages.faq'));

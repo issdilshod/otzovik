@@ -32,52 +32,168 @@
 
     <!-- faq -->
     <div class="faq">   
-      <div class="accordion" id="acco">
-        <div class="card">
-          <div class="card-header" id="headingOne">
-            <h2 class="mb-0">
-              <button class="collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Какие документы нужны для поступления в вуз?
-              </button>
-            </h2>
-          </div>
-      
-          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#acco">
-            <div class="card-body">
-              <p>После того как прием окончен, комиссия будет подводить итог и решать, кому суждено учиться, а кому нет. Результаты вывесят на доске объявлений факультета, также их можно посмотреть и на основном сайте вуза.</p>
-            </div>
-          </div>
+        <div class="accordion" id="acco">
+
+            @foreach ($qas as $key => $qa)
+            <div class="card" data-id="{{$qa->id}}">
+                <div class="card-header" id="heading{{$key}}">
+                    <h2 class="mb-0">
+                    <button class="collapsed" type="button" data-toggle="collapse" data-target="#collapse{{$key}}" aria-expanded="true" aria-controls="collapse{{$key}}">{{$qa->question}}</button>
+                    </h2>
+                </div>
+            
+                <div id="collapse{{$key}}" class="collapse <?php if ($key==0){ echo 'show'; } ?>" aria-labelledby="heading{{$key}}" data-parent="#acco">
+                    <div class="card-body">
+                    <p>{{$qa->answer}}</p>
+                    </div>
+                </div>
+            </div>  
+            @endforeach
+
         </div>
-        <div class="card">
-          <div class="card-header" id="headingTwo">
-            <h2 class="mb-0">
-              <button class="collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Когда нужно подавать документы?
-              </button>
-            </h2>
-          </div>
-          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#acco">
-            <div class="card-body">
-              <p>После того как прием окончен, комиссия будет подводить итог и решать, кому суждено учиться, а кому нет. Р</p>
-            </div>
-          </div>
+
+        @if (isset($settings['mode']['mode']) && $settings['mode']['mode']==\Illuminate\Support\Facades\Config::get('app._mode.edit'))
+        <div class="plus-card">
+            Добавить блок
         </div>
-        <div class="card">
-          <div class="card-header" id="headingThree">
-            <h2 class="mb-0">
-              <button class="collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                Как узнать, зачислены ли вы в вуз?
-              </button>
-            </h2>
-          </div>
-          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#acco">
-            <div class="card-body">
-              <p>После того как прием окончен, комиссия будет подводить итог и решать, кому суждено учиться, а кому нет. Результаты вывесят на доске объявлений факультета, также их можно посмотреть и на основном сайте вуза.</p>
-              <p>После того как прием окончен, комиссия будет подводить итог и решать, кому суждено учиться, а кому нет. Р</p>
+        <style>
+            .plus-card{
+                padding: 20px;
+                text-align: center;
+                border: 1px dashed #e5ecfb;
+                border-radius: 10px;
+                cursor: pointer;
+                transition: .4s;
+            }
+            .plus-card:hover{
+                background-color: #e5ecfb5e;
+            }
+        </style>
+        <script>
+            var elementsCount = parseInt('{{count($qas)}}');
+
+            // add new
+            $(document).on('click', '.plus-card', function(){
+                $('#_id').val('');
+                $('#_question').val('');
+                $('#_answer').val('');
+
+                $('#_modal2').modal('show');
+            });
+
+            // edit exists
+            $(document).on('click', '.card', function(){
+                var id = $(this).data('id');
+                var question = $(this).find('button').html();
+                var answer = $(this).find('p').html();
+
+                $('#_id').val(id);
+                $('#_question').val(question);
+                $('#_answer').val(answer);
+
+                $('#_modal2').modal('show');
+            });
+
+            $(document).on('submit', '._setting_form1', function (e){
+                e.preventDefault();
+                
+                var token = $('#_token').val();
+                var user_id = $('#_user_id').val();
+                var question = $('#_question').val();
+                var answer = $('#_answer').val();
+                var id = '';
+                if ($('#_id').val()){
+                    id=$('#_id').val();
+                }
+
+                if (id!=''){ // edit
+                    $.ajax({
+                        type: 'put',
+                        url: '<?=url('api/qa')?>/'+id,
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('Authorization', 'Bearer '+ token);
+                        },
+                        data: {
+                            user_id: user_id,
+                            question: question,
+                            answer: answer
+                        },
+                        success: function(res){
+                            $('#_modal2').modal('hide');
+
+                            $('.card[data-id='+id+']').find('button').html(question);
+                            $('.card[data-id='+id+']').find('p').html(answer);
+
+                            $('#_id').val('');
+                            $('#_question').val('');
+                            $('#_answer').val('');
+                        }
+                    });
+                }else{ // add
+                    $.ajax({
+                        type: 'post',
+                        url: '<?=url('api/qa')?>',
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('Authorization', 'Bearer '+ token);
+                        },
+                        data: {
+                            user_id: user_id,
+                            question: question,
+                            answer: answer
+                        },
+                        success: function(res){
+                            $('#_modal2').modal('hide');
+
+                            $('#acco').append('<div class="card" data-id="'+res.id+'"><div class="card-header" id="heading'+elementsCount+'"><h2 class="mb-0"><button class="collapsed" type="button" data-toggle="collapse" data-target="#collapse'+elementsCount+'" aria-expanded="true" aria-controls="collapse'+elementsCount+'">'+question+'</button></h2></div><div id="collapse'+elementsCount+'" class="collapse" aria-labelledby="heading'+elementsCount+'" data-parent="#acco"><div class="card-body"><p>'+answer+'</p></div></div></div>');
+
+                            elementsCount++;
+
+                            $('#_id').val('');
+                            $('#_question').val('');
+                            $('#_answer').val('');
+                        }
+                    });
+                }
+
+            });
+
+            function submitFaq(){
+                $('#_submit1').click();
+            }
+        </script>
+
+        <div class="modal fade" id="_modal2">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{__('global_edit')}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="_setting_form1">
+                        <input type="hidden" id="_id" />
+                        <div class="form-group">
+                            <label for="_question">{{__('university_question')}}</label>
+                            <input id="_question" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="_answer">{{__('university_answer')}}</label>
+                            <textarea id="_answer" class="form-control" style="height: 200px"></textarea> 
+                        </div>
+                        <input type="submit" id="_submit1" class="d-none" />
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{__('global_close_button')}}</button>
+                    <button type="button" class="btn btn-primary" onclick="submitFaq()">{{__('global_save_button')}}</button>
+                </div>
+                </div>
+                <!-- /.modal-content -->
             </div>
-          </div>
+            <!-- /.modal-dialog -->
         </div>
-      </div>
+        @endif
     </div>
     <!-- / faq -->
 
