@@ -32,7 +32,7 @@
           <p>Поделиться в соц сетях</p>
           <ul class="content-socially">
             <li>
-              <a href="#">
+              <a href="https://www.facebook.com/sharer/sharer.php?u={{url()->full()}}" target="_blank">
                 <span class="ico fb">
                   <svg class="icon">
                     <use xlink:href="#fb-ico"></use>
@@ -41,7 +41,7 @@
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="https://twitter.com/intent/tweet?url={{url()->full()}}&text={{$title}}" target="_blank">
                 <span class="ico twitter">
                   <svg class="icon">
                     <use xlink:href="#twitter-ico"></use>
@@ -50,7 +50,7 @@
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="https://t.me/share/url?url={{url()->full()}}&text={{$title}}" target="_blank">
                 <span class="ico telegram">
                   <svg class="icon">
                     <use xlink:href="#telegram-ico"></use>
@@ -59,7 +59,7 @@
               </a>
             </li>                    
             <li>
-              <a href="#">
+              <a href="viber://forward?text={{$title}} {{url()->full()}}" target="_blank">
                 <span class="ico viber">
                   <svg class="icon">
                     <use xlink:href="#viber-ico"></use>
@@ -68,7 +68,7 @@
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="https://vk.com/share.php?url={{url()->full()}}&title={{$title}}" target="_blank">
                 <span class="ico vk">
                   <svg class="icon">
                     <use xlink:href="#vk-ico"></use>
