@@ -133,8 +133,8 @@
     </div>
 </div>
 
+<!-- Subscribe -->
 <script>
-
     function subscribe(emailSelector)
     {
         var page = '<?=url()->current()?>';
@@ -170,7 +170,22 @@
         e.preventDefault();
         subscribe('#articles-email');
     })
+</script>
 
+<!-- text show more/less -->
+<script>
+    $(document).on('click', '.last-info-button', function(e){
+        e.preventDefault();
+        if (!$(this).parent().find('.big-dots').hasClass('d-none')){ // showing more
+            $(this).parent().find('.big-dots').addClass('d-none');
+            $(this).parent().find('.extra-text').removeClass('d-none');
+            $(this).find('.last-info-button-text').text('Меньще');
+        }else{ // showing less
+            $(this).parent().find('.big-dots').removeClass('d-none');
+            $(this).parent().find('.extra-text').addClass('d-none');
+            $(this).find('.last-info-button-text').text('Читать дальше');
+        }
+    });
 </script>
 
 @if (isset($settings['mode']['mode']) && $settings['mode']['mode']==\Illuminate\Support\Facades\Config::get('app._mode.edit'))

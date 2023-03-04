@@ -167,15 +167,25 @@
         <!-- text -->
         <div class="text">
             <h3 class="_change_able" data-key="search_last_info_h3" data-value="{{$template['search_last_info_h3']}}">{{$template['search_last_info_h3']}}</h3>
-            <p class="_change_able" data-key="search_last_info_p" data-value="{{$template['search_last_info_p']}}">{{$template['search_last_info_p']}}</p>
-            <a href="#" class="btn has-ico bordered-btn more-btn">
-                Читать дальше
-                <span class="ico">
-                <svg class="icon">
-                    <use xlink:href="#arrow-ico"></use>
-                </svg>
-                </span>
-            </a>
+            <p class="_change_able" data-key="search_last_info_p" data-value="{{$template['search_last_info_p']}}">
+                <?php 
+                    if (strlen($template['search_last_info_p']>500)){ 
+                        echo substr($template['search_last_info_p'], 0, 500).'<span class="big-dots">...</span><span class="extra-text d-none">'.substr($template['search_last_info_p'], 500).'<span>';
+                    }else{
+                        echo $template['search_last_info_p'];
+                    } 
+                ?>
+            </p>
+            <?php if (strlen($template['search_last_info_p']>500)){ ?>
+                <a href="#" class="btn has-ico bordered-btn more-btn last-info-button">
+                    <span class="last-info-button-text">Читать дальше</span>
+                    <span class="ico">
+                        <svg class="icon">
+                            <use xlink:href="#arrow-ico"></use>
+                        </svg>
+                    </span>
+                </a>
+            <?php } ?>
         </div>
         <!-- / text -->
 

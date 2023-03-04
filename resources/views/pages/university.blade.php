@@ -74,43 +74,36 @@
 
     <!-- text -->
     <div class="text">
-      <h3>Об университете</h3>
-      <p id="university-description">{{$university->description}}</p>
-      @if (strlen($university->description)>500)
-      <a href="#" class="btn light-btn" id="show-more-toggle">Узнать больше</a>
-      @endif
-    </div>  
-    @if (strlen($university->description)>500) 
+        <h3>Об университете</h3>
+        <p id="university-description">
+            <?php 
+                if (strlen($university->description>500)){ 
+                    echo substr($university->description, 0, 500).'<span class="big-dots">...</span><span class="extra-text d-none">'.substr($university->description, 500).'<span>';
+                }else{
+                    echo $university->description;
+                } 
+            ?>
+        </p>
+        @if (strlen($university->description)>500)
+        <a href="#" class="btn light-btn show-more-university" id="show-more-toggle">Узнать больше</a>
+        @endif
+    </div> 
+
     <script>
-        function b64_to_utf8(str) {
-            return decodeURIComponent(escape(window.atob(str)));
-        }
-
-        var description = '<?=base64_encode($university->description)?>';
-        var isMore = false;
-
-        $(document).ready(function(){
-            $('#university-description').html(b64_to_utf8(description).substring(0, 500) + '...');
-        });
-
-        $(document).on('click', '#show-more-toggle', function (e){
+        $(document).on('click', '.show-more-university', function(e){
             e.preventDefault();
-
-            var more = 'Узнать больше';
-            var less = 'Меньще';
-
-            if (isMore){
-                $('#university-description').html(b64_to_utf8(description).substring(0, 500) + '...');
-                isMore = false;
-                $(this).html(more);
-            }else{
-                $('#university-description').html(b64_to_utf8(description));
-                isMore = true;
-                $(this).html(less);
+            if (!$(this).parent().find('.big-dots').hasClass('d-none')){ // showing more
+                $(this).parent().find('.big-dots').addClass('d-none');
+                $(this).parent().find('.extra-text').removeClass('d-none');
+                $('.show-more-university').text('Меньще');
+            }else{ // showing less
+                $(this).parent().find('.big-dots').removeClass('d-none');
+                $(this).parent().find('.extra-text').addClass('d-none');
+                $('.show-more-university').text('Читать дальше');
             }
         });
     </script>
-    @endif
+
     <!-- / text -->
 
     <!-- descript-card -->
@@ -440,15 +433,25 @@
     <!-- text -->
     <div class="text">
         <h3 class="_change_able" data-key="university_last_info_h3" data-value="{{$template['university_last_info_h3']}}">{{$template['university_last_info_h3']}}</h3>
-        <p class="_change_able" data-key="university_last_info_p" data-value="{{$template['university_last_info_p']}}">{{$template['university_last_info_p']}}</p>
-        <a href="#" class="btn has-ico bordered-btn more-btn">
-            Читать дальше
-            <span class="ico">
-            <svg class="icon">
-                <use xlink:href="#arrow-ico"></use>
-            </svg>
-            </span>
-        </a>
+        <p class="_change_able" data-key="university_last_info_p" data-value="{{$template['university_last_info_p']}}">
+            <?php 
+                if (strlen($template['university_last_info_p']>500)){ 
+                    echo substr($template['university_last_info_p'], 0, 500).'<span class="big-dots">...</span><span class="extra-text d-none">'.substr($template['university_last_info_p'], 500).'<span>';
+                }else{
+                    echo $template['university_last_info_p'];
+                } 
+            ?>
+        </p>
+        <?php if (strlen($template['university_last_info_p']>500)){ ?>
+            <a href="#" class="btn has-ico bordered-btn more-btn last-info-button">
+                <span class="last-info-button-text">Читать дальше</span>
+                <span class="ico">
+                    <svg class="icon">
+                        <use xlink:href="#arrow-ico"></use>
+                    </svg>
+                </span>
+            </a>
+        <?php } ?>
     </div>
     <!-- / text --> 
 
