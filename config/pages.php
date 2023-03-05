@@ -3,6 +3,7 @@
 return [
     'index' => 'index',
     'search' => 'search',
+    'search2' => 'search2',
     
     'universities' => 'universities',
     'university' => 'university',

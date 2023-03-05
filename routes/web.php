@@ -23,6 +23,8 @@ Route::get('/', [MainController::class, 'index']);
 Route::get('/poisk', [MainController::class, 'search']);
 Route::get('/poisk/{slug1?}/{slug2?}/{slug3?}/{slug4?}/{slug5?}', [MainController::class, 'search']);
 
+Route::get('/poisk2', [MainController::class, 'search2']);
+
 Route::get('/universitety', [MainController::class, 'universities']);
 Route::get('/universitety/{slug1?}/{slug2?}/{slug3?}/{slug4?}', [MainController::class, 'universities']);
 Route::get('/universitet/{university_slug?}', [MainController::class, 'university']);
@@ -125,6 +127,7 @@ Route::middleware(['auth.custom'])->group(function (){
     // setting
     Route::get('/admin/settings/templates/index', [SettingController::class, 'index']);
     Route::get('/admin/settings/templates/search', [SettingController::class, 'search']);
+    Route::get('/admin/settings/templates/search2', [SettingController::class, 'search2']);
     Route::get('/admin/settings/templates/universities', [SettingController::class, 'universities']);
     Route::get('/admin/settings/templates/university', [SettingController::class, 'university']);
     Route::get('/admin/settings/templates/reviews', [SettingController::class, 'reviews']);

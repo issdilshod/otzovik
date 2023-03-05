@@ -48,6 +48,15 @@ class SettingController extends Controller
         ]);
     }
 
+    public function search2(Request $request)
+    {
+        // permission
+
+        return view('admin.pages.setting.setting.settings', [
+            'src' => url('/poisk2').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0]
+        ]);
+    }
+
     public function universities(Request $request)
     {
         // permission

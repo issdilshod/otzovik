@@ -68,6 +68,22 @@ $(document).ready(function(){
     $('#value').text(value); 
   });
 
+  $('.answered').click(function(e){
+    e.preventDefault();
+    $(this).parents('.review-card').toggleClass('form-open');
+    $(this).text(function(i, text){
+          return text === "Ответить" ? "Скрыть" : "Ответить";
+    });
+  });
+
+  $('.collapse-btn').click(function(e){
+    e.preventDefault();
+    $(this).parents('.text').toggleClass('text-expand');
+    $('.collapse-btn .txt').text(function(i, text){
+          return text === "Читать дальше" ? "Скрыть" : "Читать дальше";
+    });
+  })
+
 
 });
 

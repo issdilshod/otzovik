@@ -141,6 +141,34 @@ class MainController extends Controller
         return view('pages.serach', $data);
     }
 
+    // page search
+    public function search2(Request $request)
+    {
+        // detect searched
+        $name = '';
+        if (isset($request->q)){
+            $name = $request->q;
+        }
+
+        $data['title'] = __('search_page_title');
+
+        $data['cities'] = $this->cityService->findAll(); 
+
+        // search result universities
+        $data['list'] = $this->universityService->findAll($name);
+
+        $data['popular_universities'] = $this->universityService->popular();
+        $data['popular_reviews'] = $this->reviewService->popular();
+        $data['last_reviews'] = $this->reviewService->last();
+
+        // settings
+        $data['template'] = $this->settingService->findByPage(Config::get('pages.search2'));
+        $data['settings']['current_page'] = Config::get('pages.search2');
+        $data['settings']['mode'] = $this->mainService->_mode($request);
+
+        return view('pages.serach2', $data);
+    }
+
     // page universities
     public function universities(Request $request, $slug1 = '', $slug2 = '', $slug3 = '', $slug4 = '')
     {

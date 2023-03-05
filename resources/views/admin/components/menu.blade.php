@@ -127,6 +127,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{ url('/admin/settings/templates/search2') }}" class="nav-link {{ (request()->is('admin/settings/templates/search2')) ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('menu_templates_search_title')}}2</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ url('/admin/settings/templates/universities') }}" class="nav-link {{ (request()->is('admin/settings/templates/universities')) ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>{{__('menu_templates_universities_title')}}</p>

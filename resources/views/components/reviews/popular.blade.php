@@ -32,16 +32,12 @@
                     <span>{{$review->star}}</span>
                 </div>
                 <p>
-                    <a href="{{url('/otzyv/'.$review->number)}}">
-                        {{\Illuminate\Support\Str::limit($review->text, 179, '...')}}
-                    </a>
+                    <a href="{{url('/otzyv/'.$review->number)}}">{{\Illuminate\Support\Str::limit($review->text, 179, '...')}}</a>
                 </p>
                 <div class="review-subtitle">Отзыв про:</div>
                 <p>
                     <strong>
-                        <a href="{{url('/universitet/'.$review->university_slug)}}">
-                            {{$review->university_name}}
-                        </a>
+                        <a href="{{url('/universitet/'.$review->university_slug)}}">{{$review->university_name}}</a>
                     </strong>
                 </p>
                 </div>

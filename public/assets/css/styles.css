@@ -3146,6 +3146,62 @@ hr {
   color: #212121;
 }
 
+.form .form-group.size05 {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 100%;
+          flex: 0 0 100%;
+  max-width: 100%;
+  position: relative;
+}
+.form .form-group.size05 input {
+  position: relative;
+  z-index: 1;
+  padding-right: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.form .form-group.size05 .search-btn {
+  position: absolute;
+  z-index: 2;
+  top: 2px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background: #5280E2;
+  border-radius: 10px;
+  padding: 0;
+  border: 0;
+}
+.form .form-group.size05 .search-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: #fff;
+  margin-top: 2px;
+}
+
+.review-card p {
+  max-width: 100% !important;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow: hidden;
+}
+
+.text-collapse {
+  overflow: hidden;
+  height: 100px;
+  margin-bottom: 30px;
+}
+
+.text-expand .text-collapse {
+  height: auto;
+}
+.text-expand .collapse-btn .ico {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
 @media (max-width: 1329px) {
   .header .logo {
     max-width: 220px;
@@ -3349,6 +3405,12 @@ hr {
   .rateit-wrapper {
     width: 100%;
     padding: 5px 0 20px 0;
+  }
+  .form .form-group.size05 {
+    display: block;
+  }
+  .form .form-group.size05:before {
+    display: none;
   }
 }
 @media (max-width: 991px) {

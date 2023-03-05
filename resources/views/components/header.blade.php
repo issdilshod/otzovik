@@ -65,14 +65,14 @@
         <li><a href="{{ url('/uchebnim-zavedeniyam') }}">Учебным заведениям</a></li>
       </ul>
       <div class="search">
-        <form>
+        <form id="poisk2" action="{{url('/poisk2')}}">
           <div class="search-ico">
             <svg class="icon">
               <use xlink:href="#search-ico"></use>
             </svg>
           </div>
           <div class="form-group">
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" name="q" value="<?php if (isset($_GET['q'])){echo $_GET['q'];}?>">
             <div class="search-btn">
               <svg class="icon">
                 <use xlink:href="#search-ico"></use>
@@ -81,6 +81,11 @@
             <a href="#" class="close"></a>
           </div>
         </form>
+        <script>
+            $(document).on('click', '.search-btn', function(){
+                $('#poisk2').submit();
+            });
+        </script>
       </div>
       <div class="nav-ico"></div>
     </div>

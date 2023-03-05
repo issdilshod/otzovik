@@ -33,7 +33,7 @@ class UniversityService extends Service{
         return $count;
     }
     
-    public function findAll($name = '', $address = '', $direction = '', $educationType = '')
+    public function findAll($name = '')
     {
         $universities = University::withCount('reviews')
                             ->orderBy('name')
