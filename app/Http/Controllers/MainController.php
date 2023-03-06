@@ -439,6 +439,8 @@ class MainController extends Controller
         if (!$data['current_article']){
             return abort(404);
         }
+
+        $data['title'] .= ' ' . $data['current_article']->title;
         
         $data['current_article']['comments'] = $this->commentService->findByArticle($data['current_article']->id);
 
