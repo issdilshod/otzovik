@@ -109,6 +109,9 @@ class UniversityService extends Service{
                                     $q->orderBy('universities.updated_at');
                                 }
                             })
+                            ->when($filter=='', function($q) { // default filter by review count
+                                $q->orderBy('reviews_count', 'desc');
+                            })
                             ->paginate(Config::get('pagination.per_page'), ['universities.*'], '', $page);
         return $universities;
     }
