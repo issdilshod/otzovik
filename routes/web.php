@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\Route;
  */
 Route::get('/', [MainController::class, 'index']);
 
-Route::get('/poisk', [MainController::class, 'search']);
 Route::get('/poisk/{slug1?}/{slug2?}/{slug3?}/{slug4?}/{slug5?}', [MainController::class, 'search']);
 
 Route::get('/poisk2', [MainController::class, 'search2']);

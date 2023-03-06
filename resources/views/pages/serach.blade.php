@@ -26,7 +26,7 @@
             <div class="form-group size01">
                 <label for="place">Регион</label>
                 <div class="input-wrapper">
-                <input type="text" placeholder="" id="place" data-slug="">
+                <input type="text" placeholder="Россия" id="place" data-slug="russia">
                 <div class="input-hint" style="display:none">
                     <ul></ul>
                 </div>
@@ -249,7 +249,7 @@
         var level = $('#jcf-level').val();
         var type = $('#jcf-type').val();
 
-        window.location.href = globUrl + '/' + city + '/' + direction + '/' + level + '/' + type;
+        window.location.href = globUrl+'/'+(city!=''?city:'russia')+'/'+direction+'?level='+level+'&type='+type;
     })
 </script>
 
