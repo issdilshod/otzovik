@@ -173,28 +173,33 @@ class MainController extends Controller
     public function universities(Request $request, $slug1 = '', $slug2 = '', $slug3 = '', $slug4 = '')
     {
         // detect slugs
-        $city = ''; $direction = ''; $page = ''; $filter = '';
+        $city = ''; $direction = ''; $page = ''; $filter = (isset($request->filter)?$request->filter:'');
+
         $data['current_direction'] = '';
+        $data['current_filter'] = $filter;
+
         // slug1
         if (SlugService::isCity($slug1)){ $city = SlugService::isCity($slug1); }
         if (SlugService::isDirection($slug1)){ $data['current_direction'] = $slug1; $direction = SlugService::isDirection($slug1); }
         if (SlugService::isPage($slug1)){ $page = SlugService::isPage($slug1); }
-        if (SlugService::isUniversityFilter($slug1)){ $filter = $slug1; }
         // slug2
         if (SlugService::isCity($slug2)){ $city = SlugService::isCity($slug2); }
         if (SlugService::isDirection($slug2)){ $data['current_direction'] = $slug2; $direction = SlugService::isDirection($slug2); }
         if (SlugService::isPage($slug2)){ $page = SlugService::isPage($slug2); }
-        if (SlugService::isUniversityFilter($slug2)){ $filter = $slug2; }
         // slug3
         if (SlugService::isCity($slug3)){ $city = SlugService::isCity($slug3); }
         if (SlugService::isDirection($slug3)){ $data['current_direction'] = $slug3; $direction = SlugService::isDirection($slug3); }
         if (SlugService::isPage($slug3)){ $page = SlugService::isPage($slug3); }
-        if (SlugService::isUniversityFilter($slug3)){ $filter = $slug3; }
         // slug4
         if (SlugService::isCity($slug4)){ $city = SlugService::isCity($slug4); }
         if (SlugService::isDirection($slug4)){  $data['current_direction'] = $slug4; $direction = SlugService::isDirection($slug4); }
         if (SlugService::isPage($slug4)){ $page = SlugService::isPage($slug4); }
-        if (SlugService::isUniversityFilter($slug4)){ $filter = $slug4; }
+
+        // if city equals russia then all cities
+        if ($city=='russia'){ $city = ''; }
+
+        // if direction equals vse then all directions
+        if ($direction=='vse'){ $direction = ''; }
 
         $data['title'] = __('universities_page_title');
 

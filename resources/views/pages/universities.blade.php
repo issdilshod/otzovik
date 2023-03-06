@@ -51,9 +51,9 @@
           <span class="name"></span>
         </a>
         <select class="qty-sort" data-jcf='{"wrapNative": false, "wrapNativeOnMobile": false, "fakeDropInBody": false, "useCustomScroll": false}'>
-            <option value="review">По количеству отзывов</option>
-            <option value="rate">По рейтингу</option>
-            <option value="new">По новинкам</option>
+            <option value="po_kolicestvu_otzyvov" <?php if ($current_filter=='po_kolicestvu_otzyvov') { echo 'selected';} ?>>По количеству отзывов</option>
+            <option value="po_reytingu" <?php if ($current_filter=='po_reytingu') { echo 'selected';} ?>>По рейтингу</option>
+            <option value="po_novinkam" <?php if ($current_filter=='po_novinkam') { echo 'selected';} ?>>По новинкам</option>
         </select>
       </div>
     </div>
@@ -182,63 +182,20 @@
 @include('components.svgs.welcome')
 
 <script>
-    var currentUrl = '{{url()->full()}}';
-    var globUrl = '{{url("/universitety")}}';
-
-    // on ready document
-    $(document).ready(function(){
-        // if new open then remove filters
-        if (currentUrl==globUrl){
-            localStorage.removeItem('_qty_sort');
-            localStorage.removeItem('_tags_li_a');
-        }
-    })
-
     // on change filter
     $(document).on('change', '.qty-sort', function(e) {
-        window.location.href = currentUrl + '/' + $(this).val();
-
-        localStorage.setItem('_qty_sort', $(this).val());
-
-        generate();
+        var foundIndex = window.location.href.indexOf('?');
+        var link = (foundIndex>-1?window.location.href.substr(0, foundIndex):window.location.href);
+        window.location.href = link+'?filter='+e.target.value;
     });
 
     // on location change
     $(document).on('click', '.choose-location', function(e) {
-        generate();
-    });
-
-    // on directions change
-    $(document).on('click', '.tags>li>a', function (e){
-
-        e.preventDefault();
-
-        var slug = $(this).data('slug');
-
-        localStorage.setItem('_tags_li_a', slug);
-
-        generate();
-    });
-
-    // function to generate url
-    function generate(){
-        var sort = localStorage.getItem('_qty_sort');
-        var location = JSON.parse(localStorage.getItem('_location'));
-        var tags = localStorage.getItem('_tags_li_a');
-
-        var link = globUrl;
-        if (location){
-            link += '/' + location.slug;
-        }
-        if (tags){
-            link += '/' + tags;
-        }
-        if (sort){
-            link += '/' + sort;
-        }
-
+        var link = "{{url('/universitety')}}";
+        var tmpCookie = `; ${document.cookie}`.split(`; _location=`);
+        if (tmpCookie.length === 2) link += '/' + (tmpCookie[1].indexOf(';')>-1?tmpCookie[1].substr(0, tmpCookie[1].indexOf(';')):tmpCookie[1]);
         window.location.href = link;
-    }
+    });
 </script>
 
 @stop

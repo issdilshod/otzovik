@@ -16,6 +16,10 @@
           </div>          
         </div>
         <ul class="city-list">
+            <li>
+                <?php $value = ['name'=> 'Россия', 'slug'=> 'russia', 'id'=> '']; ?>
+                <a class="choose-location" data-data="{{json_encode($value)}}">Россия</a>
+            </li>
             @foreach ($cities as $city)
                 <li>
                     <?php $value = ['name' => $city->name, 'slug' => $city->slug, 'id' => $city->id ]; ?>
@@ -33,22 +37,26 @@
     $(document).ready(function(){
         var storageLocation = localStorage.getItem('_location');
 
-        var currentCity = '';
+        var currentCity = '', citySlug = '';
 
         if (storageLocation){
             storageLocation = JSON.parse(storageLocation);
             currentCity = storageLocation['name'];
+            citySlug = storageLocation['slug'];
         }else{
-            // default Moscow
-            storageLocation = JSON.stringify('<?=json_encode(['name' => $cities[0]->name, 'slug' => $cities[0]->slug, 'id' => $cities[0]->id ])?>');
-
+            // default Russia
+            var defaultLocation = {name: 'Россия', slug: 'russia', id: ''};
+            storageLocation = JSON.stringify({name: 'Россия', slug: 'russia', id: ''});
             localStorage.setItem('_location', storageLocation);
-
-            currentCity = '<?=$cities[0]->name?>';
+            currentCity = defaultLocation.name;
+            citySlug = defaultLocation.slug;
         }
 
         // set location to template
         $('.location .name').html(currentCity);
+
+        // set to cookie
+        setCookie('_location', citySlug, 31);
     })
 
     // choose location and save to storage
@@ -63,6 +71,8 @@
         var data = JSON.stringify(tmpData);
 
         localStorage.setItem('_location', data);
+
+        setCookie('_location', tmpData['slug'], 31);
     });
 
     // search more cities
@@ -73,4 +83,12 @@
 
         // TODO: Ajax request and show in form
     })
+
+    // set cookie
+    function setCookie(name, value, exdays) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        let expires = "expires="+ d.toUTCString();
+        document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    }
 </script>

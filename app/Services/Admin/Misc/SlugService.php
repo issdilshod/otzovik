@@ -13,6 +13,10 @@ class SlugService extends Service{
 
     public static function isCity($slug)
     {
+        if ($slug=='russia'){
+            return $slug;
+        }
+
         $city = City::where('status', Config::get('status.active'))
                     ->where('slug', $slug)
                     ->first();
@@ -24,6 +28,10 @@ class SlugService extends Service{
 
     public static function isDirection($slug)
     {
+        if ($slug=='vse'){
+            return $slug;
+        }
+
         $direction = Direction::where('status', Config::get('status.active'))
                     ->where('slug', $slug)
                     ->first();

@@ -100,12 +100,12 @@ class UniversityService extends Service{
                                 $q->orderBy('universities.name');
                             })
                             ->when($filter!='', function($q) use($filter){ // specific filter 
-                                if ($filter=='review'){ // filter by review
+                                if ($filter=='po_kolicestvu_otzyvov'){ // filter by review
                                     $q->orderBy('reviews_count', 'desc');
-                                }else if ($filter=='rate'){ // filter by rate
+                                }else if ($filter=='po_reytingu'){ // filter by rate
                                     $q->orderBy('universities.worlds_rate')
                                         ->orderBy('universities.russian_rate');
-                                }else if ($filter=='new'){ // filter by new
+                                }else if ($filter=='po_novinkam'){ // filter by new
                                     $q->orderBy('universities.updated_at');
                                 }
                             })

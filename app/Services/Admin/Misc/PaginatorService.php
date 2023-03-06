@@ -70,6 +70,10 @@ class PaginatorService extends Service{
         if ($i==1){
             return $fullUrl;
         }
+
+        // last one is slash then remove slash
+        if (substr($tmpLink[0], strlen($tmpLink[0])-1, 1)=='/'){ $tmpLink[0] = substr($tmpLink[0], 0, strlen($tmpLink[0])-1); }
+
         return $tmpLink[0].'/page'.$i.(isset($tmpLink[1])?'?'.$tmpLink[1]:'');
     }
 

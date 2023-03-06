@@ -25,7 +25,6 @@ Route::get('/poisk/{slug1?}/{slug2?}/{slug3?}/{slug4?}/{slug5?}', [MainControlle
 
 Route::get('/poisk2', [MainController::class, 'search2']);
 
-Route::get('/universitety', [MainController::class, 'universities']);
 Route::get('/universitety/{slug1?}/{slug2?}/{slug3?}/{slug4?}', [MainController::class, 'universities']);
 Route::get('/universitet/{university_slug?}', [MainController::class, 'university']);
 Route::get('/universitet/{university_slug?}/{slug1?}', [MainController::class, 'university']);
