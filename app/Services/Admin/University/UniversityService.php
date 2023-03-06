@@ -96,9 +96,6 @@ class UniversityService extends Service{
                                 $q->join('university_education_types as uet', 'uet.university_id', '=', 'universities.id')
                                     ->where('uet.education_type_id', $type);
                             })
-                            ->when($filter=='', function($q){ // standard order by name
-                                $q->orderBy('universities.name');
-                            })
                             ->when($filter!='', function($q) use($filter){ // specific filter 
                                 if ($filter=='po_kolicestvu_otzyvov'){ // filter by review
                                     $q->orderBy('reviews_count', 'desc');
