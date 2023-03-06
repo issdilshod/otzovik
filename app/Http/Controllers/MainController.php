@@ -12,6 +12,7 @@ use App\Services\Admin\Setting\DirectionService;
 use App\Services\Admin\Setting\EducationLevelService;
 use App\Services\Admin\Setting\EducationTypeService;
 use App\Services\Admin\Setting\QaService;
+use App\Services\Admin\Setting\SeoService;
 use App\Services\Admin\Setting\SettingService;
 use App\Services\Admin\University\UniversityService;
 use App\Services\MainService;
@@ -33,6 +34,7 @@ class MainController extends Controller
     private $cityService;
     private $settingService;
     private $qaService;
+    private $seoService;
 
     public function __construct()
     {
@@ -48,6 +50,7 @@ class MainController extends Controller
         $this->cityService = new CityService();
         $this->settingService = new SettingService();
         $this->qaService = new QaService();
+        $this->seoService = new SeoService();
     }
 
     // e 404
@@ -65,7 +68,10 @@ class MainController extends Controller
     // page main
     public function index(Request $request)
     {
-        $data['title'] = __('main_page_title');
+        $data['title'] = '';
+
+        // SEO
+        $data['seo'] = $this->seoService->findByUrl('/');
 
         $data['cities'] = $this->cityService->findAll(); 
 
@@ -135,7 +141,10 @@ class MainController extends Controller
             ];
         }
 
-        $data['title'] = __('search_page_title');
+        $data['title'] = '';
+
+        // SEO
+        $data['seo'] = $this->seoService->findByUrl('poisk');
 
         $data['directions'] = $this->directionService->getAll();
         $data['education_types'] = $this->educationTypeService->getAll();
@@ -166,7 +175,10 @@ class MainController extends Controller
             $name = $request->q;
         }
 
-        $data['title'] = __('search_page_title');
+        $data['title'] = '';
+
+        // SEO
+        $data['seo'] = $this->seoService->findByUrl('poisk2');
 
         $data['cities'] = $this->cityService->findAll(); 
 
@@ -239,7 +251,10 @@ class MainController extends Controller
         }
 
 
-        $data['title'] = __('universities_page_title');
+        $data['title'] = '';
+
+        // SEO
+        $data['seo'] = $this->seoService->findByUrl('universitety');
 
         $data['directions'] = $this->directionService->getAll();
         $data['cities'] = $this->cityService->findAll(); 
@@ -305,6 +320,9 @@ class MainController extends Controller
 
         $data['title'] = __('university_add_page_title');
 
+        // SEO
+        $data['seo'] = $this->seoService->findByUrl('dobavit-vuz');
+
         $data['cities'] = $this->cityService->findAll();
         $data['last_reviews'] = $this->reviewService->last();
 
@@ -322,6 +340,9 @@ class MainController extends Controller
         if (SlugService::isPage($slug1)){ $page = SlugService::isPage($slug1); }
 
         $data['title'] = __('reviews_page_title');
+
+        // SEO
+        $data['seo'] = $this->seoService->findByUrl('otzyvy');
 
         $data['directions'] = $this->directionService->getAll();
         $data['cities'] = $this->cityService->findAll(); 
@@ -357,7 +378,7 @@ class MainController extends Controller
             $data['current_review'] = $this->reviewService->first();
         }
 
-        $data['title'] .= ' ' . $data['current_review']->university_name . ' № ' . $data['current_review']->number;
+        $data['title'] .= ' на ' . $data['current_review']->university_name . ' № ' . $data['current_review']->number;
         $data['cities'] = $this->cityService->findAll();
 
         $data['popular_universities'] = $this->universityService->popular();
@@ -379,6 +400,9 @@ class MainController extends Controller
         $data['settings']['mode'] = $this->mainService->_mode($request);
 
         $data['title'] = __('review_add_page');
+
+        // SEO
+        $data['seo'] = $this->seoService->findByUrl('dobavit-otzyv');
 
         if (!$data['settings']['mode']){
             $data['university'] = $this->universityService->findBySlug($universitySlug);
@@ -412,6 +436,9 @@ class MainController extends Controller
         if (SlugService::isPage($slug1)){ $page = SlugService::isPage($slug1); }
 
         $data['title'] = __('articles_page_title');
+
+        // SEO
+        $data['seo'] = $this->seoService->findByUrl('posti');
 
         $data['cities'] = $this->cityService->findAll(); 
 
@@ -467,6 +494,9 @@ class MainController extends Controller
     {
         $data['title'] = __('about_page_title');
 
+        // SEO
+        $data['seo'] = $this->seoService->findByUrl('o-service');
+
         $data['cities'] = $this->cityService->findAll(); 
 
         $data['popular_universities'] = $this->universityService->popular();
@@ -486,6 +516,9 @@ class MainController extends Controller
     public function educational(Request $request)
     {
         $data['title'] = __('educational_page_title');
+
+        // SEO
+        $data['seo'] = $this->seoService->findByUrl('uchebnim-zavedeniyam');
 
         $data['cities'] = $this->cityService->findAll(); 
 
@@ -507,6 +540,9 @@ class MainController extends Controller
     {
         $data['title'] = __('faq_page_title');
 
+        // SEO
+        $data['seo'] = $this->seoService->findByUrl('faq');
+
         $data['cities'] = $this->cityService->findAll(); 
 
         $data['last_reviews'] = $this->reviewService->last();
@@ -525,6 +561,9 @@ class MainController extends Controller
     public function top(Request $request)
     {
         $data['title'] = __('top_universities_page_title');
+
+        // SEO
+        $data['seo'] = $this->seoService->findByUrl('top-universitety');
 
         $data['cities'] = $this->cityService->findAll();
 
@@ -547,6 +586,9 @@ class MainController extends Controller
         //
         $data['title'] = '';
 
+        // SEO
+        $data['seo'] = $this->seoService->findByUrl('policy');
+
         $data['cities'] = $this->cityService->findAll(); 
 
         $data['template'] = $this->settingService->findByPage(Config::get('pages.policy'));
@@ -561,6 +603,9 @@ class MainController extends Controller
     {
         //
         $data['title'] = '';
+
+        // SEO
+        $data['seo'] = $this->seoService->findByUrl('legal');
 
         $data['cities'] = $this->cityService->findAll(); 
 
