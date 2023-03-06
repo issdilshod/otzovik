@@ -108,6 +108,7 @@ class MainController extends Controller
         if ($direction=='vse'){ $direction = ''; }
 
         // breadcrumbs
+        $data['breadcrumbs'] = [];
         if (SlugService::isCity($slug1)){ 
             $tmp = SlugService::isCity($slug1, true);
             $data['breadcrumbs'][] = [
