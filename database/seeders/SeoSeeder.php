@@ -17,7 +17,7 @@ class SeoSeeder extends Seeder
     {
         $seos = [
             [
-                'url' => '/',
+                'url' => 'home',
                 'title' => 'Главная страница',
                 'description' => 'Главная страница'
             ],

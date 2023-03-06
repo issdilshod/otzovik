@@ -71,7 +71,7 @@ class MainController extends Controller
         $data['title'] = '';
 
         // SEO
-        $data['seo'] = $this->seoService->findByUrl('/');
+        $data['seo'] = $this->seoService->findByUrl('home');
 
         $data['cities'] = $this->cityService->findAll(); 
 
