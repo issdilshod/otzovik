@@ -16,7 +16,24 @@
             Главная
           </a>
         </li>
-        <li class="active">Университеты</li>
+        <li class="<?php if (count($breadcrumbs)==0){ echo 'active'; } ?>">
+            @if (count($breadcrumbs)==0)
+            Университеты
+            @else
+            <a href="{{url('/universitety')}}">Университеты</a>
+            @endif
+        </li>
+        @foreach ($breadcrumbs as $key => $breadcrumb)
+            <li class="<?php if (count($breadcrumbs)-1==$key){ echo 'active'; } ?>">
+                @if (count($breadcrumbs)-1==$key)
+                {{$breadcrumb['title']}}
+                @else
+                <a href="{{url('/'.$breadcrumb['link'])}}">
+                    {{$breadcrumb['title']}}
+                </a>
+                @endif
+            </li>
+        @endforeach
       </ol>
     </nav>
 

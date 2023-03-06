@@ -314,7 +314,7 @@
             <h4>Направления подготовки учебного заведения</h4>
             <ul class="tags">
                 @foreach ($university->directions as $direction)
-                <li><a href="#" >{{$direction->name}}</a></li> <!-- class="active" -->
+                <li><a href="{{\App\Services\Admin\Misc\UrlService::url_direction(url('/universitety'), $direction->slug)}}">{{$direction->name}}</a></li> <!-- class="active" -->
                 @endforeach
             </ul>
             <!--h4>Структура</h4>

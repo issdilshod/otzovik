@@ -123,7 +123,7 @@ class UniversityService extends Service{
 
         // get directions
         $university->directions = UniversityDirection::from('university_directions as ud1')
-                            ->select('d1.name')
+                            ->select(['d1.name', 'd1.slug'])
                             ->join('directions as d1', 'd1.id', '=', 'ud1.direction_id')
                             ->where('ud1.status', Config::get('status.active'))
                             ->where('ud1.university_id', $university->id)
@@ -164,7 +164,7 @@ class UniversityService extends Service{
 
         // get directions
         $university->directions = UniversityDirection::from('university_directions as ud1')
-                                    ->select('d1.name')
+                                    ->select(['d1.name', 'd1.slug'])
                                     ->join('directions as d1', 'd1.id', '=', 'ud1.direction_id')
                                     ->where('ud1.status', Config::get('status.active'))
                                     ->where('ud1.university_id', $university->id)

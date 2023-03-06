@@ -11,32 +11,32 @@ use Illuminate\Support\Facades\Config;
 
 class SlugService extends Service{
 
-    public static function isCity($slug)
+    public static function isCity($slug, $returnModel = false)
     {
         if ($slug=='russia'){
-            return $slug;
+            if ($returnModel){ return ['name' => 'Россия', 'slug' => 'russia']; } else { return $slug; }
         }
 
         $city = City::where('status', Config::get('status.active'))
                     ->where('slug', $slug)
                     ->first();
         if ($city!=null){
-            return $city->id;
+            if ($returnModel){ return $city; } else { return $city->id; }
         }
         return false;
     }
 
-    public static function isDirection($slug)
+    public static function isDirection($slug, $returnModel = false)
     {
         if ($slug=='vse'){
-            return $slug;
+            if ($returnModel){ return ['name' => 'Все', 'slug' => 'vse']; } else { return $slug; }
         }
 
         $direction = Direction::where('status', Config::get('status.active'))
                     ->where('slug', $slug)
                     ->first();
         if ($direction!=null){
-            return $direction->id;
+            if ($returnModel){ return $direction; } else { return $direction->id; }
         }
         return false;
     }
@@ -55,36 +55,6 @@ class SlugService extends Service{
         }
 
         return (int)$pageRight;
-    }
-
-    public static function isUniversityFilter($slug)
-    {
-        if ($slug=='review' || $slug=='rate' || $slug=='new'){
-            return true;
-        }
-        return false;
-    }
-
-    public static function isLevel($slug)
-    {
-        $educationLevel = EducationLevel::where('status', Config::get('status.active'))
-                                ->where('slug', $slug)
-                                ->first();
-        if ($educationLevel!=null){
-            return $educationLevel->id;
-        }
-        return false;
-    }
-
-    public static function isType($slug)
-    {
-        $educationType = EducationType::where('status', Config::get('status.active'))
-                                ->where('slug', $slug)
-                                ->first();
-        if ($educationType!=null){
-            return $educationType->id;
-        }
-        return false;
     }
 
 }

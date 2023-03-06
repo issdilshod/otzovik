@@ -83,41 +83,54 @@ class MainController extends Controller
     }
 
     // page search
-    public function search(Request $request, $slug1 = '', $slug2 = '', $slug3 = '', $slug4 = '', $slug5 = '')
+    public function search(Request $request, $slug1 = '', $slug2 = '', $slug3 = '')
     {
         // detect slugs
-        $city = ''; $direction = ''; $level = ''; $type = ''; $page = '';
+        $city = ''; $direction = ''; $page = '';
+        $level = (isset($request->level)?$request->level:''); $type = (isset($request->type)?$request->type:''); 
+
         $data['current_direction'] = '';
+
         // slug1
         if (SlugService::isCity($slug1)){ $city = SlugService::isCity($slug1); }
         if (SlugService::isDirection($slug1)){ $data['current_direction'] = $slug1; $direction = SlugService::isDirection($slug1); }
-        if (SlugService::isLevel($slug1)){ $level = SlugService::isLevel($slug1); }
-        if (SlugService::isType($slug1)){ $type = SlugService::isType($slug1); }
         if (SlugService::isPage($slug1)){ $page = SlugService::isPage($slug1); }
         // slug2
-        if (SlugService::isCity($slug2)){ $city = SlugService::isCity($slug2); }
         if (SlugService::isDirection($slug2)){ $data['current_direction'] = $slug2; $direction = SlugService::isDirection($slug2); }
-        if (SlugService::isLevel($slug2)){ $level = SlugService::isLevel($slug2); }
-        if (SlugService::isType($slug2)){ $type = SlugService::isType($slug2); }
         if (SlugService::isPage($slug2)){ $page = SlugService::isPage($slug2); }
         // slug3
-        if (SlugService::isCity($slug3)){ $city = SlugService::isCity($slug3); }
-        if (SlugService::isDirection($slug3)){ $data['current_direction'] = $slug3; $direction = SlugService::isDirection($slug3); }
-        if (SlugService::isLevel($slug3)){ $level = SlugService::isLevel($slug3); }
-        if (SlugService::isType($slug3)){ $type = SlugService::isType($slug3); }
         if (SlugService::isPage($slug3)){ $page = SlugService::isPage($slug3); }
-        // slug4
-        if (SlugService::isCity($slug4)){ $city = SlugService::isCity($slug4); }
-        if (SlugService::isDirection($slug4)){ $data['current_direction'] = $slug4; $direction = SlugService::isDirection($slug4); }
-        if (SlugService::isLevel($slug4)){ $level = SlugService::isLevel($slug4); }
-        if (SlugService::isType($slug4)){ $type = SlugService::isType($slug4); }
-        if (SlugService::isPage($slug4)){ $page = SlugService::isPage($slug4); }
-        // slug5
-        if (SlugService::isCity($slug5)){ $city = SlugService::isCity($slug5); }
-        if (SlugService::isDirection($slug5)){ $data['current_direction'] = $slug5; $direction = SlugService::isDirection($slug5); }
-        if (SlugService::isLevel($slug5)){ $level = SlugService::isLevel($slug5); }
-        if (SlugService::isType($slug5)){ $type = SlugService::isType($slug5); }
-        if (SlugService::isPage($slug5)){ $page = SlugService::isPage($slug5); }
+
+        // if city equals russia then all cities
+        if ($city=='russia'){ $city = ''; }
+
+        // if direction equals vse then all directions
+        if ($direction=='vse'){ $direction = ''; }
+
+        // breadcrumbs
+        if (SlugService::isCity($slug1)){ 
+            $tmp = SlugService::isCity($slug1, true);
+            $data['breadcrumbs'][] = [
+                'link' => 'poisk/'.$tmp['slug'],
+                'title' => $tmp['name']
+            ];
+        }
+
+        if (SlugService::isDirection($slug1)){ 
+            $tmp = SlugService::isDirection($slug1, true);
+            $data['breadcrumbs'][] = [
+                'link' => (count($data['breadcrumbs'])>0?$data['breadcrumbs'][0]['link'].'/'.$tmp['slug']:'univetrsitety/'.$tmp['slug']),
+                'title' => $tmp['name']
+            ];
+        }
+
+        if (SlugService::isDirection($slug2)){ 
+            $tmp = SlugService::isDirection($slug2, true);
+            $data['breadcrumbs'][] = [
+                'link' => (count($data['breadcrumbs'])>0?$data['breadcrumbs'][0]['link'].'/'.$tmp['slug']:'univetrsitety/'.$tmp['slug']),
+                'title' => $tmp['name']
+            ];
+        }
 
         $data['title'] = __('search_page_title');
 
@@ -170,10 +183,11 @@ class MainController extends Controller
     }
 
     // page universities
-    public function universities(Request $request, $slug1 = '', $slug2 = '', $slug3 = '', $slug4 = '')
+    public function universities(Request $request, $slug1 = '', $slug2 = '', $slug3 = '')
     {
         // detect slugs
-        $city = ''; $direction = ''; $page = ''; $filter = (isset($request->filter)?$request->filter:'');
+        $city = ''; $direction = ''; $page = ''; 
+        $filter = (isset($request->filter)?$request->filter:'');
 
         $data['current_direction'] = '';
         $data['current_filter'] = $filter;
@@ -183,23 +197,44 @@ class MainController extends Controller
         if (SlugService::isDirection($slug1)){ $data['current_direction'] = $slug1; $direction = SlugService::isDirection($slug1); }
         if (SlugService::isPage($slug1)){ $page = SlugService::isPage($slug1); }
         // slug2
-        if (SlugService::isCity($slug2)){ $city = SlugService::isCity($slug2); }
         if (SlugService::isDirection($slug2)){ $data['current_direction'] = $slug2; $direction = SlugService::isDirection($slug2); }
         if (SlugService::isPage($slug2)){ $page = SlugService::isPage($slug2); }
         // slug3
-        if (SlugService::isCity($slug3)){ $city = SlugService::isCity($slug3); }
-        if (SlugService::isDirection($slug3)){ $data['current_direction'] = $slug3; $direction = SlugService::isDirection($slug3); }
         if (SlugService::isPage($slug3)){ $page = SlugService::isPage($slug3); }
-        // slug4
-        if (SlugService::isCity($slug4)){ $city = SlugService::isCity($slug4); }
-        if (SlugService::isDirection($slug4)){  $data['current_direction'] = $slug4; $direction = SlugService::isDirection($slug4); }
-        if (SlugService::isPage($slug4)){ $page = SlugService::isPage($slug4); }
 
         // if city equals russia then all cities
         if ($city=='russia'){ $city = ''; }
 
         // if direction equals vse then all directions
         if ($direction=='vse'){ $direction = ''; }
+
+        // breakcrumbs
+        $data['breadcrumbs'] = [];
+
+        if (SlugService::isCity($slug1)){ 
+            $tmp = SlugService::isCity($slug1, true);
+            $data['breadcrumbs'][] = [
+                'link' => 'univetrsitety/'.$tmp['slug'],
+                'title' => $tmp['name']
+            ];
+        }
+
+        if (SlugService::isDirection($slug1)){ 
+            $tmp = SlugService::isDirection($slug1, true);
+            $data['breadcrumbs'][] = [
+                'link' => (count($data['breadcrumbs'])>0?$data['breadcrumbs'][0]['link'].'/'.$tmp['slug']:'univetrsitety/'.$tmp['slug']),
+                'title' => $tmp['name']
+            ];
+        }
+
+        if (SlugService::isDirection($slug2)){ 
+            $tmp = SlugService::isDirection($slug2, true);
+            $data['breadcrumbs'][] = [
+                'link' => (count($data['breadcrumbs'])>0?$data['breadcrumbs'][0]['link'].'/'.$tmp['slug']:'univetrsitety/'.$tmp['slug']),
+                'title' => $tmp['name']
+            ];
+        }
+
 
         $data['title'] = __('universities_page_title');
 
