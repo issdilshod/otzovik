@@ -90,6 +90,7 @@ class MainController extends Controller
         $level = (isset($request->level)?$request->level:''); $type = (isset($request->type)?$request->type:''); 
 
         $data['current_direction'] = '';
+        $data['current_location'] = ['name' => 'Россия', 'slug' => 'russia'];
 
         // slug1
         if (SlugService::isCity($slug1)){ $city = SlugService::isCity($slug1); }
@@ -115,6 +116,7 @@ class MainController extends Controller
                 'link' => 'poisk/'.$tmp['slug'],
                 'title' => $tmp['name']
             ];
+            $data['current_location'] = $tmp;
         }
 
         if (SlugService::isDirection($slug1)){ 

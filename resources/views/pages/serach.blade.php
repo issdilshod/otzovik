@@ -43,7 +43,7 @@
             <div class="form-group size01">
                 <label for="place">Регион</label>
                 <div class="input-wrapper">
-                <input type="text" placeholder="Россия" id="place" data-slug="russia">
+                <input type="text" placeholder="Россия" id="place" data-slug="{{$current_location['slug']}}" value="{{$current_location['name']}}">
                 <div class="input-hint" style="display:none">
                     <ul></ul>
                 </div>
@@ -53,7 +53,7 @@
                 <label>Направление</label>
                 <select id="jcf-direction" data-jcf='{"wrapNative": false, "wrapNativeOnMobile": false, "fakeDropInBody": false, "useCustomScroll": false}'>
                     @foreach ($directions as $direction)
-                        <option value="{{$direction->slug}}">{{$direction->name}}</option>
+                        <option value="{{$direction->slug}}" <?php if ($direction->slug==$current_direction){ echo 'selected'; } ?>>{{$direction->name}}</option>
                     @endforeach
                 </select>
             </div>
@@ -61,7 +61,7 @@
                 <label>Уровень образования</label>
                 <select id="jcf-level" data-jcf='{"wrapNative": false, "wrapNativeOnMobile": false, "fakeDropInBody": false, "useCustomScroll": false}'>
                     @foreach ($education_levels as $education_level)
-                        <option value="{{$education_level->slug}}">{{$education_level->name}}</option>
+                        <option value="{{$education_level->slug}}" <?php if (isset($_GET['level']) && $_GET['level']==$education_level->slug){ echo 'selected'; } ?>>{{$education_level->name}}</option>
                     @endforeach                
                 </select>
             </div>
@@ -69,7 +69,7 @@
                 <label>Форма обучения</label>
                 <select id="jcf-type" data-jcf='{"wrapNative": false, "wrapNativeOnMobile": false, "fakeDropInBody": false, "useCustomScroll": false}'>
                     @foreach ($education_types as $education_type)
-                        <option value="{{$education_type->slug}}">{{$education_type->name}}</option>
+                        <option value="{{$education_type->slug}}" <?php if (isset($_GET['type']) && $_GET['type']==$education_type->slug){ echo 'selected'; } ?>>{{$education_type->name}}</option>
                     @endforeach
                 </select>
             </div>
