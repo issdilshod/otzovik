@@ -87,7 +87,7 @@ class PaginatorService extends Service{
 
     public static function hasEndNumber()
     {
-        if (self::$currentPage+floor(self::$rangePagination/2)<self::$lastPage){
+        if (self::$currentPage+round(self::$rangePagination/2)<self::$lastPage){
             return self::$lastPage;
         }
         return false;
