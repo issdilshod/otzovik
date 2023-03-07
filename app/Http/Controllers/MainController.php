@@ -339,8 +339,11 @@ class MainController extends Controller
     // page reviews
     public function reviews(Request $request, $slug1 = '')
     {
-        $page = '';
+
+        $page = ''; $filter = (isset($request->filter)?$request->filter:'');
         if (SlugService::isPage($slug1)){ $page = SlugService::isPage($slug1); }
+
+        $data['current_filter'] = $filter;
 
         $data['title'] = __('reviews_page_title');
 
@@ -352,7 +355,7 @@ class MainController extends Controller
 
         $data['popular_universities'] = $this->universityService->popular();
         $data['last_articles'] = $this->articleService->last();
-        $data['list'] = $this->reviewService->findAllFront($page);
+        $data['list'] = $this->reviewService->findAllFront($page, $filter);
 
         // settings
         $data['template'] = $this->settingService->findByPage(Config::get('pages.reviews'));

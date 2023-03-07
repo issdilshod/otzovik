@@ -51,7 +51,7 @@ class ReviewService extends Service{
         return false;
     }
 
-    public function findAllFront($page = '')
+    public function findAllFront($page = '', $filter = '')
     {
         $reviews = Review::from('reviews as r')
                         ->select([
@@ -61,8 +61,17 @@ class ReviewService extends Service{
                         ])
                         ->join('users as us', 'us.id', '=', 'r.user_id')
                         ->join('universities as un', 'un.id', '=', 'r.university_id')
-                        ->orderBy('r.created_at', 'desc')
                         ->where('r.status', Config::get('status.active'))
+                        ->when($filter!='', function($q) use($filter){ // specific filter
+                            if ($filter=='po_reytingu'){ // filter by rate
+                                $q->orderBy('r.star', 'desc');
+                            }else if ($filter=='po_novinkam'){ // filter by new
+                                $q->orderBy('r.updated_at', 'desc');
+                            }
+                        })
+                        ->when($filter=='', function($q) { // default filter by star
+                            $q->orderBy('r.star', 'desc');
+                        })
                         ->paginate(Config::get('pagination.per_page'), [], '', $page);
         return $reviews;
     }

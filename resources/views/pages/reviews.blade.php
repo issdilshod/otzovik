@@ -61,14 +61,10 @@
         Все отзывы
       </div>
       <div class="sort">
-        <a href="#" class="sort-item location">
-          <span class="ico">
-            <svg class="icon">
-              <use xlink:href="#filter-ico"></use>
-            </svg>
-          </span>
-          По рейтингу
-        </a>
+            <select class="qty-sort" data-jcf='{"wrapNative": false, "wrapNativeOnMobile": false, "fakeDropInBody": false, "useCustomScroll": false}'>
+                <option value="po_reytingu" <?php if ($current_filter=='po_reytingu') { echo 'selected';} ?>>По рейтингу</option>
+                <option value="po_novinkam" <?php if ($current_filter=='po_novinkam') { echo 'selected';} ?>>По новинкам</option>
+            </select>
       </div>
     </div>  
 
@@ -160,5 +156,14 @@
 @include('components.modals.success-subscribe')
 
 @include('components.svgs.welcome')
+
+<script>
+    // on change filter
+    $(document).on('change', '.qty-sort', function(e) {
+        var foundIndex = window.location.href.indexOf('?');
+        var link = (foundIndex>-1?window.location.href.substr(0, foundIndex):window.location.href);
+        window.location.href = link+'?filter='+e.target.value;
+    });
+</script>
 
 @stop
