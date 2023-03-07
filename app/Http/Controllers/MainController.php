@@ -167,13 +167,16 @@ class MainController extends Controller
     }
 
     // page search
-    public function search2(Request $request)
+    public function search2(Request $request, $slug1 = '')
     {
         // detect searched
-        $name = '';
+        $name = ''; $page = '';
         if (isset($request->q)){
             $name = $request->q;
         }
+
+        // slug1
+        if (SlugService::isPage($slug1)){ $page = SlugService::isPage($slug1); }
 
         $data['title'] = '';
 
@@ -183,7 +186,7 @@ class MainController extends Controller
         $data['cities'] = $this->cityService->findAll(); 
 
         // search result universities
-        $data['list'] = $this->universityService->findAll($name);
+        $data['list'] = $this->universityService->findAllFront('','',$page,'','','', $name);
 
         $data['popular_universities'] = $this->universityService->popular();
         $data['popular_reviews'] = $this->reviewService->popular();

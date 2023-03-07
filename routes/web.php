@@ -22,7 +22,7 @@ Route::get('/', [MainController::class, 'index']);
 
 Route::get('/poisk/{slug1?}/{slug2?}/{slug3?}', [MainController::class, 'search']);
 
-Route::get('/poisk2', [MainController::class, 'search2']);
+Route::get('/poisk2/{slug1?}', [MainController::class, 'search2']);
 
 Route::get('/universitety/{slug1?}/{slug2?}/{slug3?}', [MainController::class, 'universities']);
 Route::get('/universitet/{university_slug?}', [MainController::class, 'university']);

@@ -76,7 +76,7 @@ class UniversityService extends Service{
         return $university;
     }
 
-    public function findAllFront($city = '', $direction = '', $page = '', $filter = '', $level = '', $type = '')
+    public function findAllFront($city = '', $direction = '', $page = '', $filter = '', $level = '', $type = '', $name = '')
     {
         $universities = University::from('universities')
                             ->withCount('reviews')
@@ -108,6 +108,9 @@ class UniversityService extends Service{
                             })
                             ->when($filter=='', function($q) { // default filter by review count
                                 $q->orderBy('reviews_count', 'desc');
+                            })
+                            ->when($name!='', function($q) use($name){
+                                $q->where('name', 'like', $name.'%');
                             })
                             ->paginate(Config::get('pagination.per_page'), ['universities.*'], '', $page);
         return $universities;
