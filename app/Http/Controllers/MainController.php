@@ -340,15 +340,32 @@ class MainController extends Controller
     }
 
     // page reviews
-    public function reviews(Request $request, $slug1 = '')
+    public function reviews(Request $request, $slug1 = '', $slug2 = '')
     {
+        $data['current_direction'] = '';
+        $page = ''; $direction = ''; 
+        $filter = (isset($request->filter)?$request->filter:'');
 
-        $page = ''; $filter = (isset($request->filter)?$request->filter:'');
+        // slug1
+        if (SlugService::isDirection($slug1)){ $data['current_direction'] = $slug1; $direction = SlugService::isDirection($slug1); }
         if (SlugService::isPage($slug1)){ $page = SlugService::isPage($slug1); }
+        // slug2
+        if (SlugService::isPage($slug2)){ $page = SlugService::isPage($slug2); }
 
         $data['current_filter'] = $filter;
 
         $data['title'] = __('reviews_page_title');
+
+        // breakcrumbs
+        $data['breadcrumbs'] = [];
+
+        if (SlugService::isDirection($slug1)){ 
+            $tmp = SlugService::isDirection($slug1, true);
+            $data['breadcrumbs'][] = [
+                'link' => (count($data['breadcrumbs'])>0?$data['breadcrumbs'][0]['link'].'/'.$tmp['slug']:'otzyvy/'.$tmp['slug']),
+                'title' => $tmp['name']
+            ];
+        }
 
         // SEO
         $data['seo'] = $this->seoService->findByUrl('otzyvy');
@@ -358,7 +375,7 @@ class MainController extends Controller
 
         $data['popular_universities'] = $this->universityService->popular();
         $data['last_articles'] = $this->articleService->last();
-        $data['list'] = $this->reviewService->findAllFront($page, $filter);
+        $data['list'] = $this->reviewService->findAllFront($page, $filter, $direction);
 
         // settings
         $data['template'] = $this->settingService->findByPage(Config::get('pages.reviews'));

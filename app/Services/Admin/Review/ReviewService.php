@@ -51,7 +51,7 @@ class ReviewService extends Service{
         return false;
     }
 
-    public function findAllFront($page = '', $filter = '')
+    public function findAllFront($page = '', $filter = '', $direction = '')
     {
         $reviews = Review::from('reviews as r')
                         ->select([
@@ -62,6 +62,10 @@ class ReviewService extends Service{
                         ->join('users as us', 'us.id', '=', 'r.user_id')
                         ->join('universities as un', 'un.id', '=', 'r.university_id')
                         ->where('r.status', Config::get('status.active'))
+                        ->when($direction!='', function ($q) use($direction){
+                            $q->join('university_directions as ud', 'ud.university_id', '=', 'un.id')
+                                ->where('ud.direction_id', $direction);
+                        })
                         ->when($filter!='', function($q) use($filter){ // specific filter
                             if ($filter=='po_reytingu'){ // filter by rate
                                 $q->orderBy('r.star', 'desc');

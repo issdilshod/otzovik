@@ -17,7 +17,24 @@
           </a>
         </li>
         <li><a href="{{url('/otzyvy')}}">Отзывы</a></li>
-        <li class="active">Все отзывы</li>
+        <li class="<?php if (count($breadcrumbs)==0){ echo 'active'; } ?>">
+            @if (count($breadcrumbs)==0)
+            Все отзывы
+            @else
+            <a href="{{url('/otzyvy')}}">Все отзывы</a>
+            @endif
+        </li>
+        @foreach ($breadcrumbs as $key => $breadcrumb)
+            <li class="<?php if (count($breadcrumbs)-1==$key){ echo 'active'; } ?>">
+                @if (count($breadcrumbs)-1==$key)
+                {{$breadcrumb['title']}}
+                @else
+                <a href="{{url('/'.$breadcrumb['link'])}}">
+                    {{$breadcrumb['title']}}
+                </a>
+                @endif
+            </li>
+        @endforeach
       </ol>
     </nav>
 
@@ -49,6 +66,10 @@
     </div>
     <!-- / hero -->  
 
+    @php
+        $this_page = '/otzyvy';
+        $with_city = false;
+    @endphp
     @include('components.universities.directions')
     
     <div class="title-wrap align-items-center">

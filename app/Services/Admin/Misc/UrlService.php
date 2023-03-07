@@ -6,11 +6,11 @@ use App\Services\Service;
 
 class UrlService extends Service{
 
-    public static function url_direction($url, $directionSlug = '')
+    public static function url_direction($url, $directionSlug = '', $withCity = true)
     {
         $citySlug = (isset($_COOKIE['_location'])?$_COOKIE['_location']:'russia');
 
-        return url($url.($citySlug!=''?'/'.$citySlug:'').($directionSlug!=''?'/'.$directionSlug:''));
+        return url($url.($withCity?($citySlug!=''?'/'.$citySlug:''):'').($directionSlug!=''?'/'.$directionSlug:''));
     }
 
 }
