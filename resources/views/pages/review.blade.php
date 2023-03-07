@@ -18,7 +18,7 @@
         </li>
         <li><a href="{{url('/otzyvy')}}">Отзывы</a></li>
         <li><a href="{{url('/universitet/'.$current_review->university_slug)}}">Отзывы об университете</a></li>
-        <li class="active">Отзыв {{$current_review->university_name}} № {{$current_review->number}}</li>
+        <li class="active">Отзыв на {{$current_review->university_name}} № {{$current_review->number}}</li>
       </ol>
     </nav>
 
