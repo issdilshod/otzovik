@@ -83,8 +83,10 @@
       </div>
       <div class="sort">
             <select class="qty-sort" data-jcf='{"wrapNative": false, "wrapNativeOnMobile": false, "fakeDropInBody": false, "useCustomScroll": false}'>
-                <option value="po_reytingu" <?php if ($current_filter=='po_reytingu') { echo 'selected';} ?>>По рейтингу</option>
-                <option value="po_novinkam" <?php if ($current_filter=='po_novinkam') { echo 'selected';} ?>>По новинкам</option>
+                <option value="po_reytingu_pol" <?php if ($current_filter=='po_reytingu_pol') { echo 'selected';} ?>>По рейтингу (положительному)</option>
+                <option value="po_reytingu_neg" <?php if ($current_filter=='po_reytingu_neg') { echo 'selected';} ?>>По рейтингу (негативному)</option>
+                <option value="svejie" <?php if ($current_filter=='svejie') { echo 'selected';} ?>>Свежие</option>
+                <option value="starie" <?php if ($current_filter=='starie') { echo 'selected';} ?>>Старые</option>
             </select>
       </div>
     </div>  

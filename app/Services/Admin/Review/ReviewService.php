@@ -67,10 +67,14 @@ class ReviewService extends Service{
                                 ->where('ud.direction_id', $direction);
                         })
                         ->when($filter!='', function($q) use($filter){ // specific filter
-                            if ($filter=='po_reytingu'){ // filter by rate
+                            if ($filter=='po_reytingu_pol'){ // filter by rate plus
                                 $q->orderBy('r.star', 'desc');
-                            }else if ($filter=='po_novinkam'){ // filter by new
+                            }else if ($filter=='po_reytingu_neg'){ // filter by rate minus
+                                $q->orderBy('r.star', 'asc');
+                            }else if ($filter=='svejie'){ // filter by new
                                 $q->orderBy('r.updated_at', 'desc');
+                            }else if ($filter=='starie'){ // filter by old
+                                $q->orderBy('r.updated_at', 'asc');
                             }
                         })
                         ->when($filter=='', function($q) { // default filter by star

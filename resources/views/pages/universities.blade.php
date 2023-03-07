@@ -70,7 +70,7 @@
         <select class="qty-sort" data-jcf='{"wrapNative": false, "wrapNativeOnMobile": false, "fakeDropInBody": false, "useCustomScroll": false}'>
             <option value="po_kolicestvu_otzyvov" <?php if ($current_filter=='po_kolicestvu_otzyvov') { echo 'selected';} ?>>По количеству отзывов</option>
             <option value="po_reytingu_po_rossii" <?php if ($current_filter=='po_reytingu_po_rossii') { echo 'selected';} ?>>По рейтинг по России</option>
-            <option value="po_mirovomu_reytingu" <?php if ($current_filter=='po_reytingu') { echo 'selected';} ?>>По мировому рейтингу</option>
+            <option value="po_mirovomu_reytingu" <?php if ($current_filter=='po_mirovomu_reytingu') { echo 'selected';} ?>>По мировому рейтингу</option>
             <option value="po_novinkam" <?php if ($current_filter=='po_novinkam') { echo 'selected';} ?>>По новинкам</option>
         </select>
       </div>
