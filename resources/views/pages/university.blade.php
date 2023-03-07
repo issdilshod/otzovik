@@ -95,7 +95,7 @@
             if (!$(this).parent().find('.big-dots').hasClass('d-none')){ // showing more
                 $(this).parent().find('.big-dots').addClass('d-none');
                 $(this).parent().find('.extra-text').removeClass('d-none');
-                $('.show-more-university').text('Меньще');
+                $('.show-more-university').text('Скрыть');
             }else{ // showing less
                 $(this).parent().find('.big-dots').removeClass('d-none');
                 $(this).parent().find('.extra-text').addClass('d-none');

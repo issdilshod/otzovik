@@ -179,7 +179,7 @@
         if (!$(this).parent().find('.big-dots').hasClass('d-none')){ // showing more
             $(this).parent().find('.big-dots').addClass('d-none');
             $(this).parent().find('.extra-text').removeClass('d-none');
-            $(this).find('.last-info-button-text').text('Меньще');
+            $(this).find('.last-info-button-text').text('Скрыть');
         }else{ // showing less
             $(this).parent().find('.big-dots').removeClass('d-none');
             $(this).parent().find('.extra-text').addClass('d-none');
