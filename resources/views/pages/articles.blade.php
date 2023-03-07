@@ -61,7 +61,7 @@
                     <use xlink:href="#files-colorful"></use>
                 </svg>
                 </span>
-                {{$today['articles_count']}} статьи
+                {{$articles_count}} статьи
             </span>
             <span class="articles-info-item">
                 <span class="ico">

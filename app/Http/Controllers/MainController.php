@@ -456,6 +456,7 @@ class MainController extends Controller
         $data['cities'] = $this->cityService->findAll(); 
 
         $data['list'] = $this->articleService->findAllFront($page);
+        $data['articles_count'] = $this->articleService->findCount();
         $data['popular_reviews'] = $this->reviewService->popular();
         $data['last_reviews'] = $this->reviewService->last();
         $data['popular_articles'] = $this->articleService->popular(); 
