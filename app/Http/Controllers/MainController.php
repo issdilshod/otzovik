@@ -388,6 +388,10 @@ class MainController extends Controller
         }
 
         $data['title'] .= ' на ' . $data['current_review']->university_name . ' № ' . $data['current_review']->number;
+
+        // SEO
+        $data['seo'] = ['title' => $data['title'], 'description' => $data['title']];
+
         $data['cities'] = $this->cityService->findAll();
 
         $data['popular_universities'] = $this->universityService->popular();
