@@ -34,8 +34,7 @@
                         <div class="d-flex">
                             <div style="width: 150px;">
                                 <form class="input-group input-group-sm d-flex" action="{{url('admin/blog/comments')}}" method="get">
-                                    @csrf
-                                    <input type="text" name="search" class="form-control" placeholder="{{__('global_search_title')}}">
+                                    <input type="text" name="q" class="form-control" placeholder="{{__('global_search_title')}}" value="{{$q}}">
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-default">
                                             <i class="fas fa-search"></i>

@@ -30,7 +30,10 @@ class ReviewController extends Controller
     {
         $data['title'] = __('reviews_title');
 
-        $data['list'] = $this->reviewService->findAll();
+        // search
+        $data['q'] = $request->q??'';
+
+        $data['list'] = $this->reviewService->findAll($data['q']);
 
         $data['status'] = Config::get('status');
 

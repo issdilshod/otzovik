@@ -47,7 +47,10 @@ class UniversityController extends Controller
         // permission
         $data['title'] = __('universities_title');
 
-        $data['list'] = $this->universityService->findAll();
+        // search
+        $data['q'] = $request->q??'';
+
+        $data['list'] = $this->universityService->findAll($data['q']);
 
         $data['status'] = Config::get('status');
 

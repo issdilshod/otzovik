@@ -17,7 +17,7 @@ class ReviewService extends Service{
         return $count;
     }
 
-    public function findAll($name = '')
+    public function findAll($q = '')
     {
         $reviews = Review::from('reviews as r')
                         ->select([
@@ -28,6 +28,12 @@ class ReviewService extends Service{
                         ->join('universities as un', 'un.id', '=', 'r.university_id')
                         ->orderBy('r.created_at', 'desc')
                         ->where('r.status', '!=', Config::get('status.delete'))
+                        ->when($q!='', function($qq) use($q){
+                            $qq->where(function($qq1) use($q){
+                                $qq1->where('us.first_name', 'like', $q.'%')
+                                    ->orWhere('un.name', 'like', $q.'%');
+                            });
+                        })
                         ->paginate(Config::get('pagination.per_page'));
         return $reviews;
     }

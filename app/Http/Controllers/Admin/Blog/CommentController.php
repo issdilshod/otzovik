@@ -30,7 +30,10 @@ class CommentController extends Controller
     {
         $data['title'] = __('comments_title');
 
-        $data['list'] = $this->commentService->findAll();
+        // search
+        $data['q'] = $request->q??'';
+
+        $data['list'] = $this->commentService->findAll($data['q']);
 
         $data['status'] = Config::get('status');
 

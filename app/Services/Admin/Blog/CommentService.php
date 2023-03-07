@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Config;
 
 class CommentService extends Service{
 
-    public function findAll()
+    public function findAll($q = '')
     {
         $comments = Comment::
                         from('comments as c')
@@ -21,6 +21,12 @@ class CommentService extends Service{
                         ->join('articles as a', 'a.id', '=', 'c.article_id')
                         ->join('users as u', 'u.id', '=', 'c.user_id')
                         ->where('c.status', '!=', Config::get('status.delete'))
+                        ->when($q!='', function ($qq) use($q){
+                            $qq->where(function($qq1) use($q){
+                                $qq1->where('u.first_name', 'like', $q.'%')
+                                    ->orWhere('a.title', 'like', $q.'%');
+                            });
+                        })
                         ->orderBy('c.updated_at', 'desc')
                         ->paginate(Config::get('pagination.per_page'));
         return $comments;

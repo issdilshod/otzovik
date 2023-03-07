@@ -20,10 +20,15 @@ class ArticleService extends Service{
         return $count;
     }
 
-    public function findAll($name = '')
+    public function findAll($q = '')
     {
         $articles = Article::where('status', '!=', Config::get('status.delete'))
                         ->orderBy('updated_at', 'desc')
+                        ->when($q!='', function($qq) use($q){
+                            $qq->where(function($qq1) use($q){
+                                $qq1->where('title', 'like', $q.'%');
+                            });
+                        })
                         ->paginate(Config::get('pagination.per_page'));
         return $articles;
     }

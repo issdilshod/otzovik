@@ -25,8 +25,11 @@ class ArticleController extends Controller{
     {
         // permission
         $data['title'] = __('articles_title');
+
+        // search
+        $data['q'] = $request->q??'';
         
-        $data['list'] = $this->articleService->findAll();
+        $data['list'] = $this->articleService->findAll($data['q']);
 
         return view('admin.pages.blog.article.articles', $data);
     }

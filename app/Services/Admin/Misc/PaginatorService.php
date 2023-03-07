@@ -12,14 +12,16 @@ class PaginatorService extends Service{
     public static $lastPage;
     public static $startNumber;
     public static $endNumber;
+    private static $onAttr;
 
-    public function __construct($cPage = 1, $lPage = 1, $range = 3)
+    public function __construct($cPage = 1, $lPage = 1, $range = 3, $attr = false)
     {
         // get & set data
         self::$rangePagination = $range;
         self::$currentPage = $cPage;
         self::$lastPage = $lPage;
         self::$firstPage = 1;
+        self::$onAttr = $attr;
 
         self::init();
     }
@@ -57,7 +59,9 @@ class PaginatorService extends Service{
     {
         $fullUrl = url()->full();
 
+        // remove last pages from link
         $fullUrl = preg_replace('/page\d+/', '', $fullUrl);
+        $fullUrl = preg_replace('/page=\d+/', '', $fullUrl);
 
         // remove last slash
         if (substr($fullUrl, strlen($fullUrl)-1, 1) == '/'){
@@ -67,14 +71,22 @@ class PaginatorService extends Service{
         // find get params
         $tmpLink = explode('?', $fullUrl);
 
-        if ($i==1){
+        if ($i==1&&!self::$onAttr){
             return $fullUrl;
         }
 
         // last one is slash then remove slash
         if (substr($tmpLink[0], strlen($tmpLink[0])-1, 1)=='/'){ $tmpLink[0] = substr($tmpLink[0], 0, strlen($tmpLink[0])-1); }
 
-        return $tmpLink[0].'/page'.$i.(isset($tmpLink[1])?'?'.$tmpLink[1]:'');
+        if (self::$onAttr){ //* on attribute ?page=
+            // first one is & then remove &
+            if (isset($tmpLink[1])){
+                if (substr($tmpLink[1], 0, 1)=='&'){ $tmpLink[1] = substr($tmpLink[1], 1); }
+            }
+            return $tmpLink[0].(isset($tmpLink[1])?'?'.$tmpLink[1].'&page='.$i:'?page='.$i);
+        }else{ //* on path /page2
+            return $tmpLink[0].'/page'.$i.(isset($tmpLink[1])?'?'.$tmpLink[1]:'');
+        }
     }
 
     public static function hasStartNumber()

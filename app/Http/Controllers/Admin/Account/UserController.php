@@ -25,7 +25,10 @@ class UserController extends Controller
         // permission
         $data['title'] = __('staff_title');
 
-        $data['list'] = $this->userService->findAll();
+        // search
+        $data['q'] = $request->q??'';
+
+        $data['list'] = $this->userService->findAll($data['q']);
         $data['roles'] = Config::get('roles');
 
         return view('admin.pages.user.users', $data);

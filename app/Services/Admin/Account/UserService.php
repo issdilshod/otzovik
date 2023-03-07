@@ -16,18 +16,20 @@ class UserService extends Service{
         return $count;
     }
 
-    public function findAll($name = '')
+    public function findAll($q = '')
     {
         $users = User::orderBy('first_name')
                     ->orderBy('last_name')
                     ->where('status', '!=', Config::get('status.delete'))
-                    ->when($name!='', function($q1) use ($name){
-                        $q1->where(function($q2) use($name){
-                            $q2->where('first_name', 'like', $name . '%')
-                                ->orWhere('last_name', 'like', $name . '%');
+                    ->when($q!='', function($qq) use ($q){
+                        $qq->where(function($qq1) use($q){
+                            $qq1->where('first_name', 'like', $q.'%')
+                                ->orWhere('last_name', 'like', $q.'%')
+                                ->orWhere('email', 'like', $q.'%')
+                                ->orWhere('phone', 'like', $q.'%');
                         });
                     })
-                    ->paginate(Config::get('pagination.per_page'));
+                    ->paginate(1);
         return $users;
     }
 

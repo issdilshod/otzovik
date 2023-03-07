@@ -1,36 +1,33 @@
-@if($list->lastPage()>1)
-<?php 
-    /**
-     * calculate pagination
-     */
-    $rangePagination = 6; // pagination range
-    $startNumber = $list->currentPage() - floor($rangePagination/2); // current page center
-    if (($startNumber+$rangePagination)>$list->lastPage()){ // fix the end
-        $startNumber -= (($startNumber+$rangePagination) - $list->lastPage() - 1);  
-    }
-    if ($startNumber<=1){ // fix the start
-        $startNumber = 1; 
-    }
+<?php
+
+use App\Services\Admin\Misc\PaginatorService;
+
+$paginatorService = new PaginatorService($list->currentPage(), $list->lastPage(), 3, true);
+
 ?>
+
+@if($paginatorService::hasMore())
+
 <div class="col-12 text-right">
     <ul class="pagination pagination-sm m-0 float-right">
-        <li class="page-item @if ($list->currentPage()==1) disabled @endif">
-            <a class="page-link" href="{{url()->current().'?page='.$list->currentPage()-1}}">{{__('pagination_prev')}}</a>
+        <li class="page-item">
+            <a class="page-link" href="{{$paginatorService::getUrl($paginatorService::prevPage())}}">{{__('pagination_prev')}}</a>
         </li>
 
-        
-        @for ($i = $startNumber, $j = 1; ($i <= $list->lastPage() && $j <= $rangePagination); $i++, $j++)
-            <li class="page-item @if($list->currentPage()==$i) active @endif">
-                <a class="page-link" href="{{url()->current().'?page='.$i}}">{{$i}}</a>
+        @for ($i = $paginatorService::$startNumber; $i<=$paginatorService::$endNumber; $i++)
+            <li class="page-item @if ($i==$paginatorService::$currentPage){{'active'}}@endif">
+                <a class="page-link" href="{{$paginatorService::getUrl($i)}}">{{$i}}</a>
             </li>
         @endfor
 
-        <li class="page-item @if ($list->currentPage()==$list->lastPage()) disabled @endif">
-            <a class="page-link" href="{{url()->current().'?page='.$list->currentPage()+1}}">{{__('pagination_next')}}</a>
+        <li class="page-item">
+            <a class="page-link" href="{{$paginatorService::getUrl($paginatorService::nextPage())}}">{{__('pagination_next')}}</a>
         </li>
     </ul>
 </div>
+
 @endif
+
 <div class="col-12 text-right mb-2">
     <div>
         {{__('pagination_shown')}} {{ $list->count() }} {{__('pagination_from')}} {{ $list->total() }}
