@@ -102,11 +102,12 @@ class UniversityService extends Service{
                                     ->where('uet.education_type_id', $type);
                             })
                             ->when($filter!='', function($q) use($filter){ // specific filter 
-                                if ($filter=='po_kolicestvu_otzyvov'){ // filter by review
+                                if ($filter=='po_kolicestvu_otzyvov'){ // filter by reviews count
                                     $q->orderBy('reviews_count', 'desc');
-                                }else if ($filter=='po_reytingu'){ // filter by rate
-                                    $q->orderBy('universities.worlds_rate')
-                                        ->orderBy('universities.russian_rate');
+                                }else if ($filter=='po_reytingu_po_rossii'){ // filter by rate russia
+                                    $q->orderBy('universities.russian_rate');
+                                }else if ($filter=='po_mirovomu_reytingu'){ // filter by rate world
+                                    $q->orderBy('universities.worlds_rate');
                                 }else if ($filter=='po_novinkam'){ // filter by new
                                     $q->orderBy('universities.updated_at');
                                 }
