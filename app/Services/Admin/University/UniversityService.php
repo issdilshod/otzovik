@@ -4,6 +4,7 @@ namespace App\Services\Admin\University;
 
 use App\Models\Admin\Review\Review;
 use App\Models\Admin\Setting\Qa;
+use App\Models\Admin\Setting\Seo;
 use App\Services\Admin\Misc\StringService;
 use App\Services\Service;
 use App\Models\Admin\University\University;
@@ -72,6 +73,10 @@ class UniversityService extends Service{
         $university['qas'] = Qa::where('status', Config::get('status.active'))
                                 ->where('rel', $id)
                                 ->get();
+
+        // seo 
+        $university->seo = Seo::where('url', $university->slug)
+                                ->first();
 
         return $university;
     }
@@ -330,9 +335,12 @@ class UniversityService extends Service{
         }
 
         // UPDATE
-        $university = University::where('id', $id)
+        University::where('id', $id)
                         ->where('status', '!=', Config::get('status.delete'))
                         ->update($university);
+
+        $university = University::where('id', $id)
+                        ->first();
         return $university;
     }
 

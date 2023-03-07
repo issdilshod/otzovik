@@ -12,12 +12,13 @@ class SeoService extends Service{
         $seoOrg = Seo::where('url', $url)
                         ->first();
         
-        if ($seoOrg==null){
-            return response()->json(['msg' => 'seo not found'], 404);
-            
+        if ($seoOrg==null){ // add new
+            $seo['url'] = $url;
+            $seoOrg = Seo::create($seo);
+        }else{
+            $seoOrg->update($seo);
         }
 
-        $seoOrg->update($seo);
         return $seoOrg;
     }
 

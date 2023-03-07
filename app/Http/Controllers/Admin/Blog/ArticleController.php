@@ -5,17 +5,20 @@ namespace App\Http\Controllers\Admin\Blog;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\Blog\ArticleService;
 use App\Services\Admin\Misc\FileService;
+use App\Services\Admin\Setting\SeoService;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller{
 
     private $articleService;
     private $fileService;
+    private $seoService;
 
     public function __construct()
     {
         $this->articleService = new ArticleService();
         $this->fileService = new FileService();
+        $this->seoService = new SeoService();
     }
 
     public function index(Request $request)
@@ -39,7 +42,13 @@ class ArticleController extends Controller{
         // logo upload
         $validated['cover'] = $this->fileService->upload($request, $validated['title'], 'cover');
 
-        if ($this->articleService->save($validated)){
+        $article = $this->articleService->save($validated);
+        if ($article){
+            // seo
+            $seo['title'] = ($request->tit??'');
+            $seo['description'] = ($request->descript??'');
+            $this->seoService->save($seo, $article->slug);
+
             return redirect('admin/blog/articles')->with('status', '200');
         }
 
@@ -69,7 +78,13 @@ class ArticleController extends Controller{
         // logo upload
         $validated['cover'] = $this->fileService->upload($request, $validated['title'], 'cover');
 
-        if ($this->articleService->save($validated, $id)){
+        $article = $this->articleService->save($validated, $id);
+        if ($article){
+            // seo
+            $seo['title'] = ($request->tit??'');
+            $seo['description'] = ($request->descript??'');
+            $this->seoService->save($seo, $article->slug);
+
             return redirect('admin/blog/articles')->with('status', '200');
         }
 

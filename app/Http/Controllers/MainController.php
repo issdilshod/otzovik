@@ -297,6 +297,9 @@ class MainController extends Controller
             $data['university'] = $this->universityService->first();
         }
 
+        // SEO
+        $data['seo'] = $this->seoService->findByUrl($data['university']->slug);
+
         $data['university']->statistic = $this->reviewService->staticticByUniversity($data['university']->id);
 
         $data['title'] .= ' ' . $data['university']->name;
@@ -474,6 +477,9 @@ class MainController extends Controller
         }
 
         $data['title'] .= ' ' . $data['current_article']->title;
+
+        // SEO
+        $data['seo'] = $this->seoService->findByUrl($data['current_article']->slug);
         
         $data['current_article']['comments'] = $this->commentService->findByArticle($data['current_article']->id);
 

@@ -3,6 +3,7 @@
 namespace App\Services\Admin\Blog;
 
 use App\Models\Admin\Blog\Article;
+use App\Models\Admin\Setting\Seo;
 use App\Services\Admin\Misc\StringService;
 use App\Services\Admin\Misc\SystemService;
 use App\Services\Service;
@@ -32,6 +33,10 @@ class ArticleService extends Service{
         $article = Article::where('status', '!=', Config::get('status.delete'))
                         ->where('id', $id)
                         ->first();
+
+        // seo
+        $article->seo = Seo::where('url', $article->slug)
+                            ->first();
         return $article;
     }
 

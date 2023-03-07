@@ -11,6 +11,7 @@ use App\Services\Admin\Setting\DirectionService;
 use App\Services\Admin\Setting\EducationLevelService;
 use App\Services\Admin\Setting\EducationTypeService;
 use App\Services\Admin\Setting\QaService;
+use App\Services\Admin\Setting\SeoService;
 use App\Services\Admin\University\UniversityService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -26,6 +27,7 @@ class UniversityController extends Controller
     private $citySevice;
     private $userService;
     private $qaService;
+    private $seoService;
 
     public function __construct()
     {
@@ -37,6 +39,7 @@ class UniversityController extends Controller
         $this->citySevice = new CityService();
         $this->userService = new UserService();
         $this->qaService = new QaService();
+        $this->seoService = new SeoService();
     }
     
     public function index(Request $request)
@@ -59,8 +62,8 @@ class UniversityController extends Controller
         // logo upload
         $validated['logo'] = $this->fileService->upload($request, $validated['name']);
 
-        if ($university = $this->universityService->create($validated)){
-
+        $university = $this->universityService->create($validated);
+        if ($university){
             // qa
             if (isset($validated['qa'])){
                 $this->qaService->removeByRel($university->id);
@@ -69,6 +72,11 @@ class UniversityController extends Controller
                     $this->qaService->save($value);
                 endforeach;
             }
+
+            // seo
+            $seo['title'] = ($request->title??'');
+            $seo['description'] = ($request->description??'');
+            $this->seoService->save($seo, $university->slug);
 
             return redirect('admin/universities')->with('status', '200');
         }
@@ -103,7 +111,8 @@ class UniversityController extends Controller
         // logo upload
         $validated['logo'] = $this->fileService->upload($request, $validated['name']);
 
-        if ($this->universityService->update($validated, $id))
+        $university = $this->universityService->update($validated, $id);
+        if ($university)
         {
             // qa
             if (isset($validated['qa'])){
@@ -113,6 +122,11 @@ class UniversityController extends Controller
                     $this->qaService->save($value);
                 endforeach;
             }
+
+            // seo
+            $seo['title'] = ($request->title??'');
+            $seo['description'] = ($request->description??'');
+            $this->seoService->save($seo, $university->slug);
 
             return redirect('admin/universities')->with('status', '200'); 
         }

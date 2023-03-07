@@ -79,6 +79,16 @@
                                     <input name="slug" class="form-control" id="slug1" value="@isset($article->slug){{ $article->slug }}@endisset">
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="tit1">Title</label>
+                                    <input name="tit" class="form-control" id="tit1" value="@isset($article->seo){{ $article->seo->title }}@endisset">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="descript1">Description</label>
+                                    <textarea class="form-control" id="descript1" name="descript">@isset($article->seo){{ $article->seo->description }}@endisset</textarea>
+                                </div>
+
                             </div>
                             <!-- /.card-body -->
 

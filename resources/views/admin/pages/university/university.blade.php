@@ -246,6 +246,20 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="title1">Title</label>
+                                                    <input name="title" class="form-control" id="title1" value="@isset($university->seo){{ $university->seo->title }}@endisset">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="descript1">Description</label>
+                                                    <textarea class="form-control" id="descript1" name="descript">@isset($university->seo){{ $university->seo->description }}@endisset</textarea>
+                                                </div>
+                                            </div>
+
                                             <!-- directions from base -->
                                             <div class="col-md-6">
                                                 <div class="form-group">
