@@ -29,7 +29,7 @@ class UserService extends Service{
                                 ->orWhere('phone', 'like', $q.'%');
                         });
                     })
-                    ->paginate(1);
+                    ->paginate(Config::get('pagination.per_page'));
         return $users;
     }
 
