@@ -17,7 +17,7 @@ class ReviewService extends Service{
         return $count;
     }
 
-    public function findAll($q = '')
+    public function findAll($q = '', $f = '')
     {
         $reviews = Review::from('reviews as r')
                         ->select([
@@ -26,12 +26,32 @@ class ReviewService extends Service{
                             'un.name as university_name', 'un.logo as university_logo', 'un.slug as university_slug'])
                         ->join('users as us', 'us.id', '=', 'r.user_id')
                         ->join('universities as un', 'un.id', '=', 'r.university_id')
-                        ->orderBy('r.created_at', 'desc')
                         ->where('r.status', '!=', Config::get('status.delete'))
                         ->when($q!='', function($qq) use($q){
                             $qq->where(function($qq1) use($q){
                                 $qq1->where('us.first_name', 'like', $q.'%')
                                     ->orWhere('un.name', 'like', $q.'%');
+                            });
+                        })
+                        ->when($f!='', function($qq)use($f){
+                            $qq->when($f=='user-asc', function($qq1){ // user - asc
+                                $qq1->orderBy('us.first_name', 'asc');
+                            })->when($f=='user-asc', function($qq1){ // user - desc
+                                $qq1->orderBy('us.first_name', 'desc');
+                            })->when($f=='university-asc', function($qq1){ // university - asc
+                                $qq1->orderBy('un.name', 'asc');
+                            })->when($f=='university-desc', function($qq1){ // university - desc
+                                $qq1->orderBy('un.name', 'desc');
+                            })->when($f=='created_at-asc', function($qq1){ // created_at - asc
+                                $qq1->orderBy('r.created_at', 'asc');
+                            })->when($f=='created_at-desc', function($qq1){ // created_at - desc
+                                $qq1->orderBy('r.created_at', 'desc');
+                            })->when($f=='status-'.Config::get('status.active'), function($qq1){ // active
+                                $qq1->orderByRaw("r.status = ".Config::get('status.active')." desc, status");
+                            })->when($f=='status-'.Config::get('status.wait'), function($qq1){ // wait
+                                $qq1->orderByRaw("r.status = ".Config::get('status.wait')." desc, status");
+                            })->when($f=='status-'.Config::get('status.block'), function($qq1){ // block
+                                $qq1->orderByRaw("r.status = ".Config::get('status.block')." desc, status");
                             });
                         })
                         ->paginate(Config::get('pagination.per_page'));

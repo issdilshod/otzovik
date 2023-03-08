@@ -33,7 +33,9 @@ class ReviewController extends Controller
         // search
         $data['q'] = $request->q??'';
 
-        $data['list'] = $this->reviewService->findAll($data['q']);
+        $data['f'] = $request->f??'created_at-desc';
+
+        $data['list'] = $this->reviewService->findAll($data['q'], $data['f']);
 
         $data['status'] = Config::get('status');
 

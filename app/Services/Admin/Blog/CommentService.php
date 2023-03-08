@@ -28,7 +28,6 @@ class CommentService extends Service{
                             });
                         })
                         ->when($f!='', function($qq)use($f){
-                            //TODO: by post & users
                             $qq->when($f=='user-asc', function($qq1){ // user - asc
                                 $qq1->orderBy('u.first_name', 'asc');
                             })->when($f=='user-asc', function($qq1){ // user - desc

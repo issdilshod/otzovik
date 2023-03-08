@@ -55,10 +55,64 @@
                         <thead>
                             <tr>
                                 <th>{{__('global_id')}}</th>
-                                <th>{{__('review_user')}}</th>
-                                <th>{{__('review_university')}}</th>
-                                <th>{{__('global_created_at')}}</th>
-                                <th>{{__('global_status')}}</th>
+                                <th>
+                                    <div class="d-flex d-sort" data-sort="<?php if ($f=='user-asc'){ echo 'user-desc'; }else{ echo 'user-asc'; }?>">
+                                        <div>{{__('review_user')}}</div>
+                                        @if($f=='user-asc' || $f=='user-desc')
+                                        <div class="ml-auto d-label">
+                                            @if($f=='user-asc')
+                                            <i class="fa fa-angle-down"></i>
+                                            @endif
+                                            @if($f=='user-desc')
+                                            <i class="fa fa-angle-up"></i>
+                                            @endif
+                                        </div>
+                                        @endif
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="d-flex d-sort" data-sort="<?php if ($f=='university-asc'){ echo 'university-desc'; }else{ echo 'university-asc'; }?>">
+                                        <div>{{__('review_university')}}</div>
+                                        @if($f=='university-asc' || $f=='university-desc')
+                                        <div class="ml-auto d-label">
+                                            @if($f=='university-asc')
+                                            <i class="fa fa-angle-down"></i>
+                                            @endif
+                                            @if($f=='university-desc')
+                                            <i class="fa fa-angle-up"></i>
+                                            @endif
+                                        </div>
+                                        @endif
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="d-flex d-sort" data-sort="<?php if ($f=='created_at-asc'){ echo 'created_at-desc'; }else{ echo 'created_at-asc'; }?>">
+                                        <div>{{__('global_created_at')}}</div>
+                                        @if($f=='created_at-asc' || $f=='created_at-desc')
+                                        <div class="ml-auto d-label">
+                                            @if($f=='created_at-asc')
+                                            <i class="fa fa-angle-down"></i>
+                                            @endif
+                                            @if($f=='created_at-desc')
+                                            <i class="fa fa-angle-up"></i>
+                                            @endif
+                                        </div>
+                                        @endif
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="d-flex d-sort-multi">
+                                        <div>{{__('global_status')}}</div>
+                                        <div class="ml-auto">
+                                            <select class="form-control p-0" style="height:auto">
+                                                <option value="">-</option>
+                                                <option value="status-{{$status['wait']}}" <?php if ($f=='status-'.$status['wait']){ echo 'selected'; } ?>>{{__('global_waiting')}}</option>
+                                                <option value="status-{{$status['active']}}" <?php if ($f=='status-'.$status['active']){ echo 'selected'; } ?>>{{__('global_active')}}</option>
+                                                <option value="status-{{$status['block']}}" <?php if ($f=='status-'.$status['block']){ echo 'selected'; } ?>>{{__('global_block')}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </th>
                                 <th>{{__('global_actions')}}</th>
                             </tr>
                         </thead>
