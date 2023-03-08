@@ -20,13 +20,23 @@ class ArticleService extends Service{
         return $count;
     }
 
-    public function findAll($q = '')
+    public function findAll($q = '', $f = '')
     {
         $articles = Article::where('status', '!=', Config::get('status.delete'))
-                        ->orderBy('updated_at', 'desc')
                         ->when($q!='', function($qq) use($q){
                             $qq->where(function($qq1) use($q){
                                 $qq1->where('title', 'like', $q.'%');
+                            });
+                        })
+                        ->when($f!='', function($qq)use($f){
+                            $qq->when($f=='title-asc', function($qq1){ // title - asc
+                                $qq1->orderBy('title', 'asc');
+                            })->when($f=='title-desc', function($qq1){ // title - desc
+                                $qq1->orderBy('title', 'desc');
+                            })->when($f=='created_at-asc', function($qq1){ // updated_at - asc
+                                $qq1->orderBy('updated_at', 'asc');
+                            })->when($f=='created_at-desc', function($qq1){ // updated_at - desc
+                                $qq1->orderBy('updated_at', 'desc');
                             });
                         })
                         ->paginate(Config::get('pagination.per_page'));

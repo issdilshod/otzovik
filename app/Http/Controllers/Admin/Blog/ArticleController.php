@@ -28,8 +28,10 @@ class ArticleController extends Controller{
 
         // search
         $data['q'] = $request->q??'';
+
+        $data['f'] = $request->f??'title-asc';
         
-        $data['list'] = $this->articleService->findAll($data['q']);
+        $data['list'] = $this->articleService->findAll($data['q'], $data['f']);
 
         return view('admin.pages.blog.article.articles', $data);
     }

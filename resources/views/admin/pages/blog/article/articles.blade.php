@@ -55,8 +55,36 @@
                         <thead>
                             <tr>
                                 <th>{{__('global_id')}}</th>
-                                <th>{{__('article_title')}}</th>
-                                <th>{{__('global_created_at')}}</th>
+                                <th>
+                                    <div class="d-flex d-sort" data-sort="<?php if ($f=='title-asc'){ echo 'title-desc'; }else{ echo 'title-asc'; }?>">
+                                        <div>{{__('article_title')}}</div>
+                                        @if($f=='title-asc' || $f=='title-desc')
+                                        <div class="ml-auto d-label">
+                                            @if($f=='title-asc')
+                                            <i class="fa fa-angle-down"></i>
+                                            @endif
+                                            @if($f=='title-desc')
+                                            <i class="fa fa-angle-up"></i>
+                                            @endif
+                                        </div>
+                                        @endif
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="d-flex d-sort" data-sort="<?php if ($f=='created_at-asc'){ echo 'created_at-desc'; }else{ echo 'created_at-asc'; }?>">
+                                        <div>{{__('global_created_at')}}</div>
+                                        @if($f=='created_at-asc' || $f=='created_at-desc')
+                                        <div class="ml-auto d-label">
+                                            @if($f=='created_at-asc')
+                                            <i class="fa fa-angle-down"></i>
+                                            @endif
+                                            @if($f=='created_at-desc')
+                                            <i class="fa fa-angle-up"></i>
+                                            @endif
+                                        </div>
+                                        @endif
+                                    </div>
+                                </th>
                                 <th>{{__('global_actions')}}</th>
                             </tr>
                         </thead>
@@ -65,7 +93,7 @@
                                 <tr>
                                     <td>{{$key+1}}</td>
                                     <td><img src="{{ asset('storage/'.$value->cover) }}" width="40px" /> {{$value->title}}</td>
-                                    <td>{{$value->created_at}}</td>
+                                    <td>{{$value->updated_at}}</td>
                                     <td class="text-right">
                                         <div class="d-flex">
                                             <div class="ml-auto">
