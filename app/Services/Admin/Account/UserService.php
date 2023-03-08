@@ -16,17 +16,22 @@ class UserService extends Service{
         return $count;
     }
 
-    public function findAll($q = '')
+    public function findAll($q = '', $f = '')
     {
-        $users = User::orderBy('first_name')
-                    ->orderBy('last_name')
-                    ->where('status', '!=', Config::get('status.delete'))
+        $users = User::where('status', '!=', Config::get('status.delete'))
                     ->when($q!='', function($qq) use ($q){
                         $qq->where(function($qq1) use($q){
                             $qq1->where('first_name', 'like', $q.'%')
                                 ->orWhere('last_name', 'like', $q.'%')
                                 ->orWhere('email', 'like', $q.'%')
                                 ->orWhere('phone', 'like', $q.'%');
+                        });
+                    })
+                    ->when($f!='', function($qq)use($f){
+                        $qq->when($f=='created_at-desc', function($qq1){ // order by created at new
+                            $qq1->orderBy('created_at', 'desc');
+                        })->when($f=='created_at-asc', function($qq1){ // order by created at old
+                            $qq1->orderBy('created_at', 'asc');
                         });
                     })
                     ->paginate(Config::get('pagination.per_page'));

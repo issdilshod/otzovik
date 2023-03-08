@@ -59,7 +59,21 @@
                                 <th>{{__('staff_email')}}</th>
                                 <th>{{__('staff_phone')}}</th>
                                 <th>{{__('staff_role')}}</th>
-                                <th>{{__('global_created_at')}}</th>
+                                <th>
+                                    <div class="d-flex d-sort" data-sort="<?php if ($f=='created_at-asc'){ echo 'created_at-desc'; }else{ echo 'created_at-asc'; }?>">
+                                        <div>{{__('global_created_at')}}</div>
+                                        @if($f=='created_at-asc' || $f=='created_at-desc')
+                                        <div class="ml-auto d-label">
+                                            @if($f=='created_at-asc')
+                                            <i class="fa fa-angle-down"></i>
+                                            @endif
+                                            @if($f=='created_at-desc')
+                                            <i class="fa fa-angle-up"></i>
+                                            @endif
+                                        </div>
+                                        @endif
+                                    </div>
+                                </th>
                                 <th>{{__('global_actions')}}</th>
                             </tr>
                         </thead>

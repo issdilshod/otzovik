@@ -58,7 +58,7 @@ class UniversityService extends Service{
                                     $qq1->orderByRaw("status = ".Config::get('status.block')." desc, status");
                                 });
                             })
-                            ->paginate(1);
+                            ->paginate(Config::get('pagination.per_page'));
         return $universities;
     }
 

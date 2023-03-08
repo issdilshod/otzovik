@@ -28,7 +28,10 @@ class UserController extends Controller
         // search
         $data['q'] = $request->q??'';
 
-        $data['list'] = $this->userService->findAll($data['q']);
+        // filter
+        $data['f'] = $request->f??'created_at-desc';
+
+        $data['list'] = $this->userService->findAll($data['q'], $data['f']);
         $data['roles'] = Config::get('roles');
 
         return view('admin.pages.user.users', $data);
