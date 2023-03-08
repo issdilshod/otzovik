@@ -33,7 +33,9 @@ class CommentController extends Controller
         // search
         $data['q'] = $request->q??'';
 
-        $data['list'] = $this->commentService->findAll($data['q']);
+        $data['f'] = $request->f??'created_at-desc';
+
+        $data['list'] = $this->commentService->findAll($data['q'], $data['f']);
 
         $data['status'] = Config::get('status');
 

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Config;
 
 class CommentService extends Service{
 
-    public function findAll($q = '')
+    public function findAll($q = '', $f = '')
     {
         $comments = Comment::
                         from('comments as c')
@@ -27,7 +27,28 @@ class CommentService extends Service{
                                     ->orWhere('a.title', 'like', $q.'%');
                             });
                         })
-                        ->orderBy('c.updated_at', 'desc')
+                        ->when($f!='', function($qq)use($f){
+                            //TODO: by post & users
+                            $qq->when($f=='user-asc', function($qq1){ // user - asc
+                                $qq1->orderBy('u.first_name', 'asc');
+                            })->when($f=='user-asc', function($qq1){ // user - desc
+                                $qq1->orderBy('u.first_name', 'desc');
+                            })->when($f=='article-asc', function($qq1){ // article - asc
+                                $qq1->orderBy('a.title', 'asc');
+                            })->when($f=='article-desc', function($qq1){ // article - desc
+                                $qq1->orderBy('a.title', 'desc');
+                            })->when($f=='created_at-asc', function($qq1){ // created_at - asc
+                                $qq1->orderBy('c.created_at', 'asc');
+                            })->when($f=='created_at-desc', function($qq1){ // created_at - desc
+                                $qq1->orderBy('c.created_at', 'desc');
+                            })->when($f=='status-'.Config::get('status.active'), function($qq1){ // active
+                                $qq1->orderByRaw("c.status = ".Config::get('status.active')." desc, status");
+                            })->when($f=='status-'.Config::get('status.wait'), function($qq1){ // wait
+                                $qq1->orderByRaw("c.status = ".Config::get('status.wait')." desc, status");
+                            })->when($f=='status-'.Config::get('status.block'), function($qq1){ // block
+                                $qq1->orderByRaw("c.status = ".Config::get('status.block')." desc, status");
+                            });
+                        })
                         ->paginate(Config::get('pagination.per_page'));
         return $comments;
     }
