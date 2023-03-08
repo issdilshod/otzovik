@@ -56,9 +56,49 @@
                             <tr>
                                 <th>{{__('global_id')}}</th>
                                 <th>{{__('university_logo')}}</th>
-                                <th>{{__('university_name')}}</th>
-                                <th>{{__('global_created_at')}}</th>
-                                <th>{{__('global_status')}}</th>
+                                <th>
+                                    <div class="d-flex d-sort" data-sort="<?php if ($f=='name-asc'){ echo 'name-desc'; }else{ echo 'name-asc'; }?>">
+                                        <div>{{__('university_name')}}</div>
+                                        @if($f=='name-asc' || $f=='name-desc')
+                                        <div class="ml-auto d-label">
+                                            @if($f=='name-asc')
+                                            <i class="fa fa-angle-down"></i>
+                                            @endif
+                                            @if($f=='name-desc')
+                                            <i class="fa fa-angle-up"></i>
+                                            @endif
+                                        </div>
+                                        @endif
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="d-flex d-sort" data-sort="<?php if ($f=='created_at-asc'){ echo 'created_at-desc'; }else{ echo 'created_at-asc'; }?>">
+                                        <div>{{__('global_created_at')}}</div>
+                                        @if($f=='created_at-asc' || $f=='created_at-desc')
+                                        <div class="ml-auto d-label">
+                                            @if($f=='created_at-asc')
+                                            <i class="fa fa-angle-down"></i>
+                                            @endif
+                                            @if($f=='created_at-desc')
+                                            <i class="fa fa-angle-up"></i>
+                                            @endif
+                                        </div>
+                                        @endif
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="d-flex d-sort-multi">
+                                        <div>{{__('global_status')}}</div>
+                                        <div class="ml-auto">
+                                            <select class="form-control p-0" style="height:auto">
+                                                <option value="">-</option>
+                                                <option value="status-{{$status['wait']}}" <?php if ($f=='status-'.$status['wait']){ echo 'selected'; } ?>>{{__('global_waiting')}}</option>
+                                                <option value="status-{{$status['active']}}" <?php if ($f=='status-'.$status['active']){ echo 'selected'; } ?>>{{__('global_active')}}</option>
+                                                <option value="status-{{$status['block']}}" <?php if ($f=='status-'.$status['block']){ echo 'selected'; } ?>>{{__('global_block')}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </th>
                                 <th>{{__('global_actions')}}</th>
                             </tr>
                         </thead>

@@ -79,11 +79,13 @@ class PaginatorService extends Service{
         if (substr($tmpLink[0], strlen($tmpLink[0])-1, 1)=='/'){ $tmpLink[0] = substr($tmpLink[0], 0, strlen($tmpLink[0])-1); }
 
         if (self::$onAttr){ //* on attribute ?page=
-            // first one is & then remove &
-            if (isset($tmpLink[1])){
-                if (substr($tmpLink[1], 0, 1)=='&'){ $tmpLink[1] = substr($tmpLink[1], 1); }
-            }
-            return $tmpLink[0].(isset($tmpLink[1])?'?'.$tmpLink[1].'&page='.$i:'?page='.$i);
+            $params = parse_url($fullUrl);
+
+            // generate params
+            $finalUrl = $tmpLink[0].(isset($params['query'])?'?'.$params['query'].'&page=':'?page=').$i;
+
+            return $finalUrl;
+            //return str_replace('amp;', '', $tmpLink[0].(isset($tmpLink[1])?'?'.(strlen($tmpLink[1])>0?$tmpLink[1].'&page=':'page=').$i:'?page='.$i));
         }else{ //* on path /page2
             return $tmpLink[0].'/page'.$i.(isset($tmpLink[1])?'?'.$tmpLink[1]:'');
         }

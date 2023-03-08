@@ -34,15 +34,31 @@ class UniversityService extends Service{
         return $count;
     }
     
-    public function findAll($name = '')
+    public function findAll($name = '', $filter = '')
     {
         $universities = University::withCount('reviews')
-                            ->orderBy('name')
                             ->where('status', '!=', Config::get('status.delete'))
                             ->when($name!='', function ($q) use($name){
                                 $q->where('name', 'like', $name . '%');
                             })
-                            ->paginate(Config::get('pagination.per_page'));
+                            ->when($filter!='', function($qq)use($filter){
+                                $qq->when($filter=='name-asc', function($qq1){ // name - asc
+                                    $qq1->orderBy('name', 'asc');
+                                })->when($filter=='name-desc', function($qq1){ // name - desc
+                                    $qq1->orderBy('name', 'desc');
+                                })->when($filter=='created_at-asc', function($qq1){ // created_at - asc
+                                    $qq1->orderBy('created_at', 'asc');
+                                })->when($filter=='created_at-desc', function($qq1){ // created_at - desc
+                                    $qq1->orderBy('created_at', 'desc');
+                                })->when($filter=='status-'.Config::get('status.active'), function($qq1){ // active
+                                    $qq1->orderByRaw("status = ".Config::get('status.active')." desc, status");
+                                })->when($filter=='status-'.Config::get('status.wait'), function($qq1){ // wait
+                                    $qq1->orderByRaw("status = ".Config::get('status.wait')." desc, status");
+                                })->when($filter=='status-'.Config::get('status.block'), function($qq1){ // block
+                                    $qq1->orderByRaw("status = ".Config::get('status.block')." desc, status");
+                                });
+                            })
+                            ->paginate(1);
         return $universities;
     }
 

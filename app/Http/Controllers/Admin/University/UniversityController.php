@@ -50,7 +50,9 @@ class UniversityController extends Controller
         // search
         $data['q'] = $request->q??'';
 
-        $data['list'] = $this->universityService->findAll($data['q']);
+        $data['f'] = $request->f??'name-asc';
+
+        $data['list'] = $this->universityService->findAll($data['q'], $data['f']);
 
         $data['status'] = Config::get('status');
 
