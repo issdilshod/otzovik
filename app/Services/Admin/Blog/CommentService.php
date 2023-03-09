@@ -110,6 +110,13 @@ class CommentService extends Service{
         return $comment;
     }
 
+    public function update_status($comment, $id)
+    {
+        Comment::where('id', $id)
+            ->update($comment);
+        return true;
+    }
+
     public function delete($id)
     {
         Comment::where('id', $id)

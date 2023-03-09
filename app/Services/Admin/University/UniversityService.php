@@ -361,6 +361,13 @@ class UniversityService extends Service{
         return $university;
     }
 
+    public function update_status($university, $id)
+    {
+        University::where('id', $id)
+            ->update($university);
+        return true;
+    }
+
     public function delete($id)
     {
         University::where('id', $id)

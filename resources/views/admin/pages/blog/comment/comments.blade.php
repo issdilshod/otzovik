@@ -124,13 +124,20 @@
                                     <td>{{$value->article_title}}</td>
                                     <td>{{$value->created_at}}</td>
                                     <td>
-                                        @if ($value->status==$status['wait'])
-                                            <span class="badge badge-warning">{{__('global_waiting')}}</span>
-                                        @elseif ($value->status==$status['active'])
-                                            <span class="badge badge-success">{{__('global_active')}}</span>
-                                        @elseif ($value->status==$status['block'])
-                                            <span class="badge badge-danger">{{__('global_block')}}</span>
-                                        @endif
+                                        <div class="btn-group">
+                                            @if ($value->status==$status['wait'])
+                                                <span class="badge badge-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{__('global_waiting')}}</span>
+                                            @elseif ($value->status==$status['active'])
+                                                <span class="badge badge-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{__('global_active')}}</span>
+                                            @elseif ($value->status==$status['block'])
+                                                <span class="badge badge-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{__('global_block')}}</span>
+                                            @endif
+                                            <div class="dropdown-menu" role="menu">
+                                                <a class="dropdown-item status-items" data-url="{{url('admin/blog/comment/'.$value->id.'/status')}}" data-id="{{$value->id}}" data-status="{{$status['wait']}}">{{__('global_waiting')}}</a>
+                                                <a class="dropdown-item status-items" data-url="{{url('admin/blog/comment/'.$value->id.'/status')}}" data-id="{{$value->id}}" data-status="{{$status['active']}}">{{__('global_active')}}</a>
+                                                <a class="dropdown-item status-items" data-url="{{url('admin/blog/comment/'.$value->id.'/status')}}" data-id="{{$value->id}}" data-status="{{$status['block']}}">{{__('global_block')}}</a>
+                                            </div>
+                                        </div>
                                     </td>
                                     <td class="text-right">
                                         <div class="d-flex">

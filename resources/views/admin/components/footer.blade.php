@@ -116,6 +116,28 @@
     }
 </script>
 
+<!-- Status change -->
+<script>
+    $(document).on('click', '.status-items', function(e){
+        e.preventDefault();
+
+        var url = $(this).data('url');
+        var id = $(this).data('id');
+        var status = $(this).data('status');
+
+        $('.d-status').attr('action', url);
+        $('.d-status input[name=status]').val(status);
+        $('.d-status input[name=url]').val('{{url()->full()}}');
+        $('.d-status').submit();
+    })
+</script>
+<form class="d-status d-none" action="" method="post">
+    @csrf
+    <input type="hidden" name="_method" value="put" />
+    <input type="hidden" name="status" value="" />
+    <input type="hidden" name="url" value="" />
+</form>
+
 <!-- Alerts -->
 <script>
     $(document).on('click', '.btn-danger', function(e){
@@ -144,10 +166,13 @@
         $(document).ready(function (){
             var status = "{{session('status')}}";
 
-            Toast.fire({
-                icon: (parseInt(status)==200?'success':'error'),
-                title: (parseInt(status)==200?"{{__('global_success')}}":"{{__('global_error')}}")
-            })
+            if (parseInt(status)==200){
+                Toast.fire({
+                    icon: 'success',
+                    title: "{{__('global_success')}}"
+                })
+            }
+            
         });
     </script>
 @endif

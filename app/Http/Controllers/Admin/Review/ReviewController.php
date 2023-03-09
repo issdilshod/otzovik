@@ -93,6 +93,26 @@ class ReviewController extends Controller
         return redirect('admin/reviews')->with('status', '200');
     }
 
+    /**
+     * Method to update status
+     */
+    public function status_update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'status' => 'required',
+            'url' => ''
+        ]);
+
+        $url = $validated['url'];
+        unset($validated['url']);
+
+        if ($this->reviewService->update_status($validated, $id)){
+            return redirect($url)->with('status', '200');
+        }
+
+        return redirect($url)->with('status', '500');
+    }
+
     public function api_store(Request $request)
     {
         $review = $this->reviewService->validate($request);

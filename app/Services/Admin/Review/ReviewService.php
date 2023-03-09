@@ -235,6 +235,13 @@ class ReviewService extends Service{
         return $review;
     }
 
+    public function update_status($review, $id)
+    {
+        Review::where('id', $id)
+            ->update($review);
+        return true;
+    }
+
     public function delete($id)
     {
         Review::where('id', $id)

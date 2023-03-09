@@ -65,12 +65,16 @@ Route::middleware(['auth.custom'])->group(function (){
     Route::put('admin/university/{id}', [UniversityController::class, 'update']);
     Route::delete('admin/university/{id}', [UniversityController::class, 'destroy']);
 
+    Route::put('admin/university/{id}/status', [UniversityController::class, 'status_update']);
+
     // reviews
     Route::get('admin/reviews', [ReviewController::class, 'index']);
     Route::post('admin/review', [ReviewController::class, 'store']);
     Route::get('admin/review/{id?}', [ReviewController::class, 'get']);
     Route::put('admin/review/{id}', [ReviewController::class, 'update']);
     Route::delete('admin/review/{id}', [ReviewController::class, 'destroy']);
+
+    Route::put('admin/review/{id}/status', [ReviewController::class, 'status_update']);
 
     // articles
     Route::get('admin/blog/articles', [ArticleController::class, 'index']);
@@ -85,6 +89,8 @@ Route::middleware(['auth.custom'])->group(function (){
     Route::get('admin/blog/comment/{id?}', [CommentController::class, 'show']);
     Route::put('admin/blog/comment/{id}', [CommentController::class, 'update']);
     Route::delete('admin/blog/comment/{id}', [CommentController::class, 'destroy']);
+
+    Route::put('admin/blog/comment/{id}/status', [CommentController::class, 'status_update']);
 
     // users
     Route::get('admin/users', [UserController::class, 'index']);
