@@ -28,6 +28,27 @@
         </div>
     </div>
     @endif
+
+    @isset($directions)
+    <div class="container-fluid mt-2 mb-2">
+        <div class="row">
+            <div class="col-sm-4 mt-1">
+                <a href="{{url('admin/settings/templates/universities')}}" class="btn btn-block btn-<?php if ($d==''){echo 'primary';}else{echo 'default';}?> mr-2">
+                    Все
+                </a>
+            </div>
+            @foreach ($directions as $direction)
+            <div class="col-sm-4 mt-1">
+                <a href="{{url('admin/settings/templates/universities?d='.$direction->slug)}}" class="btn btn-block btn-<?php if ($d==$direction->slug){echo 'primary';}else{echo 'default';}?> mr-2">
+                    {{$direction->name}}
+                </a>
+            </div>
+            @endforeach
+        </div>
+    </div>
+    @endisset
+
+
     <iframe 
         id="inlineFrameExample"
         title="Inline Frame Example"

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Setting;
 
 use App\Http\Controllers\Controller;
+use App\Services\Admin\Setting\DirectionService;
 use App\Services\Admin\Setting\SeoService;
 use App\Services\Admin\Setting\SettingService;
 use Illuminate\Http\Request;
@@ -14,11 +15,13 @@ class SettingController extends Controller
 
     private $settingService;
     private $seoService;
+    private $directionService;
 
     public function __construct()
     {
         $this->settingService = new SettingService();
         $this->seoService = new SeoService();
+        $this->directionService = new DirectionService();
     }
 
     public function api_update(Request $request, $key)
@@ -72,9 +75,11 @@ class SettingController extends Controller
         // permission
 
         return view('admin.pages.setting.setting.settings', [
-            'src' => url('/universitety').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0].'&_page='.Config::get('pages.universities'),
+            'src' => url('/universitety'.($request->d?'/'.$request->d:'')).'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0].'&_page='.Config::get('pages.universities'),
             'seo' => $this->seoService->findByUrl('universitety'),
             'token' => Session::get('token')[0],
+            'directions' => $this->directionService->getAll(),
+            'd' => $request->d??''
         ]);
     }
 
