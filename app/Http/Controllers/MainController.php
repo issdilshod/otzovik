@@ -267,8 +267,11 @@ class MainController extends Controller
         $data['last_reviews'] = $this->reviewService->last();
         $data['list'] = $this->universityService->findAllFront($city, $direction, $page, $filter);
 
+        // direction
+        $data['direction'] = ($data['current_direction']!=''?'_'.$data['current_direction']:'');
+
         // settings
-        $data['template'] = $this->settingService->findByPage(Config::get('pages.universities'));
+        $data['template'] = $this->settingService->findByPage(Config::get('pages.universities').$data['direction']);
         $data['settings']['current_page'] = Config::get('pages.universities');
         $data['settings']['mode'] = $this->mainService->_mode($request);
 

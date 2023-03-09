@@ -6,8 +6,8 @@
     <!-- hero -->
     <div class="hero">
       <div class="hero-text">
-        <h1 class="_change_able" data-key="index_banner_h1" data-value="{{$template['index_banner_h1']}}">{{$template['index_banner_h1']}}</h1>
-        <p class="_change_able" data-key="index_banner_p" data-value="{{$template['index_banner_p']}}">{{$template['index_banner_p']}}</p>
+        <h1 class="_change_able" data-key="index_banner_h1" data-page="{{$_GET['_page']??''}}">{{$template['index_banner_h1']??__('global_empty')}}</h1>
+        <p class="_change_able" data-key="index_banner_p" data-page="{{$_GET['_page']??''}}">{{$template['index_banner_p']??__('global_empty')}}</p>
         <a href="{{url('/poisk')}}" class="btn has-ico">
           <span class="ico">
             <svg class="icon">
@@ -27,8 +27,8 @@
     <div class="attrackt">
       <div class="row align-items-end">
         <div class="col-lg-9">
-          <h2 class="_change_able" data-key="index_counter_h2" data-value="{{$template['index_counter_h2']}}">{{$template['index_counter_h2']}}</h2>
-          <p class="_change_able" data-key="index_counter_p" data-value="{{$template['index_counter_p']}}">{{$template['index_counter_p']}}</p>
+          <h2 class="_change_able" data-key="index_counter_h2" data-page="{{$_GET['_page']??''}}">{{$template['index_counter_h2']??__('global_empty')}}</h2>
+          <p class="_change_able" data-key="index_counter_p" data-page="{{$_GET['_page']??''}}">{{$template['index_counter_p']??__('global_empty')}}</p>
           <div class="btns">
             <a href="{{url('/dobavit-otzyv')}}" class="btn has-ico">
               <span class="ico">
@@ -55,7 +55,7 @@
                     <use xlink:href="#more-ico"></use>
                   </svg>
                 </span>
-                <strong class="_change_able" data-key="index_counter_reviews" data-value="{{$template['index_counter_reviews']}}">{{$template['index_counter_reviews']}}</strong>
+                <strong class="_change_able" data-key="index_counter_reviews" data-page="{{$_GET['_page']??''}}">{{$template['index_counter_reviews']??__('global_empty')}}</strong>
               </span>
               Отзывов в вашем городе
             </li>
@@ -66,7 +66,7 @@
                     <use xlink:href="#files-ico"></use>
                   </svg>
                 </span>
-                <strong class="_change_able" data-key="index_counter_answers" data-value="{{$template['index_counter_answers']}}">{{$template['index_counter_answers']}}</strong>
+                <strong class="_change_able" data-key="index_counter_answers" data-page="{{$_GET['_page']??''}}">{{$template['index_counter_answers']??__('global_empty')}}</strong>
               </span>
               Ответов от компаний
             </li>
@@ -77,7 +77,7 @@
                     <use xlink:href="#users-ico"></use>
                   </svg>
                 </span>
-                <strong class="_change_able" data-key="index_counter_companies" data-value="{{$template['index_counter_companies']}}">{{$template['index_counter_companies']}}</strong>
+                <strong class="_change_able" data-key="index_counter_companies" data-page="{{$_GET['_page']??''}}">{{$template['index_counter_companies']??__('global_empty')}}</strong>
               </span>
               Компаний на портале
             </li>
@@ -120,8 +120,8 @@
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="tab01" role="tabpanel" aria-labelledby="info-tab01">
-            <h3 class="_change_able" data-key="index_info_universities_h3" data-value="{{$template['index_info_universities_h3']}}">{{$template['index_info_universities_h3']}}</h3>
-            <p class="_change_able" data-key="index_info_universities_p" data-value="{{$template['index_info_universities_p']}}">{{$template['index_info_universities_p']}}</p>
+            <h3 class="_change_able" data-key="index_info_universities_h3" data-page="{{$_GET['_page']??''}}">{{$template['index_info_universities_h3']??__('global_empty')}}</h3>
+            <p class="_change_able" data-key="index_info_universities_p" data-page="{{$_GET['_page']??''}}">{{$template['index_info_universities_p']??__('global_empty')}}</p>
             <div class="btns">
                 <a href="#" class="btn has-ico bordered-btn">
                     <span class="ico">
@@ -129,13 +129,13 @@
                         <use xlink:href="#building-ico"></use>
                         </svg>
                     </span>
-                    <span class="_change_able" data-key="index_info_universities_button" data-value="{{$template['index_info_universities_button']}}">{{$template['index_info_universities_button']}}</span>
+                    <span class="_change_able" data-key="index_info_universities_button" data-page="{{$_GET['_page']??''}}">{{$template['index_info_universities_button']??__('global_empty')}}</span>
                 </a>
             </div>
         </div>
         <div class="tab-pane fade" id="tab02" role="tabpanel" aria-labelledby="info-tab02">
-            <h3 class="_change_able" data-key="index_students_h3" data-value="{{$template['index_info_students_h3']}}">{{$template['index_info_students_h3']}}</h3>
-            <p class="_change_able" data-key="index_students_p" data-value="{{$template['index_info_students_p']}}">{{$template['index_info_students_p']}}</p>
+            <h3 class="_change_able" data-key="index_students_h3" data-page="{{$_GET['_page']??''}}">{{$template['index_info_students_h3']??__('global_empty')}}</h3>
+            <p class="_change_able" data-key="index_students_p" data-page="{{$_GET['_page']??''}}">{{$template['index_info_students_p']??__('global_empty')}}</p>
             <div class="btns">
                 <a href="{{url('/dobavit-otzyv')}}" class="btn has-ico">
                     <span class="ico">
@@ -143,7 +143,7 @@
                         <use xlink:href="#files-ico"></use>
                         </svg>
                     </span>
-                    <span class="_change_able" data-key="index_info_students_button" data-value="{{$template['index_info_students_button']}}">{{$template['index_info_students_button']}}</span>
+                    <span class="_change_able" data-key="index_info_students_button" data-page="{{$_GET['_page']??''}}">{{$template['index_info_students_button']??__('global_empty')}}</span>
                 </a>
             </div>
         </div>
@@ -155,8 +155,8 @@
 
     <!-- honest -->
     <div class="honest">
-        <h2 class="_change_able" data-key="index_honest_h2" data-value="{{$template['index_honest_h2']}}">{{$template['index_honest_h2']}}</h2>
-        <p class="_change_able" data-key="index_honest_p" data-value="{{$template['index_honest_p']}}">{{$template['index_honest_p']}}</p>
+        <h2 class="_change_able" data-key="index_honest_h2" data-page="{{$_GET['_page']??''}}">{{$template['index_honest_h2']??__('global_empty')}}</h2>
+        <p class="_change_able" data-key="index_honest_p" data-page="{{$_GET['_page']??''}}">{{$template['index_honest_p']??__('global_empty')}}</p>
         <a href="{{url('/dobavit-otzyv')}}" class="btn has-ico">
             <span class="ico">
             <svg class="icon">
@@ -172,17 +172,17 @@
 
     <!-- text -->
     <div class="text">
-        <h3 class="_change_able" data-key="index_last_info_h3" data-value="{{$template['index_last_info_h3']}}">{{$template['index_last_info_h3']}}</h3>
-        <p class="_change_able" data-key="index_last_info_p" data-value="{{$template['index_last_info_p']}}">
+        <h3 class="_change_able" data-key="index_last_info_h3" data-page="{{$_GET['_page']??''}}">{{$template['index_last_info_h3']??__('global_empty')}}</h3>
+        <p class="_change_able" data-key="index_last_info_p" data-page="{{$_GET['_page']??''}}">
             <?php 
-                if (strlen($template['index_last_info_p']>500)){ 
+                if (strlen($template['index_last_info_p']??__('global_empty')>500)){ 
                     echo substr($template['index_last_info_p'], 0, 500).'<span class="big-dots">...</span><span class="extra-text d-none">'.substr($template['index_last_info_p'], 500).'<span>';
                 }else{
-                    echo $template['index_last_info_p'];
+                    echo $template['index_last_info_p']??__('global_empty');
                 } 
             ?>
         </p>
-        <?php if (strlen($template['index_last_info_p']>500)){ ?>
+        <?php if (strlen($template['index_last_info_p']??__('global_empty'))>500){ ?>
             <a href="#" class="btn has-ico bordered-btn more-btn last-info-button">
                 <span class="last-info-button-text">Читать дальше</span>
                 <span class="ico">

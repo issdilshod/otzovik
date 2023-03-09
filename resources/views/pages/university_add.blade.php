@@ -239,17 +239,17 @@
 <div class="container">         
     <!-- text -->
     <div class="text">
-        <h3 class="_change_able" data-key="university_add_last_info_h3" data-value="{{$template['university_add_last_info_h3']}}">{{$template['university_add_last_info_h3']}}</h3>
-        <p class="_change_able" data-key="university_add_last_info_p" data-value="{{$template['university_add_last_info_p']}}">
+        <h3 class="_change_able" data-key="university_add_last_info_h3" data-page="{{$_GET['_page']??''}}">{{$template['university_add_last_info_h3']??''}}</h3>
+        <p class="_change_able" data-key="university_add_last_info_p" data-page="{{$_GET['_page']??''}}">
             <?php 
-                if (strlen($template['university_add_last_info_p']>500)){ 
+                if (strlen($template['university_add_last_info_p']??__('global_empty'))>500){ 
                     echo substr($template['university_add_last_info_p'], 0, 500).'<span class="big-dots">...</span><span class="extra-text d-none">'.substr($template['university_add_last_info_p'], 500).'<span>';
                 }else{
-                    echo $template['university_add_last_info_p'];
+                    echo $template['university_add_last_info_p']??__('global_empty');
                 } 
             ?>
         </p>
-        <?php if (strlen($template['university_add_last_info_p']>500)){ ?>
+        <?php if (strlen($template['university_add_last_info_p']??__('global_empty'))>500){ ?>
             <a href="#" class="btn has-ico bordered-btn more-btn last-info-button">
                 <span class="last-info-button-text">Читать дальше</span>
                 <span class="ico">

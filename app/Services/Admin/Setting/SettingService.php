@@ -26,10 +26,17 @@ class SettingService extends Service{
 
     public function saveByKey($setting, $key)
     {
-        Setting::where('status', Config::get('status.active'))
-                ->where('key', $key)
-                ->where('lang', Config::get('app.locale'))
-                ->update($setting);
+        $settingOrg = Setting::where('status', Config::get('status.active'))
+                        ->where('key', $key)
+                        ->where('lang', Config::get('app.locale'))
+                        ->first();
+        if ($settingOrg==null){ // create new
+            $setting['lang'] = Config::get('app.locale');
+            $setting['key'] = $key;
+            Setting::create($setting);
+        }else{
+            $settingOrg->update($setting);
+        }
         return true;
     }
 

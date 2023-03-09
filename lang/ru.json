@@ -17,6 +17,7 @@
     "global_success": "Успешно",
     "global_error": "Ошибка",
     "global_delete_alert": "Вы действительно хотите удалить?",
+    "global_empty": "Ваш текст",
 
     "login_title": "Вход",
     "login_welcome_title": "Войдите чтобы начать работу",

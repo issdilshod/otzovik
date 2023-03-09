@@ -25,6 +25,7 @@ class SettingController extends Controller
     {
         $validated = $request->validate([
             'value' => 'required',
+            'page' => '',
             'user_id' => '',
         ]);
 
@@ -38,7 +39,7 @@ class SettingController extends Controller
         // permission
 
         return view('admin.pages.setting.setting.settings', [
-            'src' => url('/').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0],
+            'src' => url('/').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0].'&_page='.Config::get('pages.index'),
             'seo' => $this->seoService->findByUrl('home'),
             'token' => Session::get('token')[0]
         ]);
@@ -49,7 +50,7 @@ class SettingController extends Controller
         // permission
 
         return view('admin.pages.setting.setting.settings', [
-            'src' => url('/poisk').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0],
+            'src' => url('/poisk').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0].'&_page='.Config::get('pages.search'),
             'seo' => $this->seoService->findByUrl('poisk'),
             'token' => Session::get('token')[0]
         ]);
@@ -60,7 +61,7 @@ class SettingController extends Controller
         // permission
 
         return view('admin.pages.setting.setting.settings', [
-            'src' => url('/poisk2').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0],
+            'src' => url('/poisk2').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0].'&_page='.Config::get('pages.search2'),
             'seo' => $this->seoService->findByUrl('poisk2'),
             'token' => Session::get('token')[0]
         ]);
@@ -71,9 +72,9 @@ class SettingController extends Controller
         // permission
 
         return view('admin.pages.setting.setting.settings', [
-            'src' => url('/universitety').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0],
+            'src' => url('/universitety').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0].'&_page='.Config::get('pages.universities'),
             'seo' => $this->seoService->findByUrl('universitety'),
-            'token' => Session::get('token')[0]
+            'token' => Session::get('token')[0],
         ]);
     }
 
@@ -82,7 +83,7 @@ class SettingController extends Controller
         // permission
 
         return view('admin.pages.setting.setting.settings', [
-            'src' => url('/universitet').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0]
+            'src' => url('/universitet').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0].'&_page='.Config::get('pages.university')
         ]);
     }
 
@@ -91,7 +92,7 @@ class SettingController extends Controller
         // permission
 
         return view('admin.pages.setting.setting.settings', [
-            'src' => url('/otzyvy').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0],
+            'src' => url('/otzyvy').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0].'&_page='.Config::get('pages.reviews'),
             'seo' => $this->seoService->findByUrl('otzyvy'),
             'token' => Session::get('token')[0]
         ]);
@@ -102,7 +103,7 @@ class SettingController extends Controller
         // permission
 
         return view('admin.pages.setting.setting.settings', [
-            'src' => url('/otzyv').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0]
+            'src' => url('/otzyv').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0].'&_page='.Config::get('pages.review')
         ]);
     }
 
@@ -111,7 +112,7 @@ class SettingController extends Controller
         // permission
 
         return view('admin.pages.setting.setting.settings', [
-            'src' => url('/dobavit-otzyv').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0],
+            'src' => url('/dobavit-otzyv').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0].'&_page='.Config::get('pages.review_add'),
             'seo' => $this->seoService->findByUrl('dobavit-otzyv'),
             'token' => Session::get('token')[0]
         ]);
@@ -122,7 +123,7 @@ class SettingController extends Controller
         // permission
 
         return view('admin.pages.setting.setting.settings', [
-            'src' => url('/posti').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0],
+            'src' => url('/posti').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0].'&_page='.Config::get('pages.articles'),
             'seo' => $this->seoService->findByUrl('posti'),
             'token' => Session::get('token')[0]
         ]);
@@ -133,7 +134,7 @@ class SettingController extends Controller
         // permission
 
         return view('admin.pages.setting.setting.settings', [
-            'src' => url('/o-service').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0],
+            'src' => url('/o-service').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0].'&_page='.Config::get('pages.about'),
             'seo' => $this->seoService->findByUrl('o-service'),
             'token' => Session::get('token')[0]
         ]);
@@ -144,7 +145,7 @@ class SettingController extends Controller
         // permission
 
         return view('admin.pages.setting.setting.settings', [
-            'src' => url('/faq').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0],
+            'src' => url('/faq').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0].'&_page='.Config::get('pages.faq'),
             'seo' => $this->seoService->findByUrl('faq'),
             'token' => Session::get('token')[0]
         ]);
@@ -155,7 +156,7 @@ class SettingController extends Controller
         // permission
 
         return view('admin.pages.setting.setting.settings', [
-            'src' => url('/uchebnim-zavedeniyam').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0],
+            'src' => url('/uchebnim-zavedeniyam').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0].'&_page='.Config::get('pages.educational'),
             'seo' => $this->seoService->findByUrl('uchebnim-zavedeniyam'),
             'token' => Session::get('token')[0]
         ]);

@@ -41,8 +41,8 @@
     <!-- hero -->
     <div class="hero">
       <div class="hero-text">
-        <h1 class="_change_able" data-key="reviews_info_h1" data-value="{{$template['reviews_info_h1']}}">{{$template['reviews_info_h1']}}</h1> 
-        <p class="_change_able" data-key="reviews_info_p" data-value="{{$template['reviews_info_p']}}">{{$template['reviews_info_p']}}</p>       
+        <h1 class="_change_able" data-key="reviews_info_h1" data-page="{{$_GET['_page']??''}}">{{$template['reviews_info_h1']??__('global_empty')}}</h1> 
+        <p class="_change_able" data-key="reviews_info_p" data-page="{{$_GET['_page']??''}}">{{$template['reviews_info_p']??__('global_empty')}}</p>       
         <div class="btns">
           <a href="{{url('dobavit-otzyv')}}" class="btn has-ico">
             <span class="ico">
@@ -148,17 +148,17 @@
 
     <!-- text -->
     <div class="text">
-        <h3 class="_change_able" data-key="reviews_last_info_h3" data-value="{{$template['reviews_last_info_h3']}}">{{$template['reviews_last_info_h3']}}</h3>
-        <p class="_change_able" data-key="reviews_last_info_p" data-value="{{$template['reviews_last_info_p']}}">
+        <h3 class="_change_able" data-key="reviews_last_info_h3" data-page="{{$_GET['_page']??''}}">{{$template['reviews_last_info_h3']??__('global_empty')}}</h3>
+        <p class="_change_able" data-key="reviews_last_info_p" data-page="{{$_GET['_page']??''}}">
             <?php 
-                if (strlen($template['reviews_last_info_p']>500)){ 
+                if (strlen($template['reviews_last_info_p']??__('global_empty'))>500){ 
                     echo substr($template['reviews_last_info_p'], 0, 500).'<span class="big-dots">...</span><span class="extra-text d-none">'.substr($template['reviews_last_info_p'], 500).'<span>';
                 }else{
-                    echo $template['reviews_last_info_p'];
+                    echo $template['reviews_last_info_p']??__('global_empty');
                 } 
             ?>
         </p>
-        <?php if (strlen($template['reviews_last_info_p']>500)){ ?>
+        <?php if (strlen($template['reviews_last_info_p']??__('global_empty'))>500){ ?>
             <a href="#" class="btn has-ico bordered-btn more-btn last-info-button">
                 <span class="last-info-button-text">Читать дальше</span>
                 <span class="ico">

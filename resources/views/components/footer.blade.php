@@ -220,6 +220,7 @@
         var user_id = $('#_user_id').val();
         var key = $('#_key').val();
         var value = $('#_value').val();
+        var page = $('#_page').val();
         var token = $('#_token').val();
 
         $.ajax({
@@ -230,7 +231,8 @@
             },
             data: {
                 user_id: user_id,
-                value: value
+                value: value,
+                page: page
             },
             success: function(res){
                 $('#_modal1').modal('hide');
@@ -240,6 +242,7 @@
 
                 $('#_key').val('');
                 $('#_value').val('');
+                $('#_page').val('');
 
                 Toast.fire({
                     icon: 'success',
@@ -264,10 +267,19 @@
     // click elements to update
     $(document).on('click', '._change_able', function(e){
         var key = $(this).attr('data-key');
-        var value = $(this).attr('data-value');
+        var page = $(this).attr('data-page');
+        var value = '';
+
+        // if link then get from attr
+        if ($(this).attr('data-link')=='1'){
+            value = $(this).attr('href');
+        }else{
+            value = $(this).text().trim();
+        }
 
         $('#_key').val(key);
         $('#_value').val(value);
+        $('#_page').val(page);
 
         $('#_modal1').modal('show');
     })
@@ -289,6 +301,7 @@
         <div class="modal-body">
             <form class="_setting_form">
                 <input type="hidden" id="_key" />
+                <input type="hidden" id="_page" />
                 <div class="form-group">
                     <label for="_value">{{__('global_value')}}</label>
                     <textarea id="_value" class="form-control" style="height: 200px"></textarea> 
