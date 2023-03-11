@@ -208,10 +208,11 @@ class MainController extends Controller
         $filter = (isset($request->filter)?$request->filter:'');
 
         $data['current_direction'] = '';
+        $data['current_city'] = '';
         $data['current_filter'] = $filter;
 
         // slug1
-        if (SlugService::isCity($slug1)){ $city = SlugService::isCity($slug1); }
+        if (SlugService::isCity($slug1)){ $data['current_city'] = $slug1; $city = SlugService::isCity($slug1); }
         if (SlugService::isDirection($slug1)){ $data['current_direction'] = $slug1; $direction = SlugService::isDirection($slug1); }
         if (SlugService::isPage($slug1)){ $page = SlugService::isPage($slug1); }
         // slug2
@@ -221,10 +222,10 @@ class MainController extends Controller
         if (SlugService::isPage($slug3)){ $page = SlugService::isPage($slug3); }
 
         // if city equals russia then all cities
-        if ($city=='russia'){ $city = ''; }
+        if ($city=='russia'){ $city = ''; $data['current_city'] = ''; }
 
         // if direction equals vse then all directions
-        if ($direction=='vse'){ $direction = ''; }
+        if ($direction=='vse'){ $direction = ''; $data['current_direction'] = ''; }
 
         // breakcrumbs
         $data['breadcrumbs'] = [];
@@ -269,9 +270,10 @@ class MainController extends Controller
 
         // direction
         $data['direction'] = ($data['current_direction']!=''?'_'.$data['current_direction']:'');
+        $data['city'] = ($data['current_city']!=''?'_'.$data['current_city']:'');
 
         // settings
-        $data['template'] = $this->settingService->findByPage(Config::get('pages.universities').$data['direction']);
+        $data['template'] = $this->settingService->findByPage(Config::get('pages.universities').$data['city'].$data['direction']);
         $data['settings']['current_page'] = Config::get('pages.universities');
         $data['settings']['mode'] = $this->mainService->_mode($request);
 

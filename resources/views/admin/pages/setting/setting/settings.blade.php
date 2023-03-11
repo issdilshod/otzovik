@@ -29,25 +29,33 @@
     </div>
     @endif
 
-    @isset($directions)
+    @isset($cities)
     <div class="container-fluid mt-2 mb-2">
         <div class="row">
-            <div class="col-sm-4 mt-1">
-                <a href="{{url('admin/settings/templates/universities')}}" class="btn btn-block btn-<?php if ($d==''){echo 'primary';}else{echo 'default';}?> mr-2">
-                    Все
-                </a>
+            <div class="tcd col-sm-6 mt-1">
+                <select class="form-control">
+                    <option value="russia">Россия</option>
+                    @foreach ($cities as $city)
+                    <option value="{{App\Services\Admin\Misc\UrlService::url_templater_loc_dir(url('admin/settings/templates/universities'), $city->slug)}}" <?php if (isset($_GET['c']) && $_GET['c']==$city->slug){ echo 'selected';} ?>>{{$city->name}}</option>
+                    @endforeach
+                </select>
             </div>
-            @foreach ($directions as $direction)
-            <div class="col-sm-4 mt-1">
-                <a href="{{url('admin/settings/templates/universities?d='.$direction->slug)}}" class="btn btn-block btn-<?php if ($d==$direction->slug){echo 'primary';}else{echo 'default';}?> mr-2">
-                    {{$direction->name}}
-                </a>
+            <div class="tcd col-sm-6 mt-1">
+                <select class="form-control">
+                    <option value="{{App\Services\Admin\Misc\UrlService::url_templater_loc_dir(url('admin/settings/templates/universities'), '', 'vse')}}">Все</option>
+                    @foreach ($directions as $direction)
+                    <option value="{{App\Services\Admin\Misc\UrlService::url_templater_loc_dir(url('admin/settings/templates/universities'), '', $direction->slug)}}" <?php if (isset($_GET['d']) && $_GET['d']==$direction->slug){ echo 'selected';} ?>>{{$direction->name}}</option>
+                    @endforeach
+                </select>
             </div>
-            @endforeach
         </div>
     </div>
+    <script>
+        $(document).on('change', '.tcd select', function(e){
+            window.location.href = e.target.value;
+        });
+    </script>
     @endisset
-
 
     <iframe 
         id="inlineFrameExample"

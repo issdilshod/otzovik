@@ -40,8 +40,8 @@
     <!-- hero -->
     <div class="hero">
       <div class="hero-text has-size">
-        <h1 class="_change_able" data-key="universities_info_h1{{$direction}}" data-page="{{($_GET['_page']??'').$direction}}">{{$template['universities_info_h1'.$direction]??__('global_empty')}}</h1>
-        <p class="_change_able" data-key="universities_info_p{{$direction}}" data-page="{{($_GET['_page']??'').$direction}}">{{$template['universities_info_p'.$direction]??__('global_empty')}}</p>        
+        <h1 class="_change_able" data-key="universities_info_h1{{$city}}{{$direction}}" data-page="{{($_GET['_page']??'').$city.$direction}}">{{$template['universities_info_h1'.$city.$direction]??__('global_empty')}}</h1>
+        <p class="_change_able" data-key="universities_info_p{{$city}}{{$direction}}" data-page="{{($_GET['_page']??'').$city.$direction}}">{{$template['universities_info_p'.$city.$direction]??__('global_empty')}}</p>        
       </div>
       <div class="hero-img"><img src="{{ asset('assets/images/hero02.svg') }}" alt=""></div>
     </div>
@@ -138,8 +138,8 @@
 
     <!-- honest -->
     <div class="honest">
-        <h2 class="_change_able" data-key="universities_honest_h2{{$direction}}" data-page="{{($_GET['_page']??'').$direction}}">{{$template['universities_honest_h2'.$direction]??__('global_empty')}}</h2>
-        <p class="_change_able" data-key="universities_honest_p{{$direction}}" data-page="{{($_GET['_page']??'').$direction}}">{{$template['universities_honest_p'.$direction]??__('global_empty')}}</p>
+        <h2 class="_change_able" data-key="universities_honest_h2{{$city}}{{$direction}}" data-page="{{($_GET['_page']??'').$city.$direction}}">{{$template['universities_honest_h2'.$city.$direction]??__('global_empty')}}</h2>
+        <p class="_change_able" data-key="universities_honest_p{{$city}}{{$direction}}" data-page="{{($_GET['_page']??'').$city.$direction}}">{{$template['universities_honest_p'.$city.$direction]??__('global_empty')}}</p>
         <a href="{{url('/dobavit-otzyv')}}" class="btn has-ico">
             <span class="ico">
             <svg class="icon">
@@ -167,17 +167,17 @@
 
     <!-- text -->
     <div class="text">
-        <h3 class="_change_able" data-key="universities_last_info_h3{{$direction}}" data-page="{{($_GET['_page']??'').$direction}}">{{$template['universities_last_info_h3'.$direction]??__('global_empty')}}</h3>
-        <p class="_change_able" data-key="universities_last_info_p{{$direction}}" data-page="{{($_GET['_page']??'').$direction}}">
+        <h3 class="_change_able" data-key="universities_last_info_h3{{$city}}{{$direction}}" data-page="{{($_GET['_page']??'').$city.$direction}}">{{$template['universities_last_info_h3'.$city.$direction]??__('global_empty')}}</h3>
+        <p class="_change_able" data-key="universities_last_info_p{{$city}}{{$direction}}" data-page="{{($_GET['_page']??'').$city.$direction}}">
             <?php 
-                if (strlen($template['universities_last_info_p'.$direction]??'')>500){ 
-                    echo substr($template['universities_last_info_p'.$direction], 0, 500).'<span class="big-dots">...</span><span class="extra-text d-none">'.substr($template['universities_last_info_p'.$direction], 500).'<span>';
+                if (strlen($template['universities_last_info_p'.$city.$direction]??'')>500){ 
+                    echo substr($template['universities_last_info_p'.$city.$direction], 0, 500).'<span class="big-dots">...</span><span class="extra-text d-none">'.substr($template['universities_last_info_p'.$city.$direction], 500).'<span>';
                 }else{
-                    echo $template['universities_last_info_p'.$direction]??__('global_empty');
+                    echo $template['universities_last_info_p'.$city.$direction]??__('global_empty');
                 } 
             ?>
         </p>
-        <?php if (strlen($template['universities_last_info_p'.$direction]??'')>500){ ?>
+        <?php if (strlen($template['universities_last_info_p'.$city.$direction]??'')>500){ ?>
             <a href="#" class="btn has-ico bordered-btn more-btn last-info-button">
                 <span class="last-info-button-text">Читать дальше</span>
                 <span class="ico">

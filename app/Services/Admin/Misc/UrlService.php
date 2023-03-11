@@ -27,4 +27,31 @@ class UrlService extends Service{
         return $tmpLink[0];
     }
 
+    public static function url_templater_loc_dir($url, $city = '', $direction = '')
+    {
+        if (isset($_GET['d']) && $direction==''){
+            $direction = $_GET['d'];
+        }
+
+        if (isset($_GET['c']) && $city==''){
+            $city = $_GET['c'];
+        }
+
+        $attr = '';
+        if ($city!=''){
+            $attr.='?c='.$city;
+        }
+
+        if ($direction!=''){
+            if ($attr==''){
+                $attr.='?';
+            }else{
+                $attr.='&';
+            }
+            $attr.='d='.$direction;
+        }
+
+        return $url.$attr;
+    }
+
 }
