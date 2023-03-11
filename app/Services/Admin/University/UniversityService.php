@@ -39,7 +39,7 @@ class UniversityService extends Service{
         $universities = University::withCount('reviews')
                             ->where('status', '!=', Config::get('status.delete'))
                             ->when($name!='', function ($q) use($name){
-                                $q->where('name', 'like', $name . '%');
+                                $q->where('name', 'like', '%'.$name.'%');
                             })
                             ->when($filter!='', function($qq)use($filter){
                                 $qq->when($filter=='name-asc', function($qq1){ // name - asc

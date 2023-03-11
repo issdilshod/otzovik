@@ -23,8 +23,8 @@ class CommentService extends Service{
                         ->where('c.status', '!=', Config::get('status.delete'))
                         ->when($q!='', function ($qq) use($q){
                             $qq->where(function($qq1) use($q){
-                                $qq1->where('u.first_name', 'like', $q.'%')
-                                    ->orWhere('a.title', 'like', $q.'%');
+                                $qq1->where('u.first_name', 'like', '%'.$q.'%')
+                                    ->orWhere('a.title', 'like', '%'.$q.'%');
                             });
                         })
                         ->when($f!='', function($qq)use($f){

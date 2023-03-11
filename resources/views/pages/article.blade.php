@@ -153,12 +153,12 @@
             <div class="row">
             <div class="col-lg-4">
                 <div class="form-group">
-                    <input name="first_name" type="text" placeholder="Имя*" class="form-control" />
+                    <input name="first_name" type="text" placeholder="Имя*" class="form-control" maxlength="20" />
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="form-group">
-                    <input name="last_name" type="text" placeholder="Фамилия" class="form-control" />
+                    <input name="last_name" type="text" placeholder="Фамилия" class="form-control" maxlength="20" />
                 </div>
             </div>
             <div class="col-lg-4">
@@ -182,8 +182,8 @@
                 Оставить комментарий
             </button>
             <div class="rateit-wrapper">
-                <div id="rateit" class="rateit"></div>
-                <div id="value" class="value">0.0</div>
+                <div id="rateit" class="rateit" data-rateit-value="1.0"></div>
+                <div id="value" class="value">1.0</div>
             </div>
             <div class="file-box">
                 <input type="file" name="file" data-jcf='{"buttonText": "", "placeholderText": "Загрузить фото: jpg или png"}'>

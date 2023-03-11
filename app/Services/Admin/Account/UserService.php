@@ -21,10 +21,10 @@ class UserService extends Service{
         $users = User::where('status', '!=', Config::get('status.delete'))
                     ->when($q!='', function($qq) use ($q){
                         $qq->where(function($qq1) use($q){
-                            $qq1->where('first_name', 'like', $q.'%')
-                                ->orWhere('last_name', 'like', $q.'%')
-                                ->orWhere('email', 'like', $q.'%')
-                                ->orWhere('phone', 'like', $q.'%');
+                            $qq1->where('first_name', 'like', '%'.$q.'%')
+                                ->orWhere('last_name', 'like', '%'.$q.'%')
+                                ->orWhere('email', 'like', '%'.$q.'%')
+                                ->orWhere('phone', 'like', '%'.$q.'%');
                         });
                     })
                     ->when($f!='', function($qq)use($f){

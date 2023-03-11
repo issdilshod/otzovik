@@ -29,8 +29,8 @@ class ReviewService extends Service{
                         ->where('r.status', '!=', Config::get('status.delete'))
                         ->when($q!='', function($qq) use($q){
                             $qq->where(function($qq1) use($q){
-                                $qq1->where('us.first_name', 'like', $q.'%')
-                                    ->orWhere('un.name', 'like', $q.'%');
+                                $qq1->where('us.first_name', 'like', '%'.$q.'%')
+                                    ->orWhere('un.name', 'like', '%'.$q.'%');
                             });
                         })
                         ->when($f!='', function($qq)use($f){
