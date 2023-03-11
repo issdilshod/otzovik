@@ -29,25 +29,29 @@
     </div>
     @endif
 
-    @isset($cities)
+    @if (isset($cities) || isset($directions))
     <div class="container-fluid mt-2 mb-2">
         <div class="row">
+            @isset($cities)
             <div class="tcd col-sm-6 mt-1">
                 <select class="form-control">
                     <option value="russia">Россия</option>
                     @foreach ($cities as $city)
-                    <option value="{{App\Services\Admin\Misc\UrlService::url_templater_loc_dir(url('admin/settings/templates/universities'), $city->slug)}}" <?php if (isset($_GET['c']) && $_GET['c']==$city->slug){ echo 'selected';} ?>>{{$city->name}}</option>
+                    <option value="{{App\Services\Admin\Misc\UrlService::url_templater_loc_dir($city->slug)}}" <?php if (isset($_GET['c']) && $_GET['c']==$city->slug){ echo 'selected';} ?>>{{$city->name}}</option>
                     @endforeach
                 </select>
             </div>
+            @endisset
+            @isset($directions)
             <div class="tcd col-sm-6 mt-1">
                 <select class="form-control">
-                    <option value="{{App\Services\Admin\Misc\UrlService::url_templater_loc_dir(url('admin/settings/templates/universities'), '', 'vse')}}">Все</option>
+                    <option value="{{App\Services\Admin\Misc\UrlService::url_templater_loc_dir('', 'vse')}}">Все</option>
                     @foreach ($directions as $direction)
-                    <option value="{{App\Services\Admin\Misc\UrlService::url_templater_loc_dir(url('admin/settings/templates/universities'), '', $direction->slug)}}" <?php if (isset($_GET['d']) && $_GET['d']==$direction->slug){ echo 'selected';} ?>>{{$direction->name}}</option>
+                    <option value="{{App\Services\Admin\Misc\UrlService::url_templater_loc_dir('', $direction->slug)}}" <?php if (isset($_GET['d']) && $_GET['d']==$direction->slug){ echo 'selected';} ?>>{{$direction->name}}</option>
                     @endforeach
                 </select>
             </div>
+            @endisset
         </div>
     </div>
     <script>
@@ -55,7 +59,7 @@
             window.location.href = e.target.value;
         });
     </script>
-    @endisset
+    @endif
 
     <iframe 
         id="inlineFrameExample"

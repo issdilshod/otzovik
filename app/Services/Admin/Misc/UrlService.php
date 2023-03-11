@@ -27,8 +27,11 @@ class UrlService extends Service{
         return $tmpLink[0];
     }
 
-    public static function url_templater_loc_dir($url, $city = '', $direction = '')
+    public static function url_templater_loc_dir($city = '', $direction = '')
     {
+        $fullUrl = url()->full();
+        $tmpLink = explode('?', $fullUrl);
+
         if (isset($_GET['d']) && $direction==''){
             $direction = $_GET['d'];
         }
@@ -51,7 +54,7 @@ class UrlService extends Service{
             $attr.='d='.$direction;
         }
 
-        return $url.$attr;
+        return $tmpLink[0].$attr;
     }
 
 }

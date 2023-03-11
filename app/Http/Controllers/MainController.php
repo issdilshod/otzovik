@@ -268,7 +268,7 @@ class MainController extends Controller
         $data['last_reviews'] = $this->reviewService->last();
         $data['list'] = $this->universityService->findAllFront($city, $direction, $page, $filter);
 
-        // direction
+        // templater
         $data['direction'] = ($data['current_direction']!=''?'_'.$data['current_direction']:'');
         $data['city'] = ($data['current_city']!=''?'_'.$data['current_city']:'');
 
@@ -372,6 +372,9 @@ class MainController extends Controller
             ];
         }
 
+        // if direction equals vse then all directions
+        if ($direction=='vse'){ $direction = ''; $data['current_direction'] = ''; }
+
         // SEO
         $data['seo'] = $this->seoService->findByUrl('otzyvy');
 
@@ -382,8 +385,11 @@ class MainController extends Controller
         $data['last_articles'] = $this->articleService->last();
         $data['list'] = $this->reviewService->findAllFront($page, $filter, $direction);
 
+        // templater
+        $data['direction'] = ($data['current_direction']!=''?'_'.$data['current_direction']:'');
+
         // settings
-        $data['template'] = $this->settingService->findByPage(Config::get('pages.reviews'));
+        $data['template'] = $this->settingService->findByPage(Config::get('pages.reviews').$data['direction']);
         $data['settings']['current_page'] = Config::get('pages.reviews');
         $data['settings']['mode'] = $this->mainService->_mode($request);
 

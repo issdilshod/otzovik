@@ -101,9 +101,10 @@ class SettingController extends Controller
         // permission
 
         return view('admin.pages.setting.setting.settings', [
-            'src' => url('/otzyvy').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0].'&_page='.Config::get('pages.reviews'),
+            'src' => url('/otzyvy'.($request->d?'/'.$request->d:'')).'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0].'&_page='.Config::get('pages.reviews'),
             'seo' => $this->seoService->findByUrl('otzyvy'),
-            'token' => Session::get('token')[0]
+            'token' => Session::get('token')[0],
+            'directions' => $this->directionService->getAll(),
         ]);
     }
 
