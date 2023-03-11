@@ -193,7 +193,7 @@
 </div>
 </main>
 
-@include('components.modals.location')
+@include('components.modals.location', ['is_link' => true])
 
 @include('components.modals.success-subscribe')
 

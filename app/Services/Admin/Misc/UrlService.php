@@ -13,6 +13,11 @@ class UrlService extends Service{
         return url($url.($withCity?($citySlug!=''?'/'.$citySlug:''):'').($directionSlug!=''?'/'.$directionSlug:''));
     }
 
+    public static function url_location($city = '', $direction = '')
+    {
+        return url('/universitety'.($city!=''?'/'.$city:'').($direction!=''?'/'.$direction:''));
+    }
+
     public static function url_canonical()
     {
         $fullUrl = url()->full();

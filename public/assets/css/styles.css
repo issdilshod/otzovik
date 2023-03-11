@@ -394,14 +394,16 @@ div[class*=col-] {
 }
 
 .search-ico,
-.search-btn {
+.search-btn,
+.search-btn-loc {
   display: block;
   width: 26px;
   height: 26px;
   cursor: pointer;
 }
 .search-ico svg,
-.search-btn svg {
+.search-btn svg,
+.search-btn-loc svg {
   fill: #5280E2;
 }
 
@@ -1481,7 +1483,7 @@ textarea.form-control {
   position: relative;
   margin-bottom: 30px;
 }
-.full-search .search-btn {
+.full-search .search-btn, .search-btn-loc {
   display: block;
   position: absolute;
   z-index: 2;

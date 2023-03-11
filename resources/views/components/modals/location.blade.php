@@ -1,33 +1,31 @@
 <!-- Modal -->
 <div class="modal fade" id="modal01" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">      
-      <form>
+    <div class="modal-content"> 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
         <div class="modal-title">Где вы находитесь?</div>
         <div class="full-search">                      
-          <div class="form-group">
+            <div class="form-group">
             <input type="text" class="form-control search-location" placeholder="Укажите местоположение">
-            <div class="search-btn">
-              <svg class="icon">
+            <div class="search-btn-loc">
+                <svg class="icon">
                 <use xlink:href="#search-ico"></use>
-              </svg>
+                </svg>
             </div>            
-          </div>          
+            </div>          
         </div>
         <ul class="city-list">
             <li>
                 <?php $value = ['name'=> 'Россия', 'slug'=> 'russia', 'id'=> '']; ?>
-                <a class="choose-location" data-data="{{json_encode($value)}}">Россия</a>
+                <a href="{{App\Services\Admin\Misc\UrlService::url_location($value['slug'], $current_direction??'')}}" class="choose-location" data-data="{{json_encode($value)}}">Россия</a>
             </li>
             @foreach ($cities as $city)
                 <li>
                     <?php $value = ['name' => $city->name, 'slug' => $city->slug, 'id' => $city->id ]; ?>
-                    <a class="choose-location" data-data="{{json_encode($value)}}">{{$city->name}}</a>
+                    <a href="{{App\Services\Admin\Misc\UrlService::url_location($value['slug'], $current_direction??'')}}" class="choose-location" data-data="{{json_encode($value)}}">{{$city->name}}</a>
                 </li> 
-            @endforeach  
+            @endforeach
         </ul>
-      </form>
     </div>  
   </div>
 </div>
@@ -61,7 +59,11 @@
 
     // choose location and save to storage
     $(document).on('click', '.choose-location', function(e){
-        e.preventDefault();
+        let prev = "<?php if (isset($is_link)){echo '0';}else{echo '1';}?>";
+
+        if (prev=='1'){
+            e.preventDefault();
+        }
 
         var tmpData = $(this).data('data');
 
@@ -76,12 +78,49 @@
     });
 
     // search more cities
-    $(document).on('click', '.full-search .search-btn', function(e){
+    $(document).on('click', '.full-search .search-btn-loc', function(e){
         e.preventDefault();
 
-        var value = $('.search-location').val();
+        var currentDir = "{{$current_direction??''}}";
+        var mainUrl = "{{url('/universitety')}}";
 
-        // TODO: Ajax request and show in form
+        var value = $('.search-location').val();
+        var url = '<?=url('api/cities')?>'+(value?'/'+value:'');
+
+        $.ajax({
+            type: 'get',
+            url: url,
+            success: function(res){
+                $('.city-list').html('');
+
+                // set to modal
+                var li = document.createElement('li');
+                var a = document.createElement('a');
+                a.href = mainUrl+'/russia'+(currentDir!=''?'/'+currentDir:'');
+                a.classList.add('choose-location');
+                a.dataset.data = JSON.stringify({name: 'Россия', slug: 'russia', id: ''});
+                a.innerText = 'Россия';
+                li.appendChild(a);
+
+                $('.city-list').append(li);
+
+                //var result = '<li><a href="'+mainUrl+'/russia'+(currentDir!=''?'/'+currentDir:'')+'" class="choose-location" data-data="'+JSON.stringify({name: 'Россия', slug: 'russia', id: ''})+'">Россия</a></li>';
+                for (var i in res.data){
+                    var li1 = document.createElement('li');
+                    var a1 = document.createElement('a');
+                    a1.href = mainUrl+'/'+res.data[i].slug+(currentDir!=''?'/'+currentDir:'');
+                    a1.classList.add('choose-location');
+                    a1.dataset.data = JSON.stringify(res.data[i]);
+                    a1.innerText = res.data[i].name;
+                    li1.appendChild(a1);
+
+                    $('.city-list').append(li1);
+
+                    //result+='<li><a href="'+mainUrl+'/'+res.data[i].slug+(currentDir!=''?'/'+currentDir:'')+'" class="choose-location" data-data="'+JSON.stringify(res.data[i])+'">'+res.data[i].name+'</a></li>';
+                }
+
+            }
+        });
     })
 
     // set cookie
