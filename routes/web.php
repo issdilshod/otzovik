@@ -131,6 +131,7 @@ Route::middleware(['auth.custom'])->group(function (){
     Route::get('/admin/settings/templates/index', [SettingController::class, 'index']);
     Route::get('/admin/settings/templates/search', [SettingController::class, 'search']);
     Route::get('/admin/settings/templates/search2', [SettingController::class, 'search2']);
+    Route::get('/admin/settings/templates/top', [SettingController::class, 'top']);
     Route::get('/admin/settings/templates/universities', [SettingController::class, 'universities']);
     Route::get('/admin/settings/templates/university', [SettingController::class, 'university']);
     Route::get('/admin/settings/templates/reviews', [SettingController::class, 'reviews']);

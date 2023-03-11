@@ -133,6 +133,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{ url('/admin/settings/templates/top') }}" class="nav-link {{ (request()->is('admin/settings/templates/top')) ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{__('menu_templates_top_title')}}</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ url('/admin/settings/templates/universities') }}" class="nav-link {{ (request()->is('admin/settings/templates/universities')) ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>{{__('menu_templates_universities_title')}}</p>

@@ -73,6 +73,17 @@ class SettingController extends Controller
         ]);
     }
 
+    public function top(Request $request)
+    {
+        // permission
+
+        return view('admin.pages.setting.setting.settings', [
+            'src' => url('/top-universitety').'?_mode='.Config::get('app._mode.edit').'&_token='.Session::get('token')[0].'&_page='.Config::get('pages.top'),
+            'seo' => $this->seoService->findByUrl('top-universitety'),
+            'token' => Session::get('token')[0]
+        ]);
+    }
+
     public function universities(Request $request)
     {
         // permission

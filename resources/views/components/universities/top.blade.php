@@ -61,7 +61,10 @@
             @endforeach
           </div>
         </div>
-        <div class="text-center"><a href="{{url('/top-universitety')}}" class="btn">Посмотреть все</a></div>
+        @if(!isset($remove_more))
+            <div class="text-center"><a href="{{url('/top-universitety')}}" class="btn">Посмотреть все</a></div>
+        @endif
+        
       </div>
       <!-- / top-rate -->
 </div>
