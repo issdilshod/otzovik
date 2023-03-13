@@ -17,12 +17,12 @@
         <ul class="city-list">
             <li>
                 <?php $value = ['name'=> 'Россия', 'slug'=> 'russia', 'id'=> '']; ?>
-                <a href="{{App\Services\Admin\Misc\UrlService::url_location($value['slug'], $current_direction??'')}}" class="choose-location" data-data="{{json_encode($value)}}">Россия</a>
+                <a href="<?php if (isset($is_link)){echo \App\Services\Admin\Misc\UrlService::url_location($value['slug'],$current_direction??'');}else{echo '#';}?>" class="choose-location" data-data="{{json_encode($value)}}">Россия</a>
             </li>
             @foreach ($cities as $city)
                 <li>
                     <?php $value = ['name' => $city->name, 'slug' => $city->slug, 'id' => $city->id ]; ?>
-                    <a href="{{App\Services\Admin\Misc\UrlService::url_location($value['slug'], $current_direction??'')}}" class="choose-location" data-data="{{json_encode($value)}}">{{$city->name}}</a>
+                    <a href="<?php if (isset($is_link)){echo \App\Services\Admin\Misc\UrlService::url_location($value['slug'],$current_direction??'');}else{echo '#';}?>" class="choose-location" data-data="{{json_encode($value)}}">{{$city->name}}</a>
                 </li> 
             @endforeach
         </ul>
@@ -63,6 +63,7 @@
 
         if (prev=='1'){
             e.preventDefault();
+            $('#modal01').modal('hide');
         }
 
         var tmpData = $(this).data('data');

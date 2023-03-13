@@ -43,7 +43,7 @@
             <div class="form-group size01">
                 <label for="place">Регион</label>
                 <div class="input-wrapper">
-                <input type="text" placeholder="Россия" id="place" data-slug="{{$current_location['slug']}}" value="{{$current_location['name']}}">
+                <input type="text" placeholder="Россия (все города)" id="place" data-slug="{{$current_location['slug']}}" value="{{$current_location['name']}}">
                 <div class="input-hint" style="display:none">
                     <ul></ul>
                 </div>
@@ -52,6 +52,7 @@
             <div class="form-group size02">
                 <label>Направление</label>
                 <select id="jcf-direction" data-jcf='{"wrapNative": false, "wrapNativeOnMobile": false, "fakeDropInBody": false, "useCustomScroll": false}'>
+                    <option value="vse">Все</option>
                     @foreach ($directions as $direction)
                         <option value="{{$direction->slug}}" <?php if ($direction->slug==$current_direction){ echo 'selected'; } ?>>{{$direction->name}}</option>
                     @endforeach
@@ -60,6 +61,7 @@
             <div class="form-group size03">
                 <label>Уровень образования</label>
                 <select id="jcf-level" data-jcf='{"wrapNative": false, "wrapNativeOnMobile": false, "fakeDropInBody": false, "useCustomScroll": false}'>
+                    <option value="luboe">Любое</option>
                     @foreach ($education_levels as $education_level)
                         <option value="{{$education_level->slug}}" <?php if (isset($_GET['level']) && $_GET['level']==$education_level->slug){ echo 'selected'; } ?>>{{$education_level->name}}</option>
                     @endforeach                
@@ -68,6 +70,7 @@
             <div class="form-group size04">
                 <label>Форма обучения</label>
                 <select id="jcf-type" data-jcf='{"wrapNative": false, "wrapNativeOnMobile": false, "fakeDropInBody": false, "useCustomScroll": false}'>
+                    <option value="lubaya">Любая</option>
                     @foreach ($education_types as $education_type)
                         <option value="{{$education_type->slug}}" <?php if (isset($_GET['type']) && $_GET['type']==$education_type->slug){ echo 'selected'; } ?>>{{$education_type->name}}</option>
                     @endforeach
@@ -233,11 +236,14 @@
             type: 'get',
             url: '<?=url('api/cities')?>'+urlValue,
             success: function(res){
-                $('.input-hint>ul').html('');
+                $('.input-hint>ul').html('<li><a href="#" data-slug="russia" data-name="Россия (все города)">Россия (все города)</a></li>');
                 if (res.data.length>0){
                     for (let key in res.data){
                         var origCity = res.data[key]['name'].toLowerCase();
                         searchValue = searchValue.charAt(0).toUpperCase() + searchValue.slice(1);
+                        if (searchValue.length<=0){
+                            origCity = origCity.charAt(0).toUpperCase() + origCity.slice(1);
+                        }
 
                         $('.input-hint>ul').append('<li><a href="#" data-slug="'+res.data[key]['slug']+'" data-name="'+res.data[key]['name']+'">'+'<span>'+searchValue+'</span>'+origCity.slice(searchValue.length)+'</a></li>');
                     }

@@ -96,7 +96,7 @@ class MainController extends Controller
         $level = (isset($request->level)?$request->level:''); $type = (isset($request->type)?$request->type:''); 
 
         $data['current_direction'] = '';
-        $data['current_location'] = ['name' => 'Россия', 'slug' => 'russia'];
+        $data['current_location'] = ['name' => 'Россия (все города)', 'slug' => 'russia'];
 
         // slug1
         if (SlugService::isCity($slug1)){ $city = SlugService::isCity($slug1); }
@@ -108,11 +108,11 @@ class MainController extends Controller
         // slug3
         if (SlugService::isPage($slug3)){ $page = SlugService::isPage($slug3); }
 
-        // if city equals russia then all cities
+        // filter defaults
         if ($city=='russia'){ $city = ''; }
-
-        // if direction equals vse then all directions
         if ($direction=='vse'){ $direction = ''; }
+        if ($level=='luboe'){ $level = ''; }
+        if ($type=='lubaya'){ $type = ''; }
 
         // breadcrumbs
         $data['breadcrumbs'] = [];

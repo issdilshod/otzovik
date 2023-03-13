@@ -130,7 +130,7 @@
                 <div class="title">Статиситка отзывов</div>
                 <div class="statistic-row">                  
                     <span>5</span>
-                    @for ($i = 0; $i <= 100; $i+=20)
+                    @for ($i = 0; $i < 100; $i+=20)
                         @if ($university->statistic['five']!=0 && $university->statistic['five']>=$i)
                             <span><span class="shild full"></span></span>
                         @else
@@ -141,7 +141,7 @@
                 </div>
                 <div class="statistic-row">                  
                     <span>4</span>
-                    @for ($i = 0; $i <= 100; $i+=20)
+                    @for ($i = 0; $i < 100; $i+=20)
                         @if ($university->statistic['four']!=0 && $university->statistic['four']>=$i)
                             <span><span class="shild full"></span></span>
                         @else
@@ -152,7 +152,7 @@
                 </div>
                 <div class="statistic-row">                  
                     <span>3</span>
-                    @for ($i = 0; $i <= 100; $i+=20)
+                    @for ($i = 0; $i < 100; $i+=20)
                         @if ($university->statistic['three']!=0 && $university->statistic['three']>=$i)
                             <span><span class="shild full"></span></span>
                         @else
@@ -163,7 +163,7 @@
                 </div>
                 <div class="statistic-row">                  
                     <span>2</span>
-                    @for ($i = 0; $i <= 100; $i+=20)
+                    @for ($i = 0; $i < 100; $i+=20)
                         @if ($university->statistic['two']!=0 && $university->statistic['two']>=$i)
                             <span><span class="shild full"></span></span>
                         @else
@@ -174,7 +174,7 @@
                 </div>
                 <div class="statistic-row">                  
                     <span>1</span>
-                    @for ($i = 0; $i <= 100; $i+=20)
+                    @for ($i = 0; $i < 100; $i+=20)
                         @if ($university->statistic['one']!=0 && $university->statistic['one']>=$i)
                             <span><span class="shild full"></span></span>
                         @else
@@ -314,7 +314,7 @@
             <h4>Направления подготовки учебного заведения</h4>
             <ul class="tags">
                 @foreach ($university->directions as $direction)
-                <li><a href="{{\App\Services\Admin\Misc\UrlService::url_direction(url('/universitety'), $direction->slug)}}">{{$direction->name}}</a></li> <!-- class="active" -->
+                <li><a href="{{\App\Services\Admin\Misc\UrlService::url_direction(url('/universitety'), $direction->slug, true, $university->city->slug)}}">{{$direction->name}}</a></li> <!-- class="active" -->
                 @endforeach
             </ul>
             <!--h4>Структура</h4>

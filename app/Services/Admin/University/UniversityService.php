@@ -3,6 +3,7 @@
 namespace App\Services\Admin\University;
 
 use App\Models\Admin\Review\Review;
+use App\Models\Admin\Setting\City;
 use App\Models\Admin\Setting\Qa;
 use App\Models\Admin\Setting\Seo;
 use App\Services\Admin\Misc\StringService;
@@ -111,11 +112,13 @@ class UniversityService extends Service{
                             })
                             ->when($level!='', function($q) use($level){ // filter by level
                                 $q->join('university_education_levels as uel', 'uel.university_id', '=', 'universities.id')
-                                    ->where('uel.education_level_id', $level);
+                                    ->join('education_levels as el', 'el.id', '=', 'uel.education_level_id')
+                                    ->where('el.slug', $level);
                             })
                             ->when($type!='', function($q) use($type){ // filter by type
                                 $q->join('university_education_types as uet', 'uet.university_id', '=', 'universities.id')
-                                    ->where('uet.education_type_id', $type);
+                                    ->join('education_types as et', 'et.id', '=', 'uet.education_type_id')
+                                    ->where('et.slug', $type);
                             })
                             ->when($filter!='', function($q) use($filter){ // specific filter 
                                 if ($filter=='po_kolicestvu_otzyvov'){ // filter by reviews count
@@ -134,7 +137,8 @@ class UniversityService extends Service{
                             ->when($name!='', function($q) use($name){
                                 $q->where('name', 'like', $name.'%');
                             })
-                            ->paginate(Config::get('pagination.per_page'), ['universities.*'], '', $page);
+                            ->join('cities as ci', 'ci.id', '=', 'universities.city_id')
+                            ->paginate(Config::get('pagination.per_page')-1, ['universities.*'], '', $page);
         return $universities;
     }
 
@@ -180,9 +184,14 @@ class UniversityService extends Service{
                         ->where('status', Config::get('status.active'))
                         ->where('slug', $slug)
                         ->first();
+                        
         if ($university==null){
             return false;
         }
+
+        // city slug
+        $university->city = City::where('id', $university->city_id)
+                                    ->first();
 
         // get directions
         $university->directions = UniversityDirection::from('university_directions as ud1')
