@@ -78,7 +78,7 @@
         <p id="university-description">
             <?php 
                 if (strlen($university->description>500)){ 
-                    echo substr($university->description, 0, 500).'<span class="big-dots">...</span><span class="extra-text d-none">'.substr($university->description, 500).'<span>';
+                    echo Illuminate\Support\Str::substr($university->description, 0, 500).'<span class="big-dots">...</span><span class="extra-text d-none">'.Illuminate\Support\Str::substr($university->description, 500).'<span>';
                 }else{
                     echo $university->description;
                 } 
