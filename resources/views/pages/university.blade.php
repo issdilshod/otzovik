@@ -77,14 +77,14 @@
         <h3>Об университете</h3>
         <p id="university-description">
             <?php 
-                if (strlen($university->description>500)){ 
+                if (Illuminate\Support\Str::length($university->description>500)){ 
                     echo Illuminate\Support\Str::substr($university->description, 0, 500).'<span class="big-dots">...</span><span class="extra-text d-none">'.Illuminate\Support\Str::substr($university->description, 500).'<span>';
                 }else{
                     echo $university->description;
                 } 
             ?>
         </p>
-        @if (strlen($university->description)>500)
+        @if (Illuminate\Support\Str::length($university->description)>500)
         <a href="#" class="btn light-btn show-more-university" id="show-more-toggle">Узнать больше</a>
         @endif
     </div> 
